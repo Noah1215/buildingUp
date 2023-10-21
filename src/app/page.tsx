@@ -7,9 +7,13 @@ import {
   TextField,
   FormControlLabel,
   Checkbox,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 
-export default function HomePage() {
+export default function Home() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box height="100vh" display="flex">
       <Box
@@ -20,13 +24,91 @@ export default function HomePage() {
           justifyContent: "center",
         }}
       >
-        <img src="/img/logo.png" alt="logo" width="50%" />
+        {isSmallScreen ? (
+          <div>
+            <Typography variant="h4" color="#024761" sx={{ fontWeight: 600 }}>
+              <span>Sign In</span>
+            </Typography>
+            <Typography variant="h4" sx={{ marginTop: "0.3rem" }}>
+              <span>Building Up - Alumni</span>
+            </Typography>
+            <Typography marginTop="2rem">
+              If you don’t have an account register
+            </Typography>
+            <Typography marginBottom="2rem ">
+              You can {""}
+              <a
+                href="/register"
+                style={{
+                  textDecoration: "none",
+                  color: "#4D47C3",
+                  fontWeight: "bold",
+                }}
+              >
+                Register here !
+              </a>
+            </Typography>
+
+            <form style={{ display: "flex", flexDirection: "column" }}>
+              <TextField
+                id="outlined-basic__email"
+                label="Email"
+                variant="outlined"
+                margin="normal"
+                color="warning"
+                sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+              />
+              <TextField
+                id="outlined-basic__password"
+                label="Password"
+                variant="outlined"
+                margin="normal"
+                color="warning"
+                sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+              />
+            </form>
+            <a href="/findPassword" style={{ textDecoration: "none" }}>
+              <Typography
+                sx={{
+                  color: "#727272",
+                  "&:hover": {
+                    color: "#024761",
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                  },
+                }}
+              >
+                Forgot the password?
+              </Typography>
+            </a>
+            <Button
+              type="submit"
+              variant="contained"
+              color="warning"
+              style={{ margin: "3rem 0 6rem 0" }}
+              href="/"
+              fullWidth
+              sx={{ height: "3.5rem" }}
+            >
+              Login
+            </Button>
+          </div>
+        ) : (
+          <img src="/img/logo.png" alt="logo" width="50%" />
+        )}
       </Box>
-      <Box sx={{ flex: 4, backgroundColor: "#024761" }}>
+      <Box
+        sx={{
+          flex: 4,
+          backgroundColor: "#024761",
+          display: isSmallScreen ? "none" : "flex",
+          alignItems: "center",
+        }}
+      >
         <div
           style={{
             width: "80%",
-            margin: "5rem 4rem",
+            margin: "auto",
           }}
         >
           <Typography
@@ -86,7 +168,7 @@ export default function HomePage() {
               variant="contained"
               color="warning"
               style={{ margin: "3rem 0 6rem 0" }}
-              href="/home"
+              href="/"
               fullWidth
               sx={{ height: "3.5rem" }}
             >

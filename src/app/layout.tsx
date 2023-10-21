@@ -1,6 +1,5 @@
 import * as React from "react";
 import HomePage from "./page";
-import HomeLayout from "@/components/HomeLayout";
 
 export const metadata = {
   title: "Building Up Alumni",
@@ -21,9 +20,7 @@ export default function RootLayout({
           margin: 0,
         }}
       >
-        {/* {isLoggedIn && <HomeLayout>} */}
-        {/* or */}
-        <HomePage />
+        {children}
       </body>
     </html>
   );
