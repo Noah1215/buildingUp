@@ -1,20 +1,31 @@
+"use client";
 import Link from "next/link";
 
 import Box from "@mui/material/Box/Box";
 import Image from "next/image";
 import Typography from "@mui/material/Typography/Typography";
 import Divider from "@mui/material/Divider";
+import useTheme from "@mui/material/styles/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
 
 export default function NotFound() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
     <Box height="100vh" display="flex" flexDirection="column" component="main">
       <Box
         component="nav"
-        padding="0.8rem 2rem"
+        padding={isSmallScreen ? "0.8rem 0.8rem" : "0.8rem 2rem"}
         boxShadow="0px 2px 4px rgba(0, 0, 0, 0.5)"
       >
         <Link href="/">
-          <Image src="/img/logo.png" alt="logo" width={152} height={31} />
+          <Image
+            src="/img/logo.png"
+            alt="logo"
+            width={isSmallScreen ? 102 : 152}
+            height={isSmallScreen ? 21 : 31}
+          />
         </Link>
       </Box>
       <Box component="section" display="flex" height="100%">
