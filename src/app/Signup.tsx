@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import Box from "@mui/material/Box/Box";
 import Button from "@mui/material/Button/Button";
@@ -37,20 +38,10 @@ const Signup = () => {
               </Typography>
             </Box>
             <Typography marginTop="2rem" component="p">
-              If you don’t have an account register
+              If you don't have an account register,
             </Typography>
-            <Typography marginBottom="2rem " component="p">
-              You can {""}
-              <a
-                href="/register"
-                style={{
-                  textDecoration: "none",
-                  color: "#4D47C3",
-                  fontWeight: "bold",
-                }}
-              >
-                Register here !
-              </a>
+            <Typography marginBottom="1rem " component="p">
+              Contact your mentor!
             </Typography>
 
             <form style={{ display: "flex", flexDirection: "column" }}>
@@ -71,7 +62,7 @@ const Signup = () => {
                 sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
               />
             </form>
-            <a href="/findPassword" style={{ textDecoration: "none" }}>
+            <Link href="/findPassword" style={{ textDecoration: "none" }}>
               <Typography
                 sx={{
                   color: "#727272",
@@ -84,7 +75,7 @@ const Signup = () => {
               >
                 Forgot the password?
               </Typography>
-            </a>
+            </Link>
             <Button
               type="submit"
               variant="contained"
@@ -162,7 +153,7 @@ const Signup = () => {
                 label={<span style={{ color: "white" }}>Remember me</span>}
               />
 
-              <a href="/findPassword" style={{ textDecoration: "none" }}>
+              <Link href="/findPassword" style={{ textDecoration: "none" }}>
                 <Typography
                   sx={{
                     color: "#727272",
@@ -174,7 +165,7 @@ const Signup = () => {
                 >
                   Forgot the password?
                 </Typography>
-              </a>
+              </Link>
             </Box>
 
             <Button
