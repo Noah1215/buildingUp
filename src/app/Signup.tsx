@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 import Box from "@mui/material/Box/Box";
@@ -9,181 +8,92 @@ import Checkbox from "@mui/material/Checkbox/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel/FormControlLabel";
 import TextField from "@mui/material/TextField/TextField";
 import Typography from "@mui/material/Typography/Typography";
-import useTheme from "@mui/material/styles/useTheme";
-import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
 
-const Signup = () => {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+type Status = "Mobile" | "Desktop";
 
-  return (
-    <Box height="100vh" display="flex" component="main">
-      <Box
-        sx={{
-          flex: 6,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        component="section"
-      >
-        {isSmallScreen ? (
-          <Box component="article">
-            <Box component="header">
-              <Typography variant="h4" color="#024761" sx={{ fontWeight: 600 }}>
-                <span>Sign In</span>
-              </Typography>
-              <Typography variant="h4" sx={{ marginTop: "0.3rem" }}>
-                <span>Building Up - Alumni</span>
-              </Typography>
-            </Box>
-            <Typography marginTop="2rem" component="p">
-              If you don't have an account register,
-            </Typography>
-            <Typography marginBottom="1rem " component="p">
-              Contact your mentor!
-            </Typography>
+const Signup = (props: { device: Status }) => {
+  if (props.device === "Mobile") {
+    return (
+      <form style={{ display: "flex", flexDirection: "column" }}>
+        <TextField
+          id="outlined-basic__email"
+          label="Email"
+          variant="outlined"
+          margin="normal"
+          color="warning"
+          sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+        />
+        <TextField
+          id="outlined-basic__password"
+          label="Password"
+          variant="outlined"
+          margin="normal"
+          color="warning"
+          sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+        />
+      </form>
+    );
+  } else if (props.device === "Desktop") {
+    return (
+      <form style={{ display: "flex", flexDirection: "column" }}>
+        <TextField
+          id="filled-basic__email"
+          label="Email"
+          variant="filled"
+          margin="normal"
+          color="warning"
+          sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+        />
+        <TextField
+          id="filled-basic__password"
+          label="Password"
+          variant="filled"
+          margin="normal"
+          color="warning"
+          sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+        />
 
-            <form style={{ display: "flex", flexDirection: "column" }}>
-              <TextField
-                id="outlined-basic__email"
-                label="Email"
-                variant="outlined"
-                margin="normal"
-                color="warning"
-                sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
-              />
-              <TextField
-                id="outlined-basic__password"
-                label="Password"
-                variant="outlined"
-                margin="normal"
-                color="warning"
-                sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
-              />
-            </form>
-            <Link href="/findPassword" style={{ textDecoration: "none" }}>
-              <Typography
-                sx={{
-                  color: "#727272",
-                  "&:hover": {
-                    color: "#024761",
-                    cursor: "pointer",
-                    fontWeight: "bold",
-                  },
-                }}
-              >
-                Forgot the password?
-              </Typography>
-            </Link>
-            <Button
-              type="submit"
-              variant="contained"
-              color="warning"
-              style={{ margin: "3rem 0 6rem 0" }}
-              href="/"
-              fullWidth
-              sx={{ height: "3.5rem" }}
-            >
-              Login
-            </Button>
-          </Box>
-        ) : (
-          <Image
-            src="/img/logo.png"
-            alt="logo"
-            width={324}
-            height={71}
-            priority
-          />
-        )}
-      </Box>
-      <Box
-        sx={{
-          flex: 4,
-          backgroundColor: "#024761",
-          display: isSmallScreen ? "none" : "flex",
-          alignItems: "center",
-        }}
-        component="section"
-      >
         <Box
-          style={{
-            width: "80%",
-            margin: "auto",
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
-          component="article"
+          component="footer"
         >
-          <Typography
-            variant="h4"
-            sx={{ color: "white", marginBottom: "5rem" }}
-            component="header"
-          >
-            Welcome!
-          </Typography>
+          <FormControlLabel
+            control={<Checkbox color="warning" sx={{ color: "white" }} />}
+            label={<span style={{ color: "white" }}>Remember me</span>}
+          />
 
-          <form style={{ display: "flex", flexDirection: "column" }}>
-            <TextField
-              id="filled-basic__email"
-              label="Email"
-              variant="filled"
-              margin="normal"
-              color="warning"
-              sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
-            />
-            <TextField
-              id="filled-basic__password"
-              label="Password"
-              variant="filled"
-              margin="normal"
-              color="warning"
-              sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
-            />
-
-            <Box
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+          <Link href="/findPassword" style={{ textDecoration: "none" }}>
+            <Typography
+              sx={{
+                color: "#727272",
+                "&:hover": {
+                  color: "white",
+                  cursor: "pointer",
+                },
               }}
-              component="footer"
             >
-              <FormControlLabel
-                control={<Checkbox color="warning" sx={{ color: "white" }} />}
-                label={<span style={{ color: "white" }}>Remember me</span>}
-              />
-
-              <Link href="/findPassword" style={{ textDecoration: "none" }}>
-                <Typography
-                  sx={{
-                    color: "#727272",
-                    "&:hover": {
-                      color: "white",
-                      cursor: "pointer",
-                    },
-                  }}
-                >
-                  Forgot the password?
-                </Typography>
-              </Link>
-            </Box>
-
-            <Button
-              type="submit"
-              variant="contained"
-              color="warning"
-              style={{ margin: "3rem 0 6rem 0" }}
-              href="/"
-              fullWidth
-              sx={{ height: "3.5rem" }}
-            >
-              Login
-            </Button>
-          </form>
+              Forgot the password?
+            </Typography>
+          </Link>
         </Box>
-      </Box>
-    </Box>
-  );
+
+        <Button
+          type="submit"
+          variant="contained"
+          color="warning"
+          href="/"
+          fullWidth
+          sx={{ height: "3.5rem", margin: "3rem 0 6rem 0" }}
+        >
+          Login
+        </Button>
+      </form>
+    );
+  }
 };
 
 export default Signup;
