@@ -1,43 +1,35 @@
-"use client";
 import Link from "next/link";
 
 import Box from "@mui/material/Box/Box";
 import Image from "next/image";
 import Typography from "@mui/material/Typography/Typography";
 import Divider from "@mui/material/Divider";
-import useTheme from "@mui/material/styles/useTheme";
-import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
+import { Height } from "@mui/icons-material";
 
 export default function NotFound() {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-
   return (
     <Box height="100vh" display="flex" flexDirection="column" component="main">
       <Box
         component="nav"
-        padding={isSmallScreen ? "0.8rem 0.8rem" : "0.8rem 2rem"}
+        sx={{ padding: { xs: "0.8rem 0.8rem", md: "0.8rem 2rem" } }}
         boxShadow="0px 2px 4px rgba(0, 0, 0, 0.5)"
       >
         <Link href="/">
-          <Image
-            src="/img/logo.png"
-            alt="logo"
-            width={isSmallScreen ? 102 : 152}
-            height={isSmallScreen ? 21 : 31}
-          />
+          <Image src="/img/logo.png" alt="logo" width={152} height={31} />
         </Link>
       </Box>
-      <Box component="section" display="flex" height="100%">
-        <Box
-          component="article"
-          margin="auto"
-          flexDirection="column"
-          textAlign="center"
+      <section
+        style={{ display: "flex", height: "100%", flexDirection: "column" }}
+      >
+        <article
+          style={{
+            margin: "auto",
+            textAlign: "center",
+          }}
         >
           <Typography
             component="header"
-            variant="h1"
+            variant="h2"
             fontWeight="bold"
             color="#024761"
           >
@@ -45,25 +37,25 @@ export default function NotFound() {
           </Typography>
           <Typography
             component="p"
-            variant="h4"
+            variant="h6"
             fontWeight="semibold"
             color="#024761"
           >
             PAGE NOT FOUND
           </Typography>
-          <Typography component="p" marginBottom="1rem">
+          <Typography component="p" marginBottom="1rem" variant="body1">
             The page you are looking for might be incorrect
           </Typography>
           <Divider variant="middle" sx={{ borderTop: "1px solid #000" }} />
-          <Typography component="p" marginTop="1rem">
+          <Typography component="p" marginTop="1rem" variant="body2">
             Please check the URL
           </Typography>
-          <Typography component="footer">
+          <Typography component="footer" variant="body2">
             Otherwise, <Link href="/">click here</Link> to be redirected to the
             homepage
           </Typography>
-        </Box>
-      </Box>
+        </article>
+      </section>
     </Box>
   );
 }
