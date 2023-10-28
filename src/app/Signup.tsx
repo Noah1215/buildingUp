@@ -12,7 +12,26 @@ import Typography from "@mui/material/Typography/Typography";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
 
+import { createBrowserClient } from "@supabase/ssr";
+import { useRouter } from "next/navigation";
+
 const Signup = () => {
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
+  const router = useRouter();
+
+  async function signInWithEmail() {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: "ara19@gmail.com",
+      password: "password1234",
+    });
+    console.log(data, error);
+    router.refresh();
+  }
+
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -169,13 +188,12 @@ const Signup = () => {
             </Box>
 
             <Button
-              type="submit"
               variant="contained"
               color="warning"
               style={{ margin: "3rem 0 6rem 0" }}
-              href="/"
               fullWidth
               sx={{ height: "3.5rem" }}
+              onClick={signInWithEmail}
             >
               Login
             </Button>
