@@ -9,14 +9,14 @@ const alumniPage = () => {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 
-  async function signOut() {
-    const { error } = await supabase.auth.signOut();
-  }
-
   return (
     <div>
       <h1>alumniPage</h1>
-      <button onClick={signOut}>SignOut</button>
+      <form action="/auth/signout" method="post">
+        <button className="button block" type="submit">
+          Sign out
+        </button>
+      </form>
     </div>
   );
 };

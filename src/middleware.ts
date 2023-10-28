@@ -65,9 +65,13 @@ export async function middleware(request: NextRequest) {
   }
 
   // if user is not signed in and the current path is not / redirect the user to /
-  // if (!session.data.session && request.nextUrl.pathname !== "/") {
-  //   return NextResponse.redirect(new URL("", request.url));
-  // }
+  if (!session.data.session && request.nextUrl.pathname !== "/") {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
 
   return response;
 }
+
+export const config = {
+  matcher: ["/", "/alumni", "/mentor", "/admin"],
+};
