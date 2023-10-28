@@ -4,7 +4,6 @@ import Box from "@mui/material/Box/Box";
 import Image from "next/image";
 import Typography from "@mui/material/Typography/Typography";
 import Divider from "@mui/material/Divider";
-import { Height } from "@mui/icons-material";
 
 export default function NotFound() {
   return (

@@ -1,5 +1,6 @@
 import * as React from "react";
 import HomePage from "./page";
+import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 
 export const metadata = {
   title: "Building Up Alumni",
@@ -20,7 +21,7 @@ export default function RootLayout({
           margin: 0,
         }}
       >
-        {children}
+        <ThemeRegistry>{children}</ThemeRegistry>
       </body>
     </html>
   );
