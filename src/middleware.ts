@@ -54,24 +54,7 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  const session = await supabase.auth.getSession();
-  console.log(session.data.session);
-  console.log("pathname: ", request.nextUrl.pathname);
-
-  // if user is signed in and the current path is / redirect the user to /account
-  if (session.data.session && request.nextUrl.pathname === "/") {
-    console.log(session);
-    return NextResponse.redirect(new URL("/alumni", request.url));
-  }
-
-  // if user is not signed in and the current path is not / redirect the user to /
-  if (!session.data.session && request.nextUrl.pathname !== "/") {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
+  await supabase.auth.getSession();
 
   return response;
 }
-
-export const config = {
-  matcher: ["/", "/alumni", "/mentor", "/admin"],
-};
