@@ -1,28 +1,33 @@
 "use client";
 
-import { createBrowserClient } from "@supabase/ssr";
+import { useRouter } from "next/navigation";
 
-export default function AuthButton() {
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+import { createClient } from "@/lib/supabase/client";
 
-  const handleSignIn = async () => {
-    await supabase.auth.signInWithPassword({
-      email: "ara19@gmail.com",
-      password: "password1234",
-    });
-  };
+import Button from "@mui/material/Button/Button";
+
+export default async function AuthButtonClient() {
+  const supabase = createClient();
+  const router = useRouter();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
+    router.push("/");
   };
 
   return (
-    <form action="/auth/sign-in" method="post">
-      <button>Login</button>
-      <button formAction="/auth/sign-out">Logout</button>
-    </form>
+    <Button
+      onClick={handleSignOut}
+      variant="contained"
+      color="warning"
+      fullWidth
+      sx={{ height: "3.5rem", margin: "3rem 0 6rem 0" }}
+    >
+      Logout
+    </Button>
   );
 }
