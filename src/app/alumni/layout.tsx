@@ -30,5 +30,5 @@ export default async function AlumniLayout({
     redirect("/error/unauthorized-route");
   }
 
-  return { children };
+  return children;
 }

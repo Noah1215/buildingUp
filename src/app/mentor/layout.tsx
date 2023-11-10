@@ -30,5 +30,5 @@ export default async function MentorLayout({
     redirect("/error/unauthorized-route");
   }
 
-  return { children };
+  return children;
 }
