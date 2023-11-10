@@ -1,22 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/middleware";
 
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
-  ],
-};
-
 export async function middleware(request: NextRequest) {
   const { supabase, response } = createClient(request);
+  await supabase.auth.getSession();
 
+  /*
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -25,6 +14,7 @@ export async function middleware(request: NextRequest) {
     console.log("User is not authenticated. Redirecting to /");
     return NextResponse.redirect(new URL("/", request.url));
   }
+
 
   const { data } = await supabase
     .from("user_roles")
@@ -39,6 +29,7 @@ export async function middleware(request: NextRequest) {
     );
     return NextResponse.redirect(new URL(`${userRole}`, request.url));
   }
+  */
 
   return response;
 }
