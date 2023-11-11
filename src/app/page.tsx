@@ -6,7 +6,7 @@ import Box from "@mui/material/Box/Box";
 import Button from "@mui/material/Button/Button";
 import Typography from "@mui/material/Typography/Typography";
 
-import Auth from "@/components/Auth";
+import SignInForm from "@/components/Auth/SignInForm";
 
 export default function Home() {
   return (
@@ -37,7 +37,7 @@ export default function Home() {
           <Typography marginBottom="1rem " component="p">
             Contact your mentor!
           </Typography>
-          <Auth device="Mobile" />
+          <SignInForm device="Mobile" />
         </Box>
         {/* Desktop */}
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -73,7 +73,7 @@ export default function Home() {
           >
             Welcome!
           </Typography>
-          <Auth device="Desktop" />
+          <SignInForm device="Desktop" />
         </article>
       </Box>
     </Box>

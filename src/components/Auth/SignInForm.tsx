@@ -16,7 +16,7 @@ import Typography from "@mui/material/Typography/Typography";
 
 type Status = "Mobile" | "Desktop";
 
-const Auth = (props: { device: Status }) => {
+const SignInForm = (props: { device: Status }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -172,4 +172,4 @@ const Auth = (props: { device: Status }) => {
   );
 };
 
-export default Auth;
+export default SignInForm;
