@@ -13,13 +13,16 @@
     "@emotion/cache": "11.11.0",
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
+    "@hookform/devtools": "^4.3.1",
+    "@hookform/error-message": "^2.0.1",
     "@mui/icons-material": "5.14.13",
     "@mui/material": "5.14.13",
     "@supabase/ssr": "0.0.4",
     "@supabase/supabase-js": "2.38.2",
     "next": "13.5.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.48.2"
   },
   "devDependencies": {
     "@types/node": "20.8.6",

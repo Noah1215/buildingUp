@@ -51,6 +51,7 @@ export default function Home() {
               Forgot the password?
             </Typography>
           </Link>
+          {/*
           <Button
             type="submit"
             variant="contained"
@@ -62,6 +63,7 @@ export default function Home() {
           >
             Login
           </Button>
+            */}
         </Box>
         {/* Desktop */}
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
