@@ -5,7 +5,8 @@ import Link from "next/link";
 import Box from "@mui/material/Box/Box";
 import Button from "@mui/material/Button/Button";
 import Typography from "@mui/material/Typography/Typography";
-import Signup from "./Signup";
+
+import SignInForm from "@/components/Auth/SignInForm";
 
 export default function Home() {
   return (
@@ -36,32 +37,7 @@ export default function Home() {
           <Typography marginBottom="1rem " component="p">
             Contact your mentor!
           </Typography>
-          <Signup device="Mobile" />
-          <Link href="/findPassword" style={{ textDecoration: "none" }}>
-            <Typography
-              sx={{
-                color: "#727272",
-                "&:hover": {
-                  color: "#024761",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                },
-              }}
-            >
-              Forgot the password?
-            </Typography>
-          </Link>
-          <Button
-            type="submit"
-            variant="contained"
-            color="warning"
-            style={{ margin: "3rem 0 6rem 0" }}
-            href="/"
-            fullWidth
-            sx={{ height: "3.5rem" }}
-          >
-            Login
-          </Button>
+          <SignInForm device="Mobile" />
         </Box>
         {/* Desktop */}
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -97,8 +73,7 @@ export default function Home() {
           >
             Welcome!
           </Typography>
-
-          <Signup device="Desktop" />
+          <SignInForm device="Desktop" />
         </article>
       </Box>
     </Box>

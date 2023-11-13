@@ -1,5 +1,4 @@
 import * as React from "react";
-import HomePage from "./page";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 
 export const metadata = {
