@@ -56,28 +56,59 @@ const SignInForm = (props: { device: Status }) => {
     }
   };
 
+  const onEmailHandler = (e:any) => {
+    setEmail(e.target.value);
+  }
+  const onPasswordHandler = (e:any) => {
+    setPassword(e.target.value);
+  }
+
+  const EmailValidation = () => {
+    let check = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if( email == '' ) {
+      return false;
+    } else{
+      return !(check.test(email));
+    }
+  }
+
+  const PasswordValidation = () => {
+    let check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    if( password == '' ) {
+      return false;
+    } else {
+      return !(check.test(password));
+    }
+  }
+
   if (props.device === "Mobile") {
     return (
       <form style={{ display: "flex", flexDirection: "column" }}>
         <TextField
           id="outlined-basic__email"
           label="Email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={ onEmailHandler }
           value={email}
           variant="outlined"
           margin="normal"
           color="warning"
           sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+
+          error={ EmailValidation() }
+          helperText={ EmailValidation() ? "Invalid email format." : "" }
         />
         <TextField
           id="outlined-basic__password"
           label="Password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={ onPasswordHandler }
           value={password}
           variant="outlined"
           margin="normal"
           color="warning"
           sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+
+          error={ PasswordValidation() }
+          helperText={ PasswordValidation() ? "Your password must have at least 8 letters, numbers and symbols (such as ! and %)." : ""}
         />
         <Link href="/findPassword" style={{ textDecoration: "none" }}>
           <Typography
@@ -113,22 +144,28 @@ const SignInForm = (props: { device: Status }) => {
       <TextField
         id="filled-basic__email"
         label="Email"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={ onEmailHandler }
         value={email}
         variant="filled"
         margin="normal"
         color="warning"
         sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+
+        error={ EmailValidation() }
+        helperText={ EmailValidation() ? "Invalid email format." : "" }
       />
       <TextField
         id="filled-basic__password"
         label="Password"
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={ onPasswordHandler }
         value={password}
         variant="filled"
         margin="normal"
         color="warning"
         sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+
+        error={ PasswordValidation() }
+        helperText={ PasswordValidation() ? "Your password must have at least 8 letters, numbers and symbols (such as ! and %)." : ""}
       />
 
       <Box
