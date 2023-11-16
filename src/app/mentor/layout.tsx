@@ -1,4 +1,4 @@
-import { getUser, getUserRole } from "@/lib/supabase/server";
+import { getUser, getUserRole } from "@/app/supabase-server";
 import { redirect, notFound } from "next/navigation";
 
 export default async function Layout({
