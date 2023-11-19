@@ -13,14 +13,31 @@ import Checkbox from "@mui/material/Checkbox/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel/FormControlLabel";
 import TextField from "@mui/material/TextField/TextField";
 import Typography from "@mui/material/Typography/Typography";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
 
 type Status = "Mobile" | "Desktop";
 
 const SignInForm = (props: { device: Status }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
+
+  const handleClickShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const handleMouseDownPassword = (
+    event:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.MouseEvent<HTMLDivElement>
+  ) => {
+    event.preventDefault();
+  };
 
   const handleSignIn = async () => {
     const supabase = createClient();
@@ -72,13 +89,29 @@ const SignInForm = (props: { device: Status }) => {
         <TextField
           id="outlined-basic__password"
           label="Password"
+          type={showPassword ? "text" : "password"}
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           variant="outlined"
           margin="normal"
           color="warning"
           sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
+
         <Link href="/findPassword" style={{ textDecoration: "none" }}>
           <Typography
             sx={{
@@ -124,11 +157,26 @@ const SignInForm = (props: { device: Status }) => {
         id="filled-basic__password"
         label="Password"
         onChange={(e) => setPassword(e.target.value)}
+        type={showPassword ? "text" : "password"}
         value={password}
         variant="filled"
         margin="normal"
         color="warning"
         sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
 
       <Box
