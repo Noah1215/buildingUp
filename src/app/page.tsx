@@ -1,9 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 import Box from "@mui/material/Box/Box";
-import Button from "@mui/material/Button/Button";
 import Typography from "@mui/material/Typography/Typography";
 
 import SignInForm from "@/components/Auth/SignInForm";
