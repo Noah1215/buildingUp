@@ -20,7 +20,6 @@ export default async function SignOutButton() {
       onClick={handleSignOut}
       variant="contained"
       color="warning"
-      fullWidth
       sx={{ height: "3.5rem", margin: "3rem 0 6rem 0" }}
     >
       Logout
