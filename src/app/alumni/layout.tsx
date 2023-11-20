@@ -1,34 +1,33 @@
-import { createClient } from "@/lib/supabase/server";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { getUser, getUserRole } from "@/app/supabase-server";
+import { redirect, notFound } from "next/navigation";
+import AuthButton from "@/components/SignOutButton";
+import React from "react";
 
-export default async function AlumniLayout({
+export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  console.log("Layout");
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     redirect("/");
   }
 
-  const { data } = await supabase
-    .from("user_roles")
-    .select("role")
-    .eq("user_id", user?.id)
-    .single();
-  const userRole = data?.role;
+  const userRole = await getUserRole();
 
   if (userRole !== "alumni") {
-    // TODO: REDIRECT TO CUSTOME ERROR PAGE OR LANDING PAGE FOR USER ROLE
-    redirect("/error/unauthorized-route");
+    return notFound();
   }
 
-  return children;
+  return (
+    <>
+      <header>
+        <AuthButton />
+      </header>
+      {children}
+    </>
+  );
 }
