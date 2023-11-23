@@ -23,7 +23,7 @@ import EventIcon from "@mui/icons-material/EventNote";
 import JobsIcon from "@mui/icons-material/BusinessCenter";
 import SupportIcon from "@mui/icons-material/SpeakerNotes";
 import MeetingIcon from "@mui/icons-material/PermContactCalendar";
-import NotificationActiveIcon from "@mui/icons-material/NotificationsActive";
+//import NotificationActiveIcon from "@mui/icons-material/NotificationsActive";
 import NotificationIcon from "@mui/icons-material/Notifications";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Footer from "@/components/Footer";
@@ -46,6 +46,7 @@ export default async function MentorLayout({
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
   const DRAWER_WIDTH = 220;
+  const CHILD_WIDTH = 300;
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -198,8 +199,8 @@ export default async function MentorLayout({
         sx={{
           flexGrow: 1,
           bgcolor: "#FFF",
-          ml: { xs: 0, md: `${DRAWER_WIDTH}px` },
-          mt: ["48px", "56px", "64px"],
+          ml: { xs: 0, md: `${CHILD_WIDTH}px` },
+          mt: ["60px", "80px", "100px"],
           p: 3,
         }}
       >
