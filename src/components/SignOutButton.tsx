@@ -1,11 +1,12 @@
 "use client";
-
 import { useSupabase } from "@/app/supabase-provider";
 import { useRouter } from "next/navigation";
 
 import Button from "@mui/material/Button/Button";
+import LogoutIcon from "@mui/icons-material/Logout";
+import Typography from "@mui/material/Typography";
 
-export default async function SignOutButton() {
+export default function SignOutButton() {
   const { supabase } = useSupabase();
   const router = useRouter();
 
@@ -16,13 +17,15 @@ export default async function SignOutButton() {
   };
 
   return (
-    <Button
-      onClick={handleSignOut}
-      variant="contained"
-      color="warning"
-      sx={{ height: "3.5rem", margin: "3rem 0 6rem 0" }}
-    >
-      Logout
+    <Button onClick={handleSignOut}>
+      <LogoutIcon sx={{ color: "#024761", fontSize: "2rem" }} />
+      <Typography
+        variant="h6"
+        color="#024761"
+        sx={{ fontSize: "1.1rem", whiteSpace: "nowrap" }}
+      >
+        Log Out
+      </Typography>
     </Button>
   );
 }
