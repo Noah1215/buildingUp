@@ -44,3 +44,22 @@ export async function getUserRole() {
     return null;
   }
 }
+
+export async function getUserName() {
+  const supabase = createClient();
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    const { data: userName } = await supabase
+      .from("users")
+      .select("name")
+      .eq("id", user?.id)
+      .single()
+      .throwOnError();
+    return userName?.name;
+  } catch (error) {
+    console.error("Error:", error);
+    return null;
+  }
+}
