@@ -189,6 +189,7 @@ const SignInForm = (props: { device: Status }) => {
         error={ EmailValidation() }
         helperText={ EmailValidation() ? "Invalid email format." : "" }
         FormHelperTextProps={{ style: { 
+          color: "orange",
           backgroundColor: '#024761',
           margin: 0,
           paddingLeft: 15
@@ -208,7 +209,8 @@ const SignInForm = (props: { device: Status }) => {
         error={ PasswordValidation() }
         //helperText={ PasswordValidation() ? "Your password must have at least 8 letters, numbers and symbols (such as ! and %)." : ""}
         helperText={ PasswordValidation() ? "Your password must have at least 8 letters and numbers." : ""}
-        FormHelperTextProps={{ style: { 
+        FormHelperTextProps={{ style: {
+          color: "orange", 
           backgroundColor: '#024761',
           margin: 0,
           paddingLeft: 15
