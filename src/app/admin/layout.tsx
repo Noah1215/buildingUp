@@ -1,6 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -33,34 +31,23 @@ const LINKS = [
   { text: "Calendar", href: "/admin/calendar", icon: CalendarIcon },
   { text: "Manage", href: "/admin/manage", icon: ManageIcon },
 ];
+import { getUser, getUserRole } from "@/app/supabase-server";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
-  const DRAWER_WIDTH = 220;
-  const CHILD_WIDTH = 300;
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     redirect("/");
   }
 
-  const { data } = await supabase
-    .from("user_roles")
-    .select("role")
-    .eq("user_id", user?.id)
-    .single();
-  const userRole = data?.role;
+  const userRole = await getUserRole();
 
-  if (userRole !== "admin") {
-    // TODO: REDIRECT TO CUSTOME ERROR PAGE OR LANDING PAGE FOR USER ROLE
-    redirect("/error/unauthorized-route");
+  if (userRole !== "alumni") {
+    return notFound();
   }
 
   return (
