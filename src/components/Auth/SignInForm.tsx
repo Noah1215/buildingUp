@@ -90,7 +90,8 @@ const SignInForm = (props: { device: Status }) => {
   }
 
   const PasswordValidation = () => {
-    let check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    //let check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    let check = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
     if( password == '' ) {
       return false;
     } else {
@@ -126,7 +127,8 @@ const SignInForm = (props: { device: Status }) => {
           sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
 
           error={ PasswordValidation() }
-          helperText={ PasswordValidation() ? "Your password must have at least 8 letters, numbers and symbols (such as ! and %)." : ""}
+          //helperText={ PasswordValidation() ? "Your password must have at least 8 letters, numbers and symbols (such as ! and %)." : ""}
+          helperText={ PasswordValidation() ? "Your password must have at least 8 letters and numbers." : ""}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -186,6 +188,11 @@ const SignInForm = (props: { device: Status }) => {
 
         error={ EmailValidation() }
         helperText={ EmailValidation() ? "Invalid email format." : "" }
+        FormHelperTextProps={{ style: { 
+          backgroundColor: '#024761',
+          margin: 0,
+          paddingLeft: 15
+        }}}
       />
       <TextField
         id="filled-basic__password"
@@ -199,7 +206,13 @@ const SignInForm = (props: { device: Status }) => {
         sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
 
         error={ PasswordValidation() }
-        helperText={ PasswordValidation() ? "Your password must have at least 8 letters, numbers and symbols (such as ! and %)." : ""}
+        //helperText={ PasswordValidation() ? "Your password must have at least 8 letters, numbers and symbols (such as ! and %)." : ""}
+        helperText={ PasswordValidation() ? "Your password must have at least 8 letters and numbers." : ""}
+        FormHelperTextProps={{ style: { 
+          backgroundColor: '#024761',
+          margin: 0,
+          paddingLeft: 15
+        }}}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
