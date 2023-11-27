@@ -46,7 +46,7 @@ export default async function AdminLayout({
 
   const userRole = await getUserRole();
 
-  if (userRole !== "alumni") {
+  if (userRole !== "admin") {
     return notFound();
   }
 
@@ -139,10 +139,10 @@ export default async function AdminLayout({
       </AppBar>
       <Drawer
         sx={{
-          width: DRAWER_WIDTH,
+          width: "220",
           flexShrink: 0,
           "& .MuiDrawer-paper": {
-            width: DRAWER_WIDTH,
+            width: "220",
             boxSizing: "border-box",
             top: ["48px", "56px", "64px"],
             height: "auto",
@@ -182,7 +182,7 @@ export default async function AdminLayout({
         sx={{
           flexGrow: 1,
           bgcolor: "#FFF",
-          ml: { xs: 0, md: `${CHILD_WIDTH}px` },
+          ml: { xs: 0, md: `300px` },
           mt: ["60px", "80px", "100px"],
           p: 3,
         }}
