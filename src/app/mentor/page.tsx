@@ -11,6 +11,8 @@ import Box from "@mui/material/Box/Box";
 import Avatar from "@mui/material/Avatar";
 
 import { deepOrange } from "@mui/material/colors";
+
+import JobDistribution from "@/recharts/JobDistribution";
 interface Irow {
   category?: string;
   label: string;
@@ -55,6 +57,7 @@ const mentorPage = () => {
           display: "flex",
           gap: "10%",
           flexDirection: { xs: "column", sm: "row" },
+          marginBottom: "2rem",
         }}
       >
         <Paper
@@ -209,6 +212,54 @@ const mentorPage = () => {
               </TableBody>
             </Table>
           </TableContainer>
+        </Paper>
+      </Box>
+
+      <Box
+        component="section"
+        sx={{
+          display: "flex",
+          gap: "10%",
+          flexDirection: { xs: "column", sm: "row" },
+          marginBottom: "2rem",
+        }}
+      >
+        <Paper
+          sx={{
+            width: { xs: "100%", md: "40%" },
+            overflow: "hidden",
+            borderRadius: "0.5rem",
+            marginBottom: { xs: "2rem", md: 0 },
+            elevation: 0,
+            boxShadow: {
+              xs: "none",
+              md: "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+            },
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Typography
+            sx={{
+              backgroundColor: { xs: "#FFF", md: "#024761" },
+              padding: { xs: "0.4rem 0", md: "0.8rem 2rem" },
+              color: { xs: "#000", md: "#FFF" },
+              fontSize: "1.3rem",
+              fontWeight: { xs: "600", md: "400" },
+              borderBottom: { xs: "1px solid #C4C4C4", md: "none" },
+            }}
+          >
+            Job Distribution
+          </Typography>
+          <Box
+            sx={{
+              height: "330px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <JobDistribution />
+          </Box>
         </Paper>
       </Box>
     </>
