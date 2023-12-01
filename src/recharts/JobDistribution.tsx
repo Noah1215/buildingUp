@@ -22,15 +22,15 @@ const JobDistribution = () => {
     <ResponsiveContainer
       width="80%"
       height="100%"
-      style={{ position: "relative", top: "-5%" }}
+      style={{ position: "relative" }}
     >
       <PieChart>
         <Pie
           data={data}
           cx="50%"
           cy="50%"
-          innerRadius={45}
-          outerRadius={80}
+          innerRadius={55}
+          outerRadius={100}
           fill="#8884d8"
           dataKey="value"
         >
@@ -43,9 +43,12 @@ const JobDistribution = () => {
           verticalAlign="bottom"
           wrapperStyle={{
             position: "absolute",
-            bottom: "10px",
+            bottom: "25px",
           }}
           iconType="circle"
+          formatter={(value) => (
+            <span style={{ color: "#024761" }}>{value}</span>
+          )}
         />
       </PieChart>
     </ResponsiveContainer>
