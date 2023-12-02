@@ -1,5 +1,5 @@
 "use client";
-import { useSupabase } from "@/app/supabase-provider";
+import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
 import Button from "@mui/material/Button/Button";
@@ -7,13 +7,12 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Typography from "@mui/material/Typography";
 
 export default function SignOutButton() {
-  const { supabase } = useSupabase();
+  const supabase = createClient();
   const router = useRouter();
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    router.refresh();
-    // router.push("/");
+    router.push("/");
   };
 
   return (
