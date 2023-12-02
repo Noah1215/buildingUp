@@ -6,6 +6,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { getUser, getUserRole } from "@/app/supabase-client";
 
 import Box from "@mui/material/Box/Box";
 import Button from "@mui/material/Button/Button";
@@ -25,6 +26,7 @@ const SignInForm = (props: { device: Status }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const supabase = createClient();
   const router = useRouter();
 
   const handleClickShowPassword = () => {
@@ -34,42 +36,24 @@ const SignInForm = (props: { device: Status }) => {
   const handleMouseDownPassword = (
     event:
       | React.MouseEvent<HTMLButtonElement>
-      | React.MouseEvent<HTMLDivElement>
+      | React.MouseEvent<HTMLDivElement>,
   ) => {
     event.preventDefault();
   };
 
   const handleSignIn = async () => {
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (error) {
-      alert(error);
+      const user = await getUser();
+      const userRole = await getUserRole();
+      router.push(`/${userRole}`);
+    } catch (error) {
+      console.error(error);
       router.push("/error");
-    } else {
-      const { data } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", user?.id)
-        .single();
-      const userRole = data?.role;
-
-      if (userRole === "admin") {
-        router.push("/admin");
-      } else if (userRole === "mentor") {
-        router.push("/mentor");
-      } else if (userRole === "alumni") {
-        router.push("/alumni");
-      } else {
-        router.push("/error");
-      }
     }
   };
 
