@@ -5,8 +5,6 @@ import Image from "next/image";
 import Typography from "@mui/material/Typography";
 import NotificationIcon from "@mui/icons-material/Notifications";
 import AppBar from "@mui/material/AppBar";
-import { useSupabase } from "@/app/supabase-provider";
-import { useRouter } from "next/navigation";
 import SignOutButton from "@/components/SignOutButton";
 
 interface Props {
@@ -14,9 +12,6 @@ interface Props {
 }
 
 export default function Header({ userName }: Props) {
-  const { supabase } = useSupabase();
-  const router = useRouter();
-
   return (
     <AppBar position="fixed" sx={{ zIndex: 2000 }}>
       <Toolbar
