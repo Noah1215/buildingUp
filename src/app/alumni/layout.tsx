@@ -45,13 +45,14 @@ export default async function Layout({
     redirect("/");
   }
 
-  const userRole = await getUserRole();
+  const [userRole, userName] = await Promise.all([
+    getUserRole(),
+    getUserName(),
+  ]);
 
   if (userRole !== "alumni") {
     return notFound();
   }
-
-  const userName = await getUserName();
 
   return (
     <>
