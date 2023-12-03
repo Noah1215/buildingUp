@@ -61,8 +61,6 @@ export default async function MentorLayout({
     return notFound();
   }
 
-  const CHILD_WIDTH = 220;
-
   return (
     <>
       <AppBar position="fixed" sx={{ zIndex: 2000 }}>
@@ -195,7 +193,7 @@ export default async function MentorLayout({
         sx={{
           flexGrow: 1,
           bgcolor: "#FFF",
-          ml: { xs: 0, md: `${CHILD_WIDTH}px` },
+          ml: { xs: 0, md: '300px' },
           mt: ["60px", "80px", "100px"],
           p: 3,
         }}
