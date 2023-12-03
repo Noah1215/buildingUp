@@ -48,7 +48,10 @@ const SignInForm = (props: { device: Status }) => {
         password,
       });
 
-      const user = await getUser();
+      if (error) {
+        console.log(error);
+      }
+
       const userRole = await getUserRole();
       router.push(`/${userRole}`);
     } catch (error) {
