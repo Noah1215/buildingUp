@@ -17,6 +17,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
+import { Alert, Snackbar } from "@mui/material";
 
 type Status = "Mobile" | "Desktop";
 
@@ -39,6 +40,9 @@ const SignInForm = (props: { device: Status }) => {
     event.preventDefault();
   };
 
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+
   const handleSignIn = async () => {
     const supabase = createClient();
     const { error } = await supabase.auth.signInWithPassword({
@@ -51,8 +55,12 @@ const SignInForm = (props: { device: Status }) => {
     } = await supabase.auth.getUser();
 
     if (error) {
-      alert(error);
-      router.push("/error");
+      setSnackbarMessage(error.message);
+      setSnackbarOpen(true);
+      //alert(error);
+      setTimeout(() => {
+        router.push("/error");
+      }, 3000);
     } else {
       const { data } = await supabase
         .from("user_roles")
@@ -72,6 +80,10 @@ const SignInForm = (props: { device: Status }) => {
       }
     }
   };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  }
 
   const onEmailHandler = (e:any) => {
     setEmail(e.target.value);
@@ -170,6 +182,11 @@ const SignInForm = (props: { device: Status }) => {
         >
           Login
         </Button>
+        <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+          <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: "100%" }}>
+            {snackbarMessage}            
+          </Alert>
+        </Snackbar>
       </form>
     );
   }
@@ -268,6 +285,16 @@ const SignInForm = (props: { device: Status }) => {
       >
         Login
       </Button>
+      <Snackbar 
+        open={snackbarOpen} 
+        autoHideDuration={10000} 
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: "100%" }}>
+          "Fail Login. Check your ID and Password"           
+        </Alert>
+      </Snackbar>
     </form>
   );
 };
