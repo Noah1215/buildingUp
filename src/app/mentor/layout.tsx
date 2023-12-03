@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -27,6 +27,7 @@ import MeetingIcon from "@mui/icons-material/PermContactCalendar";
 import NotificationIcon from "@mui/icons-material/Notifications";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Footer from "@/components/Footer";
+import { getUser, getUserRole } from "@/app/supabase-server";
 
 const LINKS = [
   { text: "Home", href: "/mentor", icon: HomeIcon },
@@ -44,9 +45,8 @@ export default async function MentorLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   const DRAWER_WIDTH = 220;
-  const CHILD_WIDTH = 300;
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -55,17 +55,13 @@ export default async function MentorLayout({
     redirect("/");
   }
 
-  const { data } = await supabase
-    .from("user_roles")
-    .select("role")
-    .eq("user_id", user?.id)
-    .single();
-  const userRole = data?.role;
+  const userRole = await getUserRole();
 
   if (userRole !== "mentor") {
-    // TODO: REDIRECT TO CUSTOME ERROR PAGE OR LANDING PAGE FOR USER ROLE
-    redirect("/error/unauthorized-route");
+    return notFound();
   }
+
+  const CHILD_WIDTH = 220;
 
   return (
     <>

@@ -1,5 +1,6 @@
 import * as React from "react";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
+import SupabaseProvider from "./supabase-provider";
 
 export const metadata = {
   title: "Building Up Alumni",
@@ -20,7 +21,9 @@ export default function RootLayout({
           margin: 0,
         }}
       >
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <ThemeRegistry>
+          <SupabaseProvider>{children}</SupabaseProvider>
+        </ThemeRegistry>
       </body>
     </html>
   );
