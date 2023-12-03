@@ -85,6 +85,17 @@ const SignInForm = (props: { device: Status }) => {
     setSnackbarOpen(false);
   }
 
+  const handleFormSubmit = (e:any) => {
+    e.preventDefault();
+    handleSignIn();
+  }
+
+  const handleKeyPress = (e:any) => {
+    if( e.key === 'Enter' ) {
+      handleSignIn();
+    }
+  }
+
   const onEmailHandler = (e:any) => {
     setEmail(e.target.value);
   }
@@ -192,11 +203,12 @@ const SignInForm = (props: { device: Status }) => {
   }
 
   return (
-    <form style={{ display: "flex", flexDirection: "column" }}>
+    <form style={{ display: "flex", flexDirection: "column" }} onSubmit={handleFormSubmit}>
       <TextField
         id="filled-basic__email"
         label="Email"
         onChange={ onEmailHandler }
+        onKeyDown={handleKeyPress}
         value={email}
         variant="filled"
         margin="normal"
@@ -216,6 +228,7 @@ const SignInForm = (props: { device: Status }) => {
         id="filled-basic__password"
         label="Password"
         onChange={ onPasswordHandler }
+        onKeyDown={handleKeyPress}
         type={showPassword ? "text" : "password"}
         value={password}
         variant="filled"
