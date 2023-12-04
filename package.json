@@ -18,6 +18,8 @@
     "@reduxjs/toolkit": "1.9.7",
     "@supabase/ssr": "0.0.4",
     "@supabase/supabase-js": "2.38.2",
+    "@types/js-cookie": "3.0.6",
+    "js-cookie": "3.0.5",
     "next": "13.5.4",
     "react": "18.2.0",
     "react-dom": "18.2.0"

@@ -1,16 +1,8 @@
 "use client";
-
-import React from "react";
+// MUI
 import Grid from "@mui/material/Unstable_Grid2";
 import Divider from "@mui/material/Divider";
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Box, List, ListItem, ListItemButton, Typography } from "@mui/material";
 
 interface Props {
   title: string;

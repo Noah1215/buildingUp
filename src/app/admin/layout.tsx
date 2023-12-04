@@ -1,7 +1,7 @@
+import { notFound, redirect } from "next/navigation";
 import { getUser, getUserRole } from "@/app/supabase-server";
-import { redirect, notFound } from "next/navigation";
 
-export default async function Layout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -14,9 +14,9 @@ export default async function Layout({
 
   const userRole = await getUserRole();
 
-  if (userRole !== "admin") {
+  if (userRole !== "alumni") {
     return notFound();
   }
 
-  return <>{children}</>;
+  return <div>{children}</div>;
 }
