@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -23,10 +23,11 @@ import EventIcon from "@mui/icons-material/EventNote";
 import JobsIcon from "@mui/icons-material/BusinessCenter";
 import SupportIcon from "@mui/icons-material/SpeakerNotes";
 import MeetingIcon from "@mui/icons-material/PermContactCalendar";
-import NotificationActiveIcon from "@mui/icons-material/NotificationsActive";
+//import NotificationActiveIcon from "@mui/icons-material/NotificationsActive";
 import NotificationIcon from "@mui/icons-material/Notifications";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Footer from "@/components/Footer";
+import { getUser, getUserRole } from "@/app/supabase-server";
 
 const LINKS = [
   { text: "Home", href: "/mentor", icon: HomeIcon },
@@ -44,7 +45,7 @@ export default async function MentorLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   const DRAWER_WIDTH = 220;
   const {
     data: { user },
@@ -54,16 +55,10 @@ export default async function MentorLayout({
     redirect("/");
   }
 
-  const { data } = await supabase
-    .from("user_roles")
-    .select("role")
-    .eq("user_id", user?.id)
-    .single();
-  const userRole = data?.role;
+  const userRole = await getUserRole();
 
   if (userRole !== "mentor") {
-    // TODO: REDIRECT TO CUSTOME ERROR PAGE OR LANDING PAGE FOR USER ROLE
-    redirect("/error/unauthorized-route");
+    return notFound();
   }
 
   return (
@@ -198,8 +193,8 @@ export default async function MentorLayout({
         sx={{
           flexGrow: 1,
           bgcolor: "#FFF",
-          ml: { xs: 0, md: `${DRAWER_WIDTH}px` },
-          mt: ["48px", "56px", "64px"],
+          ml: { xs: 0, md: '300px' },
+          mt: ["60px", "80px", "100px"],
           p: 3,
         }}
       >
