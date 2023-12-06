@@ -40,7 +40,7 @@ const data = [
 
 const CurrentJob = () => {
   return (
-    <ResponsiveContainer width="85%" height="100%">
+    <ResponsiveContainer>
       <BarChart
         data={data}
         margin={{

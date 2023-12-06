@@ -45,7 +45,7 @@ export default async function MentorLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = cookies();
-  const supabase = createClient();
+  const supabase = createClient(cookieStore);
   const DRAWER_WIDTH = 220;
   const {
     data: { user },
@@ -193,7 +193,7 @@ export default async function MentorLayout({
         sx={{
           flexGrow: 1,
           bgcolor: "#FFF",
-          ml: { xs: 0, md: '300px' },
+          ml: { xs: 0, md: "300px" },
           mt: ["60px", "80px", "100px"],
           p: 3,
         }}
