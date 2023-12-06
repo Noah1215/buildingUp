@@ -4,7 +4,6 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography/Typography";
 import Box from "@mui/material/Box/Box";
@@ -14,6 +13,9 @@ import { deepOrange } from "@mui/material/colors";
 
 import JobDistribution from "@/recharts/JobDistribution";
 import CurrentJob from "@/recharts/CurrentJob";
+import FrontTableHeader from "@/components/FrontTableHeader";
+import ChartHeader from "@/components/ChartHeader";
+import FrontMentorBox from "@/components/FrontMentorBox";
 interface Irow {
   category?: string;
   label: string;
@@ -61,45 +63,10 @@ const mentorPage = () => {
           marginBottom: "2rem",
         }}
       >
-        <Paper
-          sx={{
-            width: { xs: "100%", md: "40%" },
-            overflow: "hidden",
-            borderRadius: "0.5rem",
-            marginBottom: { xs: "2rem", md: 0 },
-            elevation: 0,
-            boxShadow: {
-              xs: "none",
-              md: "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
-            },
-          }}
-        >
+        <FrontMentorBox>
           <TableContainer sx={{ height: "270px", overflowY: "auto" }}>
             <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    colSpan={3}
-                    sx={{
-                      backgroundColor: { xs: "#FFF", md: "#024761" },
-                      borderBottom: { xs: "1px solid #C4C4C4", md: "none" },
-                      padding: { xs: "0.4rem 0", md: "0.8rem 2rem" },
-                      border: "none",
-                    }}
-                  >
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        color: { xs: "#000", md: "#FFF" },
-                        fontSize: "1.3rem",
-                        fontWeight: { xs: "600", md: "400" },
-                      }}
-                    >
-                      Upcoming Events
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
+              <FrontTableHeader title="Upcoming Events" size={3} />
               <TableBody>
                 {rows.map((row, index) => (
                   <TableRow
@@ -131,45 +98,11 @@ const mentorPage = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Paper>
-        <Paper
-          sx={{
-            width: { xs: "100%", md: "40%" },
-            overflow: "hidden",
-            borderRadius: "0.5rem",
-            marginBottom: { xs: "2rem", md: 0 },
-            boxShadow: {
-              xs: "none",
-              md: "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
-            },
-          }}
-        >
+        </FrontMentorBox>
+        <FrontMentorBox>
           <TableContainer sx={{ height: "270px", overflowY: "auto" }}>
             <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    colSpan={2}
-                    sx={{
-                      backgroundColor: { xs: "#FFF", md: "#024761" },
-                      borderBottom: { xs: "1px solid #C4C4C4", md: "none" },
-                      padding: { xs: "0.4rem 0", md: "0.8rem 2rem" },
-                      border: "none",
-                    }}
-                  >
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        color: { xs: "#000", md: "#FFF" },
-                        fontSize: "1.3rem",
-                        fontWeight: { xs: "600", md: "400" },
-                      }}
-                    >
-                      New Request
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
+              <FrontTableHeader title="New Request" size={2} />
               <TableBody>
                 {requests.map((row, index) => (
                   <TableRow
@@ -213,7 +146,7 @@ const mentorPage = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Paper>
+        </FrontMentorBox>
       </Box>
 
       <Box
@@ -225,41 +158,11 @@ const mentorPage = () => {
           marginBottom: "2rem",
         }}
       >
-        <Paper
-          sx={{
-            width: { xs: "100%", md: "40%" },
-            overflow: "hidden",
-            borderRadius: "0.5rem",
-            marginBottom: { xs: "2rem", md: 0 },
-            elevation: 0,
-            boxShadow: {
-              xs: "none",
-              md: "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
-            },
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <Typography
-            sx={{
-              backgroundColor: { xs: "#FFF", md: "#024761" },
-              padding: { xs: "0.4rem 0", md: "0.8rem 2rem" },
-              color: { xs: "#000", md: "#FFF" },
-              fontSize: "1.3rem",
-              fontWeight: { xs: "600", md: "400" },
-              borderBottom: { xs: "1px solid #C4C4C4", md: "none" },
-            }}
-          >
-            Job Distribution
-          </Typography>
-          <Typography
-            sx={{
-              padding: { xs: "0.2rem 0", md: "0.3rem 2rem" },
-              fontSize: "0.8rem",
-            }}
-          >
-            Last updated on April 2023
-          </Typography>
+        <FrontMentorBox>
+          <ChartHeader
+            title="Job Distribution"
+            updated="Last updated on April 2023"
+          />
           <Box
             sx={{
               height: "370px",
@@ -269,43 +172,13 @@ const mentorPage = () => {
           >
             <JobDistribution />
           </Box>
-        </Paper>
+        </FrontMentorBox>
 
-        <Paper
-          sx={{
-            width: { xs: "100%", md: "40%" },
-            overflow: "hidden",
-            borderRadius: "0.5rem",
-            marginBottom: { xs: "2rem", md: 0 },
-            elevation: 0,
-            boxShadow: {
-              xs: "none",
-              md: "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
-            },
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <Typography
-            sx={{
-              backgroundColor: { xs: "#FFF", md: "#024761" },
-              padding: { xs: "0.4rem 0", md: "0.8rem 2rem" },
-              color: { xs: "#000", md: "#FFF" },
-              fontSize: "1.3rem",
-              fontWeight: { xs: "600", md: "400" },
-              borderBottom: { xs: "1px solid #C4C4C4", md: "none" },
-            }}
-          >
-            Current Job by Education Level
-          </Typography>
-          <Typography
-            sx={{
-              padding: { xs: "0.2rem 0", md: "0.3rem 2rem" },
-              fontSize: "0.8rem",
-            }}
-          >
-            Last updated on April 2023
-          </Typography>
+        <FrontMentorBox>
+          <ChartHeader
+            title="Current Job by Education Level"
+            updated="Last updated on April 2023"
+          />
           <Box
             sx={{
               height: "370px",
@@ -315,7 +188,7 @@ const mentorPage = () => {
           >
             <CurrentJob />
           </Box>
-        </Paper>
+        </FrontMentorBox>
       </Box>
     </>
   );

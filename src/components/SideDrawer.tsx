@@ -24,9 +24,6 @@ interface link {
 }
 
 export default function SideDrawer({ links, width }: Props) {
-  const { supabase } = useSupabase();
-  const router = useRouter();
-
   return (
     <Drawer
       sx={{
