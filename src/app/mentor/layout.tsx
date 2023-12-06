@@ -23,7 +23,7 @@ import EventIcon from "@mui/icons-material/EventNote";
 import JobsIcon from "@mui/icons-material/BusinessCenter";
 import SupportIcon from "@mui/icons-material/SpeakerNotes";
 import MeetingIcon from "@mui/icons-material/PermContactCalendar";
-import NotificationActiveIcon from "@mui/icons-material/NotificationsActive";
+//import NotificationActiveIcon from "@mui/icons-material/NotificationsActive";
 import NotificationIcon from "@mui/icons-material/Notifications";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Footer from "@/components/Footer";
@@ -44,7 +44,12 @@ export default async function MentorLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getUser();
+  const cookieStore = cookies();
+  const supabase = createClient();
+  const DRAWER_WIDTH = 220;
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!user) {
     redirect("/");
@@ -55,8 +60,6 @@ export default async function MentorLayout({
   if (userRole !== "mentor") {
     return notFound();
   }
-
-  const DRAWER_WIDTH = 220;
 
   return (
     <>
@@ -190,8 +193,8 @@ export default async function MentorLayout({
         sx={{
           flexGrow: 1,
           bgcolor: "#FFF",
-          ml: { xs: 0, md: `${DRAWER_WIDTH}px` },
-          mt: ["48px", "56px", "64px"],
+          ml: { xs: 0, md: '300px' },
+          mt: ["60px", "80px", "100px"],
           p: 3,
         }}
       >
