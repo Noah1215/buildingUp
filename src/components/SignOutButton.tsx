@@ -17,11 +17,13 @@ export default function SignOutButton() {
 
   return (
     <Button onClick={handleSignOut}>
-      <LogoutIcon sx={{ color: "#024761", fontSize: "2rem" }} />
+      <LogoutIcon
+        sx={{ color: "#024761", fontSize: "2rem", marginRight: "0.5rem" }}
+      />
       <Typography
         variant="h6"
         color="#024761"
-        sx={{ fontSize: "1.1rem", whiteSpace: "nowrap" }}
+        sx={{ fontSize: "1rem", whiteSpace: "nowrap" }}
       >
         Log Out
       </Typography>
