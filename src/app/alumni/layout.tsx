@@ -58,7 +58,8 @@ export default async function Layout({
           flexGrow: 1,
           bgcolor: "#FFF",
           ml: { xs: 0, md: `${DRAWER_WIDTH}px` },
-          mt: ["48px", "56px", "64px"],
+          mt: "64px",
+          mb: { xs: "80px", md: 0 },
           p: 3,
         }}
       >

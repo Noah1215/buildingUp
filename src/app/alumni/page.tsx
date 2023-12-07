@@ -1,31 +1,48 @@
 // Component
-import Board from "@/app/alumni/board";
+import Board from "@/app/alumni/Board";
+import EventTable from "@/app/alumni/EventTable";
+import SupportTable from "@/app/alumni/SupportTable";
+import ChartContainer from "@/app/alumni/ChartContainer";
+import JobDistribution from "@/recharts/JobDistribution";
+import CurrentJob from "@/recharts/CurrentJob";
 // MUI
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Unstable_Grid2";
-
-// TODO: replace sample data
-const announcements = [
-  { title: "[Workshop] Alumni Workshop", date: "2023-11-28" },
-  { title: "[Party] Trainee Party", date: "2023-10-24" },
-];
-// TODO: replace sample data
-const Schedule = [
-  { title: "Mentor 1", date: "2023-11-23" },
-  { title: "Mentor 2", date: "2023-10-25" },
-];
+import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 
 export default async function Home() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={5}>
-        <Grid xs={12} md={6}>
-          <Board title={"Announcement"} data={announcements} />
-        </Grid>
-        <Grid xs={12} md={6}>
-          <Board title={"Schedule"} data={Schedule} />
-        </Grid>
+    <Grid
+      container
+      spacing={4}
+      sx={{
+        padding: {
+          md: 6,
+        },
+      }}
+    >
+      <Grid xs={12} md={6} order={1}>
+        <Board title={"Upcoming Events"}>
+          <EventTable />
+        </Board>
       </Grid>
-    </Box>
+      <Grid xs={12} md={6} order={2}>
+        <Board title={"Support Status"}>
+          <SupportTable />
+        </Board>
+      </Grid>
+      <Grid xs={12} md={6} order={3}>
+        <Board title={"Current Job Distribution"}>
+          <ChartContainer updatedAt={"April 2023"}>
+            <JobDistribution />
+          </ChartContainer>
+        </Board>
+      </Grid>
+      <Grid xs={12} md={6} order={4}>
+        <Board title={"Current Job By Education Level"}>
+          <ChartContainer updatedAt={"April 2023"}>
+            <CurrentJob />
+          </ChartContainer>
+        </Board>
+      </Grid>
+    </Grid>
   );
 }
