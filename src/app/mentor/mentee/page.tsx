@@ -1,195 +1,135 @@
-import React from "react";
+'use client'
+import { createClient } from "@/lib/supabase/client";
 
-import Typography from "@mui/material/Typography/Typography";
+import React, { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Tooltip from "@mui/material/Tooltip";
-import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 
-import SearchIcon from "@mui/icons-material/Search";
-import EmailIcon from "@mui/icons-material/Email";
-import FilterListIcon from "@mui/icons-material/FilterList";
+import Details from "@/components/List/details";
+import CardList from "@/components/List/cardList";
+import ListHeader from "@/components/List/listHeader";
+
+const supabase = createClient();
 
 const Mentee = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [highlightedCard, setHighlightedCard] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [menteeData, setMenteeData] = useState(null);
+  const [filteredMenteeData, setFilteredMenteeData] = useState(null);
+  const [sortBy, setSortBy] = useState(""); 
+  const [jobFilter, setJobFilter] = useState(""); 
+
+  const handleFilterClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleFilterClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleCardClick = (menteeId) => {
+    setHighlightedCard((prev) => (prev === menteeId ? null : menteeId));
+  };
+  
+  const handleSortBy = (criteria) => {
+    setSortBy(criteria);
+  };
+
+  const handleJobFilterChange = (event) => {
+    setJobFilter(event.target.value);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await supabase.from('mentees').select('email,phone,name,joined_at,current_trade,current_employer,current_wage,last_wage,raise,cohort,notes');
+      if (error) {
+        console.error('Error fetching data:', error.message);
+      } else {
+        setMenteeData(data);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredMenteeData(menteeData);
+    } else {
+      const filteredMentees = menteeData.filter((mentee) =>
+        mentee.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredMenteeData(filteredMentees);
+    }
+  }, [searchQuery, menteeData]); 
+
+  useEffect(() => {
+    const dataToFilter = Array.isArray(menteeData) ? menteeData : [];
+
+    let filteredMentees = dataToFilter;
+
+    // based on search query
+    if (searchQuery.trim() !== "") {
+      filteredMentees = filteredMentees.filter((mentee) =>
+        mentee.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    if (jobFilter) {
+      filteredMentees = filteredMentees.filter(
+        (mentee) => mentee.current_trade.toLowerCase() === jobFilter.toLowerCase()
+      );
+    }    
+
+    if (sortBy === "Name") {
+      filteredMentees.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === "Cohort") {
+      filteredMentees.sort((a, b) => {
+        const getNum = (cohort) => parseInt(cohort.replace(/\D/g, ''), 10);
+        const num1 = getNum(a.cohort);
+        const num2 = getNum(b.cohort);
+
+        return num1 - num2;
+      });
+    }
+    setFilteredMenteeData(filteredMentees);
+  }, [searchQuery, menteeData, jobFilter, sortBy]);
+  
+  
   return (
     <Container maxWidth="lg">
-      <Grid container spacing={3}>
-        <Grid item xs={12} lg={4}>
-          <Typography variant="h5" fontWeight="bold" align="left" style={{marginTop:"8px"}}>
-            Mentee List
-          </Typography>
-          <Typography variant="subtitle1" align="left">
-            Total: XX
-          </Typography>
-        </Grid>
-        <Grid item xs={12} lg={8}>
-          <Grid container alignItems="center">
-            <Typography variant="h6" fontWeight="bold" align="left" style={{ marginRight: "8px", marginTop: "10px" }}>
-              Noah Park
-            </Typography>
-            <Tooltip title="Send a message">
-              <EmailIcon />
-            </Tooltip>
-          </Grid>
-          <Typography variant="subtitle1" fontWeight="bold" align="left" color="#0263E0" style={{ marginTop: "10px", marginBottom: "8px" }}>
-            Details
-          </Typography>
-          <Divider />
+      <Grid container spacing={3} >
+        {/* Mentee List */}
+        <Grid item xs={12} lg={4} style={{overflow:'hidden'}}>
+          <ListHeader
+              totalMentees={menteeData ? menteeData.length : 0}
+              handleFilterClick={handleFilterClick}
+              handleFilterClose={handleFilterClose}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              handleSortBy={handleSortBy}
+              handleJobFilterChange={handleJobFilterChange}
+              jobFilter={jobFilter}
+              anchorEl={anchorEl}
+            /> 
 
-          {/* Personal info table */}
-          <Typography variant="h6" fontWeight="bold" align="left" style={{ marginTop: "20px" }}>
-            Personal Information
-          </Typography>
-
-          <TableContainer  style={{ marginLeft: "-15px", marginTop: "8px", border: 'none', backgroundColor: 'transparent' }}>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell style={{ border: 'none' }}>
-                    <Typography variant="subtitle2" >
-                      First Name
-                    </Typography>
-                    <Typography variant="body1">
-                      Noah
-                    </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: 'none' }}>
-                    <Typography variant="subtitle2" >
-                      Middle Name
-                    </Typography>
-                    <Typography variant="body1">
-                      -
-                    </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: 'none' }}>
-                    <Typography variant="subtitle2" >
-                      Last Name
-                    </Typography>
-                    <Typography variant="body1">
-                      Park
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell style={{ border: 'none' }}>
-                    <Typography variant="subtitle2" >
-                      Phone Number
-                    </Typography>
-                    <Typography variant="body1">
-                      123-456-7890
-                    </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: 'none' }}>
-                    <Typography variant="subtitle2" >
-                      Email
-                    </Typography>
-                    <Typography variant="body1">
-                      example@gmail.com
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-
-          {/* Work Status */}
-          <Typography variant="h6" fontWeight="bold" align="left" style={{ marginTop: "20px" }}>
-            Work Status
-          </Typography>
-
-          <TableContainer  style={{ marginLeft: "-15px", marginTop: "8px", border: 'none', backgroundColor: 'transparent' }}>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell style={{ border: 'none' }}>
-                    <Typography variant="subtitle2" >
-                      Job
-                    </Typography>
-                    <Typography variant="body1">
-                      Truck Driver
-                    </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: 'none' }}>
-                    <Typography variant="subtitle2" >
-                      Union
-                    </Typography>
-                    <Typography variant="body1">
-                      Local 95
-                    </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: 'none' }}>
-                    <Typography variant="subtitle2" >
-                      Employer
-                    </Typography>
-                    <Typography variant="body1">
-                      Sienna Electrician
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell style={{ border: 'none' }}>
-                    <Typography variant="subtitle2" >
-                      Current Wage
-                    </Typography>
-                    <Typography variant="body1">
-                      $27.50
-                    </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: 'none' }}>
-                    <Typography variant="subtitle2" >
-                      Initial Wage
-                    </Typography>
-                    <Typography variant="body1">
-                      $25.00
-                    </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: 'none' }}>
-                    <Typography variant="subtitle2" >
-                      Wage Raise
-                    </Typography>
-                    <Typography variant="body1">
-                      $2.50
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-
-          {/* Notes */}
-          <Typography variant="h6" fontWeight="bold" align="left" style={{ marginTop: "20px" }}>
-            Notes
-          </Typography>
-          <Paper elevation={0} style={{ padding: "10px", borderRadius: "10px", backgroundColor: "#EBF4FF", marginTop: "8px" }}>
-            <Typography variant="subtitle2" fontWeight="bold" align="left" >
-              Memo
-            </Typography>
-          </Paper>
-
-        </Grid>
-
-        <Grid item xs={12}>
-          <TextField
-            label="Search"
-            variant="outlined"
-            size="small"
-            style={{ marginTop: "-550px", marginBottom: "16px" }}
-            InputProps={{
-              startAdornment: <SearchIcon />,
-              endAdornment: <FilterListIcon />,
-            }}
+            {/* List of Mentees Cards */}
+            <CardList
+            mentees={filteredMenteeData}
+            highlightedCard={highlightedCard}
+            handleCardClick={handleCardClick}
           />
-        <Grid item xs={12} container spacing={2}>
-        </Grid>          
+        </Grid> 
+      
+        <Divider orientation="vertical" style={{ height: "800px", margin: "0 10px",}} />
+
+        {/* Details */}
+        <Grid item xs={12} lg={7}>
+          <Details menteeData={menteeData} selectedMentee={highlightedCard}/>
         </Grid>
       </Grid>
+
     </Container>
   );
 };
