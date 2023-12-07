@@ -66,7 +66,7 @@ export default function Header({ userName }: Props) {
             <Typography
               variant="h6"
               color="#024761"
-              sx={{ fontSize: { xs: "0.9rem", md: "1.1rem" } }}
+              sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
             >
               Welcome, {userName}
             </Typography>
