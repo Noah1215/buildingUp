@@ -1,7 +1,8 @@
 //React
 import React from "react";
 //Component
-import Board from "@/app/alumni/board";
+import Board from "@/app/alumni/Board";
+import EventTable from "@/app/alumni/EventTable";
 import JobDistribution from "@/components/Recharts/JobDistribution";
 import WageDistribution from "@/components/Recharts/WageDistribution";
 import AverageWage from "@/components/Recharts/AverageWage";
@@ -168,7 +169,9 @@ export default async function Home() {
         </Grid>
 
         <Grid xs={12} md={5}>
-          <Board title={"Upcoming Events"} data={announcements} />
+          <Board title={"Upcoming Events"}>
+            <EventTable />
+          </Board>
         </Grid>
       </Grid>
     </Box>
