@@ -1,6 +1,7 @@
 "use client";
-
+//React
 import React from "react";
+//Recharts
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
 
 type JobData = {
@@ -20,8 +21,8 @@ const data: JobData[] = [
 const JobDistribution = () => {
   return (
     <ResponsiveContainer
-      width="80%"
-      height="100%"
+      width="95%"
+      height="95%"
       style={{ position: "relative" }}
     >
       <PieChart>
@@ -44,7 +45,7 @@ const JobDistribution = () => {
           wrapperStyle={{
             position: "absolute",
             bottom: "25px",
-            fontSize: "0.8rem"
+            fontSize: "0.6rem"
           }}
           iconType="circle"
           formatter={(value) => (

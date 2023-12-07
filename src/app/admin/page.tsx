@@ -1,9 +1,10 @@
+//React
 import React from "react";
 //Component
 import Board from "@/app/alumni/board";
-import JobDistribution from "@/recharts/JobDistribution";
-import WageDistribution from "@/recharts/WageDistribution";
-import AverageWage from "@/recharts/AverageWage";
+import JobDistribution from "@/components/Recharts/JobDistribution";
+import WageDistribution from "@/components/Recharts/WageDistribution";
+import AverageWage from "@/components/Recharts/AverageWage";
 //MUI
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography/Typography";
@@ -106,7 +107,7 @@ export default async function Home() {
                   </Typography>
                   <Box
                     sx={{
-                      height: "370px",
+                      height: "330px",
                       display: "flex",
                       justifyContent: "center",
                     }}
@@ -153,7 +154,7 @@ export default async function Home() {
                   </Typography>
                   <Box
                     sx={{
-                      height: "370px",
+                      height: "330px",
                       display: "flex",
                       justifyContent: "center",
                     }}

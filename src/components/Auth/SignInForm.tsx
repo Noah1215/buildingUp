@@ -1,12 +1,14 @@
 "use client";
 
+//React
 import React from "react";
 import { useState } from "react";
-
+//Next
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+//Supabase
 import { createClient } from "@/lib/supabase/client";
-
+//MUI
 import Box from "@mui/material/Box/Box";
 import Button from "@mui/material/Button/Button";
 import Checkbox from "@mui/material/Checkbox/Checkbox";
@@ -59,7 +61,7 @@ const SignInForm = (props: { device: Status }) => {
       setSnackbarOpen(true);
       //alert(error);
       setTimeout(() => {
-        router.push("/error");
+        router.push("/");
       }, 3000);
     } else {
       const { data } = await supabase

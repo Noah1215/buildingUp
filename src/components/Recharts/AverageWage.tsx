@@ -1,6 +1,7 @@
 "use client";
-
+//React
 import React from "react";
+//Recharts
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from "recharts";
 
 type AverageWageData = {
@@ -14,94 +15,55 @@ type AverageWageData = {
 const data: AverageWageData[] = [
   {
     name: "W1",
-    Level0: 14,
-    Level1: 15,
-    Level2: 18,
-    Level3: 22
+    Level0: 14,    Level1: 15,    Level2: 18,    Level3: 22
   },
   {
     name: "W5",
-    Level0: 15,
-    Level1: 16,
-    Level2: 20,
-    Level3: 24
+    Level0: 15,    Level1: 16,    Level2: 20,    Level3: 24
   },
   {
     name: "W9",
-    Level0: 15,
-    Level1: 20,
-    Level2: 21,
-    Level3: 25
+    Level0: 15,    Level1: 20,    Level2: 21,    Level3: 25
   },
   {
     name: "W13",
-    Level0: 18,
-    Level1: 20,
-    Level2: 23,
-    Level3: 27
+    Level0: 18,    Level1: 20,    Level2: 23,    Level3: 27
   },
   {
     name: "W17",
-    Level0: 19,
-    Level1: 20,
-    Level2: 19,
-    Level3: 29
+    Level0: 19,    Level1: 20,    Level2: 19,    Level3: 29
   },
   {
     name: "W21",
-    Level0: 20,
-    Level1: 22,
-    Level2: 25,
-    Level3: 30
+    Level0: 20,    Level1: 22,    Level2: 25,    Level3: 30
   },
   {
     name: "W25",
-    Level0: 21,
-    Level1: 25,
-    Level2: 26,
-    Level3: 32
+    Level0: 21,    Level1: 25,    Level2: 26,    Level3: 32
   },
   {
     name: "W29",
-    Level0: 23,
-    Level1: 28,
-    Level2: 29,
-    Level3: 31
+    Level0: 23,    Level1: 28,    Level2: 29,    Level3: 31
   },
   {
     name: "W33",
-    Level0: 25,
-    Level1: 30,
-    Level2: 32,
-    Level3: 34
+    Level0: 25,    Level1: 30,    Level2: 32,    Level3: 34
   },
   {
     name: "W37",
-    Level0: 27,
-    Level1: 30,
-    Level2: 32,
-    Level3: 37
+    Level0: 27,    Level1: 30,    Level2: 32,    Level3: 37
   },
   {
     name: "W41",
-    Level0: 30,
-    Level1: 28,
-    Level2: 30,
-    Level3: 38
+    Level0: 30,    Level1: 28,    Level2: 30,    Level3: 38
   },
   {
     name: "W45",
-    Level0: 31,
-    Level1: 30,
-    Level2: 33,
-    Level3: 40
+    Level0: 31,    Level1: 30,    Level2: 33,    Level3: 40
   },
   {
     name: "W49",
-    Level0: 33,
-    Level1: 32,
-    Level2: 33,
-    Level3: 42
+    Level0: 33,    Level1: 32,    Level2: 33,    Level3: 42
   }
 ];
 

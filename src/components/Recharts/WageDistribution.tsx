@@ -1,6 +1,7 @@
 "use client";
-
+//React
 import React from "react";
+//Recharts
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
 
 type WageData = {
@@ -20,8 +21,8 @@ const data: WageData[] = [
 const WageDistribution = () => {
   return (
     <ResponsiveContainer
-      width="80%"
-      height="100%"
+      width="95%"
+      height="95%"
       style={{ position: "relative" }}
     >
       <PieChart>
@@ -39,19 +40,18 @@ const WageDistribution = () => {
           ))}
         </Pie>
         <Legend
-          align="left"
+          align="center"
           verticalAlign="bottom"
           wrapperStyle={{
             position: "absolute",
             bottom: "25px",
-            left: "5px",
-            fontSize: "0.8rem"
+            //left: "5px",
+            fontSize: "0.6rem"
           }}
           iconType="circle"
           formatter={(value) => (
             <span style={{ color: "#024761" }}>{value}</span>
           )}
-
         />
       </PieChart>
     </ResponsiveContainer>
