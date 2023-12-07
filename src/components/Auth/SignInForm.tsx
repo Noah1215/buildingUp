@@ -8,7 +8,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 //Supabase
 import { createClient } from "@/lib/supabase/client";
-//MUI
+import { getUser, getUserRole } from "@/app/supabase-client";
+
 import Box from "@mui/material/Box/Box";
 import Button from "@mui/material/Button/Button";
 import Checkbox from "@mui/material/Checkbox/Checkbox";
@@ -28,6 +29,7 @@ const SignInForm = (props: { device: Status }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const supabase = createClient();
   const router = useRouter();
 
   const handleClickShowPassword = () => {
@@ -37,7 +39,7 @@ const SignInForm = (props: { device: Status }) => {
   const handleMouseDownPassword = (
     event:
       | React.MouseEvent<HTMLButtonElement>
-      | React.MouseEvent<HTMLDivElement>
+      | React.MouseEvent<HTMLDivElement>,
   ) => {
     event.preventDefault();
   };
