@@ -16,7 +16,6 @@ export default function Board({
       sx={{
         overflow: "hidden",
         borderRadius: "0.5rem",
-        marginBottom: { xs: "2rem", md: 0 },
         elevation: 0,
         boxShadow: {
           xs: "none",
