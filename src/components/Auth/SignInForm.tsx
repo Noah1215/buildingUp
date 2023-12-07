@@ -1,10 +1,12 @@
 "use client";
 
+//React
 import React from "react";
 import { useState } from "react";
-
+//Next
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+//Supabase
 import { createClient } from "@/lib/supabase/client";
 import { getUser, getUserRole } from "@/app/supabase-client";
 
@@ -18,6 +20,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
+import { Alert, Snackbar } from "@mui/material";
 
 type Status = "Mobile" | "Desktop";
 
@@ -41,24 +44,87 @@ const SignInForm = (props: { device: Status }) => {
     event.preventDefault();
   };
 
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+
   const handleSignIn = async () => {
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-      if (error) {
-        console.log(error);
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (error) {
+      setSnackbarMessage(error.message);
+      setSnackbarOpen(true);
+      //alert(error);
+      setTimeout(() => {
+        router.push("/");
+      }, 3000);
+    } else {
+      const { data } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user?.id)
+        .single();
+      const userRole = data?.role;
+
+      if (userRole === "admin") {
+        router.push("/admin");
+      } else if (userRole === "mentor") {
+        router.push("/mentor");
+      } else if (userRole === "alumni") {
+        router.push("/alumni");
+      } else {
+        router.push("/error");
       }
-
-      const userRole = await getUserRole();
-      router.push(`/${userRole}`);
-    } catch (error) {
-      console.error(error);
-      router.push("/error");
     }
   };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  }
+
+  const handleFormSubmit = (e:any) => {
+    e.preventDefault();
+    handleSignIn();
+  }
+
+  const handleKeyPress = (e:any) => {
+    if( e.key === 'Enter' ) {
+      handleSignIn();
+    }
+  }
+
+  const onEmailHandler = (e:any) => {
+    setEmail(e.target.value);
+  }
+  const onPasswordHandler = (e:any) => {
+    setPassword(e.target.value);
+  }
+
+  const EmailValidation = () => {
+    let check = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if( email == '' ) {
+      return false;
+    } else{
+      return !(check.test(email));
+    }
+  }
+
+  const PasswordValidation = () => {
+    //let check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    let check = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+    if( password == '' ) {
+      return false;
+    } else {
+      return !(check.test(password));
+    }
+  }
 
   if (props.device === "Mobile") {
     return (
@@ -66,23 +132,30 @@ const SignInForm = (props: { device: Status }) => {
         <TextField
           id="outlined-basic__email"
           label="Email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={ onEmailHandler }
           value={email}
           variant="outlined"
           margin="normal"
           color="warning"
           sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+
+          error={ EmailValidation() }
+          helperText={ EmailValidation() ? "Invalid email format." : "" }
         />
         <TextField
           id="outlined-basic__password"
           label="Password"
           type={showPassword ? "text" : "password"}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={ onPasswordHandler }
           value={password}
           variant="outlined"
           margin="normal"
           color="warning"
           sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+
+          error={ PasswordValidation() }
+          //helperText={ PasswordValidation() ? "Your password must have at least 8 letters, numbers and symbols (such as ! and %)." : ""}
+          helperText={ PasswordValidation() ? "Your password must have at least 8 letters and numbers." : ""}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -124,32 +197,58 @@ const SignInForm = (props: { device: Status }) => {
         >
           Login
         </Button>
+        <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+          <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: "100%" }}>
+            {snackbarMessage}            
+          </Alert>
+        </Snackbar>
       </form>
     );
   }
 
   return (
-    <form style={{ display: "flex", flexDirection: "column" }}>
+    <form style={{ display: "flex", flexDirection: "column" }} onSubmit={handleFormSubmit}>
       <TextField
         id="filled-basic__email"
         label="Email"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={ onEmailHandler }
+        onKeyDown={handleKeyPress}
         value={email}
         variant="filled"
         margin="normal"
         color="warning"
         sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+
+        error={ EmailValidation() }
+        helperText={ EmailValidation() ? "Invalid email format." : "" }
+        FormHelperTextProps={{ style: { 
+          color: "orange",
+          backgroundColor: '#024761',
+          margin: 0,
+          paddingLeft: 15
+        }}}
       />
       <TextField
         id="filled-basic__password"
         label="Password"
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={ onPasswordHandler }
+        onKeyDown={handleKeyPress}
         type={showPassword ? "text" : "password"}
         value={password}
         variant="filled"
         margin="normal"
         color="warning"
         sx={{ backgroundColor: "white", borderRadius: "0.2rem" }}
+
+        error={ PasswordValidation() }
+        //helperText={ PasswordValidation() ? "Your password must have at least 8 letters, numbers and symbols (such as ! and %)." : ""}
+        helperText={ PasswordValidation() ? "Your password must have at least 8 letters and numbers." : ""}
+        FormHelperTextProps={{ style: {
+          color: "orange", 
+          backgroundColor: '#024761',
+          margin: 0,
+          paddingLeft: 15
+        }}}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -203,6 +302,16 @@ const SignInForm = (props: { device: Status }) => {
       >
         Login
       </Button>
+      <Snackbar 
+        open={snackbarOpen} 
+        autoHideDuration={10000} 
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: "100%" }}>
+          "Fail Login. Check your ID and Password"           
+        </Alert>
+      </Snackbar>
     </form>
   );
 };

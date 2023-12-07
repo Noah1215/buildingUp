@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import NotificationIcon from "@mui/icons-material/Notifications";
 import AppBar from "@mui/material/AppBar";
 import SignOutButton from "@/components/SignOutButton";
+import { Avatar } from "@mui/material";
 
 interface Props {
   userName: string;
@@ -54,15 +55,16 @@ export default function Header({ userName }: Props) {
               gap: "1rem",
             }}
           >
-            <Box
+            <Avatar
               sx={{
                 height: { xs: "2rem", md: "3rem" },
                 width: { xs: "2rem", md: "3rem" },
                 backgroundColor: "#D9D9D9",
-                borderRadius: { xs: "1rem", md: "1.5rem" },
+                //borderRadius: { xs: "1rem", md: "1.5rem" },
                 marginLeft: "3rem",
-              }}
-            />
+              }}  
+            >                        
+            </Avatar>
             <Typography
               variant="h6"
               color="#024761"
