@@ -1,5 +1,6 @@
-// Details.tsx
-import React, {useEffect} from "react";
+'use client'
+import React from "react";
+
 import Typography from "@mui/material/Typography/Typography";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -10,46 +11,23 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
-//import Tabs from "@mui/material/Tabs";
-//import Tab from "@mui/material/Tab";
-
 import Tooltip from "@mui/material/Tooltip";
+
 import EmailIcon from "@mui/icons-material/Email";
 
-type MenteeDataType = {
-  email: string;
-  phone: string;
-  name: string;
-  joined_at: string;
-  current_trade: string;
-  current_employer: string;
-  current_wage: number;
-  last_wage: number,
-  raise: number;
-  cohort: string;
-  notes: string;
-}
-interface MenteeDetailsProps{
-  menteeData: MenteeDataType|null;
-  selectedMentee:string|null;
-}
+import { filterCard } from "@/components/List/MenteeDataContext";
 
-const Details: React.FC<MenteeDetailsProps> = ({ menteeData, selectedMentee }) => {
+const Details= () => {
+  const {menteeData,highlightedCard} = filterCard();
+
   if (!menteeData) {
     return <div>No mentee data available.</div>;
   }
-  const selectedMenteeData = menteeData.find((mentee) => mentee.name === selectedMentee);
+  const selectedMenteeData = menteeData.find((mentee: { name: string | null; }) => mentee.name === highlightedCard);
 
   if (!selectedMenteeData) {
     return <div>Select a mentee</div>;
   }
-  //console.log(selectedMenteeData);
-  {/* tabs
-  const [tabValue, setTabValue] = React.useState(0);
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
-*/}
 
   let [firstName, middleName, lastName] = selectedMenteeData.name.split(" ");
   if (!lastName){
@@ -59,7 +37,7 @@ const Details: React.FC<MenteeDetailsProps> = ({ menteeData, selectedMentee }) =
 
   return (
     <div>
-      {selectedMentee && selectedMentee === selectedMenteeData.name && (
+      {highlightedCard && highlightedCard === selectedMenteeData.name && (
         <>
           <Grid container alignItems="center">
             <Typography variant="h6" fontWeight="bold" align="left" style={{ marginRight: "8px", marginTop: "10px" }}>
@@ -73,11 +51,6 @@ const Details: React.FC<MenteeDetailsProps> = ({ menteeData, selectedMentee }) =
             Details
           </Typography>
           <Divider />
-          {/*
-          <Tabs value={tabValue} onChange={handleTabChange} indicatorColor="#0263E0" textColor="#0263E0">
-            <Tab label="Details" sx={{ textAlign: "left" }} />
-          </Tabs>
-          */}
           
           {/* Personal info table */}
           <Typography variant="h6" fontWeight="bold" align="left" style={{ marginTop: "20px" }}>
@@ -156,6 +129,7 @@ const Details: React.FC<MenteeDetailsProps> = ({ menteeData, selectedMentee }) =
               </TableBody>
             </Table>
           </TableContainer>
+
           {/* Notes */}
           <Typography variant="h6" fontWeight="bold" align="left" style={{ marginTop: "20px" }}>
             Notes
