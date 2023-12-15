@@ -17,11 +17,11 @@
     "@mui/material": "5.14.13",
     "@reduxjs/toolkit": "1.9.7",
     "@supabase/ssr": "0.0.4",
-    "@supabase/supabase-js": "2.38.2",
+    "@supabase/supabase-js": "^2.38.2",
     "next": "13.5.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "recharts": "^2.10.1"
+    "recharts": "^2.10.3"
   },
   "devDependencies": {
     "@types/node": "20.8.6",
