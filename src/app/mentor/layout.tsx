@@ -46,7 +46,9 @@ export default async function MentorLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = createClient();
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
   const DRAWER_WIDTH = 220;
   const {
     data: { user },
