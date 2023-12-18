@@ -172,7 +172,10 @@ const EventCard = ({ event }: EventDetailProps) => {
           cursor: "pointer",
           color: "#E91A1A",
         }}
-        onClick={handleLikeClick}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleLikeClick();
+        }}
       />
     </Paper>
   );
