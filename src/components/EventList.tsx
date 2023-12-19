@@ -42,6 +42,7 @@ const eventData = [
 const EventList = () => {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
+
   const filteredEventData =
     selectedCategory === "ALL"
       ? eventData
