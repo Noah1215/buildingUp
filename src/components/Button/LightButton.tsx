@@ -1,11 +1,13 @@
+"use client";
+
 import React from "react";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography/Typography";
 type LightButtonProps = {
   content: string;
+  isSelected: boolean;
 };
 
-const LightButton = ({ content }: LightButtonProps) => {
+const LightButton = ({ content, isSelected }: LightButtonProps) => {
   return (
     <>
       <Typography
@@ -15,6 +17,7 @@ const LightButton = ({ content }: LightButtonProps) => {
           border: "1px solid #616480",
           padding: "0.1rem 0.4rem",
           borderRadius: "0.6rem",
+          backgroundColor: isSelected ? "#EBF4FF" : "transparent",
           "&:hover": {
             backgroundColor: "#EBF4FF",
             cursor: "pointer",

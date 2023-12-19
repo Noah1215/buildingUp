@@ -41,13 +41,15 @@ const eventData = [
 
 const EventList = () => {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
   const filteredEventData =
     selectedCategory === "ALL"
       ? eventData
       : eventData.filter((event) => event.category === selectedCategory);
 
-  const handleButtonClick = (category: string) => {
+  const handleButtonClick = (category: string, index: number) => {
     setSelectedCategory(category);
+    setSelectedButtonIndex(index);
   };
 
   return (
@@ -61,18 +63,14 @@ const EventList = () => {
           marginBottom: "1rem",
         }}
       >
-        <div onClick={() => handleButtonClick("ALL")}>
-          <LightButton content="ALL" />
-        </div>
-        <div onClick={() => handleButtonClick("Seminar")}>
-          <LightButton content="Seminar" />
-        </div>
-        <div onClick={() => handleButtonClick("Workshop")}>
-          <LightButton content="Workshop" />
-        </div>
-        <div onClick={() => handleButtonClick("Party")}>
-          <LightButton content="Party" />
-        </div>
+        {["ALL", "Seminar", "Workshop", "Party"].map((category, index) => (
+          <div key={index} onClick={() => handleButtonClick(category, index)}>
+            <LightButton
+              content={category}
+              isSelected={index === selectedButtonIndex}
+            />
+          </div>
+        ))}
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", width: "95%" }}>
         {filteredEventData.map((data, index) => (
