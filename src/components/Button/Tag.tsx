@@ -12,9 +12,8 @@ const Tag = ({ content }: TagProps) => {
       fontWeight="light"
       sx={{
         border: "1px solid #616480",
-        padding: "0.1rem 0.4rem",
+        padding: "0.1rem 1rem",
         borderRadius: "0.6rem",
-        width: "10%",
         textAlign: "center",
       }}
     >

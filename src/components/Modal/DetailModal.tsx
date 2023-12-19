@@ -4,8 +4,19 @@ import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography/Typography";
 import Button from "@mui/material/Button";
 
+//components
+import Tag from "../Button/Tag";
+
 //icon
 import CancelIcon from "@mui/icons-material/Cancel";
+import TagIcon from "@mui/icons-material/CommentBankOutlined";
+import CalendarIcon from "@mui/icons-material/CalendarMonthOutlined";
+import ClockIcon from "@mui/icons-material/AccessTimeOutlined";
+import LocationIcon from "@mui/icons-material/LocationOnOutlined";
+import RegisteredIcon from "@mui/icons-material/AccountBoxOutlined";
+import CategoryIcon from "@mui/icons-material/LayersOutlined";
+import TitleIcon from "@mui/icons-material/Title";
+import DescriptionIcon from "@mui/icons-material/Description";
 
 //type
 import { eventDetail } from "../Card/EventCard";
@@ -80,7 +91,198 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
             />
           </Box>
         </Box>
-        <Box>{title}</Box>
+        <Box sx={{ width: "100%", display: "flex", gap: "4rem" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              marginTop: "2rem",
+            }}
+          >
+            <Box
+              sx={{
+                width: "180px",
+                height: "180px",
+                borderRadius: "90px",
+                backgroundColor: "#D9D9D9",
+                margin: "auto",
+              }}
+            />
+            <Box
+              sx={{ display: "flex", alignItems: "center", marginTop: "2rem" }}
+            >
+              <TagIcon sx={{ fontSize: "19px", marginRight: "0.4rem" }} />
+              <Typography>Tag:</Typography>
+            </Box>
+            <Box sx={{ display: "flex", gap: "0.4rem" }}>
+              <Tag content="#Tag1" />
+              <Tag content="#Tag2" />
+              <Tag content="#Tag3" />
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              width: "70%",
+              display: "flex",
+              flexDirection: "column",
+              gap: "2rem",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "3rem",
+              }}
+            >
+              <div style={{ width: "40%" }}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <TitleIcon
+                    sx={{
+                      fontSize: "19px",
+                      marginRight: "0.2rem",
+                      border: "1px solid #000",
+                      borderRadius: "5px",
+                    }}
+                  />
+                  <Typography sx={{ fontWeight: "light" }}>Title:</Typography>
+                </div>
+                <Typography sx={{ fontWeight: "medium" }}>{title}</Typography>
+              </div>
+              <div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <LocationIcon
+                    sx={{
+                      fontSize: "19px",
+                      marginRight: "0.2rem",
+                    }}
+                  />
+                  <Typography sx={{ fontWeight: "light" }}>
+                    Location:
+                  </Typography>
+                </div>
+                <Typography sx={{ fontWeight: "medium" }}>{address}</Typography>
+              </div>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "3rem",
+              }}
+            >
+              <div style={{ width: "40%" }}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <CategoryIcon
+                    sx={{
+                      fontSize: "19px",
+                      marginRight: "0.2rem",
+                    }}
+                  />
+                  <Typography sx={{ fontWeight: "light" }}>
+                    Category:
+                  </Typography>
+                </div>
+                <Typography sx={{ fontWeight: "medium" }}>
+                  {category}
+                </Typography>
+              </div>
+              <div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <RegisteredIcon
+                    sx={{
+                      fontSize: "19px",
+                      marginRight: "0.2rem",
+                    }}
+                  />
+                  <Typography sx={{ fontWeight: "light" }}>
+                    Participants:
+                  </Typography>
+                </div>
+                <Typography sx={{ fontWeight: "medium" }}>
+                  {registered} people
+                </Typography>
+              </div>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "3rem",
+              }}
+            >
+              <div style={{ width: "40%" }}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <CalendarIcon
+                    sx={{
+                      fontSize: "19px",
+                      marginRight: "0.2rem",
+                    }}
+                  />
+                  <Typography sx={{ fontWeight: "light" }}>
+                    Start Date:
+                  </Typography>
+                </div>
+                <Typography sx={{ fontWeight: "medium" }}>{date}</Typography>
+              </div>
+              <div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <CalendarIcon
+                    sx={{
+                      fontSize: "19px",
+                      marginRight: "0.2rem",
+                    }}
+                  />
+                  <Typography sx={{ fontWeight: "light" }}>
+                    End Date:
+                  </Typography>
+                </div>
+                <Typography sx={{ fontWeight: "medium" }}>{date}</Typography>
+              </div>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "3rem",
+              }}
+            >
+              <div style={{ width: "40%" }}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <ClockIcon
+                    sx={{
+                      fontSize: "19px",
+                      marginRight: "0.2rem",
+                    }}
+                  />
+                  <Typography sx={{ fontWeight: "light" }}>
+                    Start Time:
+                  </Typography>
+                </div>
+                <Typography sx={{ fontWeight: "medium" }}>
+                  {startTime}
+                </Typography>
+              </div>
+              <div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <ClockIcon
+                    sx={{
+                      fontSize: "19px",
+                      marginRight: "0.2rem",
+                    }}
+                  />
+                  <Typography sx={{ fontWeight: "light" }}>
+                    End Time:
+                  </Typography>
+                </div>
+                <Typography sx={{ fontWeight: "medium" }}>{endTime}</Typography>
+              </div>
+            </Box>
+          </Box>
+        </Box>
       </Box>
     </Modal>
   );
