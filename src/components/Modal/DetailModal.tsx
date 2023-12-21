@@ -78,7 +78,11 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
   ];
 
   return (
-    <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+    <Modal
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
+      sx={{ display: { xs: "none", lg: "flex" } }}
+    >
       <Box
         sx={{
           position: "absolute" as "absolute",
@@ -174,7 +178,7 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
               height: "160px",
               backgroundColor: "#EBF4FF",
               borderRadius: "8px",
-              marginTop: "1rem",
+              marginTop: "0.5rem",
             }}
           />
         </Box>

@@ -69,18 +69,18 @@ const EventCard = ({ event }: EventDetailProps) => {
           sx={{
             width: "20%",
             height: "100%",
-            display: "flex",
+            display: { md: "none", lg: "flex" },
             alignItems: "center",
             justifyContent: "center",
           }}
         >
           <Box
             sx={{
-              display: "flex",
+              display: { md: "none", lg: "flex" },
               width: "150px",
               height: "150px",
               backgroundColor: "#D9D9D9",
-              borderRadius: "75px",
+              borderRadius: "50%",
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -90,7 +90,7 @@ const EventCard = ({ event }: EventDetailProps) => {
         </Box>
         <Box
           sx={{
-            width: "80%",
+            width: { md: "100%", lg: "80%" },
             height: "100%",
             display: "flex",
             flexDirection: "column",
@@ -98,10 +98,33 @@ const EventCard = ({ event }: EventDetailProps) => {
             padding: "1rem 3rem 0 1rem",
           }}
         >
-          <Typography variant="h2" fontWeight="bold" fontSize="1.5rem">
-            {title}
-          </Typography>
-          <Box sx={{ display: "flex", gap: "3rem", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Typography variant="h2" fontWeight="bold" fontSize="1.5rem">
+              {title}
+            </Typography>
+            <Typography
+              variant="body1"
+              fontWeight="regular"
+              fontSize="0.7rem"
+              sx={{
+                display: { md: "flex", lg: "none" },
+                alignItems: "center",
+                marginLeft: "1rem",
+              }}
+            >
+              <CalendarIcon
+                sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
+              />
+              {date}
+            </Typography>
+          </div>
+          <Box
+            sx={{
+              display: { md: "none", lg: "flex" },
+              gap: "3rem",
+              alignItems: "center",
+            }}
+          >
             <Typography
               variant="body1"
               fontWeight="regular"
@@ -150,6 +173,7 @@ const EventCard = ({ event }: EventDetailProps) => {
               width: "100%",
               height: "50%",
               borderRadius: "0.8rem",
+              marginBottom: { md: "1.2rem", lg: 0 },
             }}
           >
             <Typography variant="caption" fontWeight="medium">
