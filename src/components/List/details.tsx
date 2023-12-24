@@ -1,5 +1,5 @@
 'use client'
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 import Typography from "@mui/material/Typography/Typography";
 import TableContainer from "@mui/material/TableContainer";
@@ -12,18 +12,35 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import EmailIcon from "@mui/icons-material/Email";
 
 import { filterCard } from "@/components/List/MenteeDataContext";
+import { createClient } from "@/lib/supabase/client";
+
+const supabase = createClient();
+
 
 const Details= () => {
-  const {menteeData,highlightedCard} = filterCard();
+  const {menteeData,setMenteeData,highlightedCard,setShowMobileDetails} = filterCard();
+  const [editNotes, setEditNotes] = useState("");
+
+  const imageUrl = "https://i.namu.wiki/i/9NHi-EtL-5rzONKElVHkAxIPKogIX-sVT5xXluv9q3I6wX5LvzDjau9CC-6KL0PSIXx5jJnn_cQwOoQcn1L0HwAnnCCXxbXRXyIUUjCUOLM3w8Pg4Oi2Gh0oPRgrYQIxCetb4sK8wUg9GQzcll34FA.webp"
+  const isDesktop = useMediaQuery("(min-width: 769px)");
+
+  useEffect(() => {
+    const selectedMentee = menteeData?.find(mentee => mentee.username === highlightedCard);
+    if (selectedMentee) {
+      setEditNotes(selectedMentee.notes || "");
+    }
+  }, [menteeData, highlightedCard]);
 
   if (!menteeData) {
     return <div>No mentee data available.</div>;
   }
-  const selectedMenteeData = menteeData.find((mentee: { name: string | null; }) => mentee.name === highlightedCard);
+  const selectedMenteeData = menteeData.find((mentee: { username: string | null; }) => mentee.username === highlightedCard);
 
   if (!selectedMenteeData) {
     return <div>Select a mentee</div>;
@@ -35,9 +52,23 @@ const Details= () => {
     middleName = '';
   }
 
+  const handleNotesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEditNotes(event.target.value);
+  };
+
+  const saveNotes = async () => {
+    const menteeId = selectedMenteeData.username;
+    const {error} = await supabase.from('mentees').update({notes:editNotes}).eq('username',menteeId);
+    if (error){
+      console.error('Error updating notes:', error.message);
+    }
+    const updatedData = menteeData.map(mentee => mentee.username === menteeId ? {...mentee, notes:editNotes}:mentee);
+    setMenteeData(updatedData);
+  };
+
   return (
     <div>
-      {highlightedCard && highlightedCard === selectedMenteeData.name && (
+      {highlightedCard && highlightedCard === selectedMenteeData.username && (
         <>
           <Grid container alignItems="center">
             <Typography variant="h6" fontWeight="bold" align="left" style={{ marginRight: "8px", marginTop: "10px" }}>
@@ -134,12 +165,29 @@ const Details= () => {
           <Typography variant="h6" fontWeight="bold" align="left" style={{ marginTop: "20px" }}>
             Notes
           </Typography>
-          <Paper elevation={0} style={{ padding: "10px", borderRadius: "10px", backgroundColor: "#EBF4FF", marginTop: "8px" }}>
-            <Typography variant="subtitle2" fontWeight="bold" align="left">
-              Memo
-            </Typography>
-            <TextField multiline rows={2} fullWidth variant="standard" margin="dense" />
-          </Paper>
+          <Grid container direction="column" spacing={2}>
+          <Grid item>
+            <Paper elevation={0} style={{ padding: "10px", borderRadius: "10px", backgroundColor: "#EBF4FF" }}>
+              <Typography variant="subtitle2" fontWeight="bold" align="left">
+                Memo
+              </Typography>
+              <TextField
+                multiline
+                rows={2}
+                fullWidth
+                variant="standard"
+                margin="dense"
+                value={editNotes}
+                onChange={handleNotesChange}
+              />
+            </Paper>
+          </Grid>
+          <Grid item container justifyContent="flex-end">
+            <Button variant="contained" style={{ backgroundColor: '#024761'}} onClick={saveNotes}>
+              Save
+            </Button>
+          </Grid>
+        </Grid>
         </>
     )}
     </div>

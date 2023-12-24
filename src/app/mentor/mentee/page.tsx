@@ -1,29 +1,14 @@
-import React from "react";
+import React from 'react';
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
+import { MenteeDataProvider } from "@/components/List/MenteeDataContext";
+import MenteeContent from '@/components/List/Content';
 
-import ListHeader from "@/components/List/ListHeader";
-import CardList from "@/components/List/CardList";
-import Details from "@/components/List/Details";
-
-import {CardProvider} from "@/components/List/MenteeDataContext";
-
-const Mentee = () => {
+const Mentee: React.FC = () => {
   return (
     <Container maxWidth="lg">
-      <CardProvider>
-        <Grid container spacing={3} >
-          <Grid item xs={12} lg={4} style={{overflow:'hidden'}}>
-            <ListHeader /> 
-              <CardList />
-          </Grid> 
-          <Divider orientation="vertical" style={{ height: "800px", margin: "0 10px",}} />
-          <Grid item xs={12} lg={7}>
-            <Details />
-          </Grid>
-        </Grid>
-      </CardProvider>
+      <MenteeDataProvider>
+        <MenteeContent />
+      </MenteeDataProvider>
     </Container>
   );
 };

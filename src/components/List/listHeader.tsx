@@ -77,7 +77,7 @@ const ListHeader = () => {
         label="Search"
         variant="outlined"
         size="small"
-        style={{ width: "300px", marginTop: "20px", marginBottom: "10px" }}
+        style={{ width: "100%", marginTop: "20px", marginBottom: "10px" }}
         InputProps={{
           startAdornment: <SearchIcon />,
           endAdornment: (
