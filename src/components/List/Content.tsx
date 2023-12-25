@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ListHeader from '@/components/List/ListHeader';
 import CardList from '@/components/List/CardList';
@@ -27,6 +28,8 @@ const MenteeContent: React.FC = () => {
         <ListHeader />
         <CardList />
       </Grid>
+      <Divider orientation="vertical" sx={{ height: "800px", margin: "0 10px", display: { xs: "none", lg: "flex" } }}
+          />
       <Grid item lg={7} sx={{ display: { xs: 'none', lg: 'block' } }}>
         {isDesktop && <Details />}
       </Grid>
