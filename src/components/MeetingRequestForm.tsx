@@ -12,22 +12,34 @@ import MenuItem from "@mui/material/MenuItem";
 // MUI DatePicker
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+
 // MUI TextField
 import TextField from "@mui/material/TextField/TextField";
 
 const DATE_FORMAT = "YYYY-MM-DD";
 
-export default function MeetingRequestForm({
-  searchParamsDate,
-  openTimeBlocks,
-}: {
-  searchParamsDate: string;
-  openTimeBlocks: string[];
-}) {
-  const [date, setDate] = useState<string>(searchParamsDate);
-  const [time, setTime] = useState<string>(openTimeBlocks[0] ?? "none");
+export default function MeetingRequestForm() {
+  const [openTimeBlocks, setOpenTimeBlocks] = useState<string[]>([]);
+  const [date, setDate] = useState<string>(dayjs().format(DATE_FORMAT));
+  const [time, setTime] = useState<string>("none");
   const [description, setDescription] = useState<string>("");
+
+  useEffect(() => {
+    fetch(`/api/alumni/myMentor/openTimeBlocks/${date}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTime(data[0] ?? "none");
+        return setOpenTimeBlocks(data);
+      });
+  }, [date]);
+
+  const printStates = () => {
+    console.log("date: ", date);
+    console.log("time: ", time);
+    console.log("description: ", description);
+    console.log("openTimeBlocks: ", openTimeBlocks);
+  };
 
   return (
     <Grid container spacing={2}>
@@ -42,7 +54,11 @@ export default function MeetingRequestForm({
         p={2}
         justifyContent="flex-end"
       >
-        <Button variant="contained" sx={{ width: { xs: "100%", md: "auto" } }}>
+        <Button
+          variant="contained"
+          sx={{ width: { xs: "100%", md: "auto" } }}
+          onClick={printStates}
+        >
           Request
         </Button>
       </Grid>
@@ -51,7 +67,7 @@ export default function MeetingRequestForm({
           <Typography>Date:</Typography>
         </Grid>
         <Grid xs={12}>
-          <MeetingDatePicker date={date} setDate={setDate} setTime={setTime} />
+          <MeetingDatePicker date={date} setDate={setDate} />
         </Grid>
       </Grid>
       <Grid container xs={12} md={6} spacing={1}>
@@ -80,38 +96,23 @@ export default function MeetingRequestForm({
     </Grid>
   );
 }
-
+1;
 function MeetingDatePicker({
   date,
   setDate,
-  setTime,
 }: {
   date: string;
   setDate: (date: string) => void;
-  setTime: (times: string) => void;
 }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const updateSearchParams = (key: string, value: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set(key, value);
-    router.push(pathname + "?" + params);
-    router.refresh();
-  };
-
   const onDateChange = (value: Dayjs | null) => {
     if (value) {
-      setTime("");
       setDate(value.format(DATE_FORMAT));
-      updateSearchParams("date", value.format(DATE_FORMAT));
     }
   };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker
+      <MobileDatePicker
         slotProps={{ textField: { fullWidth: true } }}
         disablePast={true}
         maxDate={dayjs(date).add(2, "weeks")}
@@ -131,10 +132,6 @@ function MeetingTimePicker({
   time: string;
   setTime: (times: string) => void;
 }) {
-  useEffect(() => {
-    openTimeBlocks.length > 0 ? setTime(openTimeBlocks[0]) : setTime("none");
-  }, [openTimeBlocks]);
-
   const onTimeChange = (e: SelectChangeEvent) => {
     setTime(e.target.value);
   };
@@ -146,14 +143,17 @@ function MeetingTimePicker({
       onChange={onTimeChange}
       disabled={openTimeBlocks.length === 0}
     >
-      <MenuItem value={"none"} sx={{ display: "none" }}>
-        No available times.
-      </MenuItem>
-      {openTimeBlocks.map((time: string) => (
-        <MenuItem value={time} key={time}>
-          {time}
+      {openTimeBlocks.length > 0 ? (
+        openTimeBlocks.map((time: string) => (
+          <MenuItem value={time} key={time}>
+            {time}
+          </MenuItem>
+        ))
+      ) : (
+        <MenuItem value={"none"} sx={{ display: "none" }}>
+          No available times.
         </MenuItem>
-      ))}
+      )}
     </Select>
   );
 }

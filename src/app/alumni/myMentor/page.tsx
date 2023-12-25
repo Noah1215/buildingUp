@@ -12,26 +12,7 @@ import {
   DATE_REGEX,
 } from "@/app/alumni/myMentor/utils";
 
-//export const fetchCache = "force-no-store";
-// export const revalidate = 0; // seconds
-//export const dynamic = "force-dynamic";
-const cacheGetOpenTimeBlocks = cache(getOpenTimeBlocks);
-
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
-  const date = searchParams?.date ?? dayjs().format(DATE_FORMAT);
-
-  const isDateValid = typeof date === "string" && DATE_REGEX.test(date);
-  if (!isDateValid) {
-    notFound(); // wrong date format
-  }
-
-  console.log("date", date);
-  const openTimeBlocks = (await getOpenTimeBlocks(date)) ?? [];
-
+export default async function Page() {
   return (
     <Grid
       container
@@ -49,10 +30,7 @@ export default async function Page({
         <Paper elevation={4}>Mentor info section</Paper>
       </Grid>
       <Grid xs={12} order={3}>
-        <MeetingRequestForm
-          searchParamsDate={date}
-          openTimeBlocks={openTimeBlocks}
-        />
+        <MeetingRequestForm />
       </Grid>
     </Grid>
   );
