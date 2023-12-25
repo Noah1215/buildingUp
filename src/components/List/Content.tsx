@@ -28,8 +28,7 @@ const MenteeContent: React.FC = () => {
         <ListHeader />
         <CardList />
       </Grid>
-      <Divider orientation="vertical" sx={{ height: "800px", margin: "0 10px", display: { xs: "none", lg: "flex" } }}
-          />
+      <Divider orientation="vertical" sx={{ height: "800px", margin: "0 10px", display: { xs: "none", lg: "flex" } }} />
       <Grid item lg={7} sx={{ display: { xs: 'none', lg: 'block' } }}>
         {isDesktop && <Details />}
       </Grid>
