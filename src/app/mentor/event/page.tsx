@@ -10,9 +10,7 @@ const mentorEvent = () => {
       <Typography variant="h5" fontWeight="bold" align="left">
         Event
       </Typography>
-      <Box sx={{ display: { xs: "none", md: "block" } }}>
-        <EventList />
-      </Box>
+      <EventList />
     </>
   );
 };

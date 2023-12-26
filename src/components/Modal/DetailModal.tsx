@@ -21,6 +21,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import { eventDetail } from "../Card/EventCard";
 import ModalHeader from "./ModalHeader";
 import ModalContent from "./ModalContent";
+import MobileContent from "./MobileContent";
 
 type modalContentArr = {
   firstTitle: string;
@@ -78,22 +79,18 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
   ];
 
   return (
-    <Modal
-      open={isOpen}
-      onClose={() => setIsOpen(false)}
-      sx={{ display: { xs: "none", lg: "flex" } }}
-    >
+    <Modal open={isOpen} onClose={() => setIsOpen(false)}>
       <Box
         sx={{
           position: "absolute" as "absolute",
-          top: "50%",
+          top: { xs: "48%", md: "50%" },
           left: "50%",
           transform: "translate(-50%, -50%)",
           bgcolor: "background.paper",
           outline: "none",
-          padding: "3rem 6rem",
-          width: "75%",
-          height: "80%",
+          padding: { xs: "1rem", md: "2rem 6rem" },
+          width: { xs: "340px", md: "75%" },
+          height: { xs: "500px", md: "80%" },
           display: "flex",
           flexDirection: "column",
           borderRadius: "8px",
@@ -105,11 +102,17 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
           setIsOpen={setIsOpen}
         />
 
-        <Box sx={{ width: "100%", display: "flex", gap: "4rem" }}>
+        <Box
+          sx={{
+            width: "100%",
+            display: { xs: "none", md: "flex" },
+            gap: "4rem",
+          }}
+        >
           {/* Left Box including Image and Tag */}
           <Box
             sx={{
-              display: "flex",
+              display: { xs: "none", md: "flex" },
               flexDirection: "column",
               marginTop: "2rem",
             }}
@@ -158,6 +161,9 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
             ))}
           </Box>
         </Box>
+        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <MobileContent event={event} />
+        </Box>
 
         {/*Description  */}
         <Box
@@ -165,15 +171,20 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
             width: "100%",
             display: "flex",
             flexDirection: "column",
-            marginTop: "1rem",
+            marginTop: { xs: "0.7rem", md: "1rem" },
           }}
         >
           <Box sx={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
-            <DescriptionIcon sx={{ fontSize: "19px" }} />
-            <Typography>Description:</Typography>
+            <DescriptionIcon
+              sx={{ fontSize: "19px", display: { xs: "none", md: "flex" } }}
+            />
+            <Typography sx={{ fontSize: { xs: "12px", md: "14px" } }}>
+              DESCRIPTION:
+            </Typography>
           </Box>
           <Box
             sx={{
+              display: { xs: "none", md: "flex" },
               width: "100%",
               height: "160px",
               backgroundColor: "#EBF4FF",

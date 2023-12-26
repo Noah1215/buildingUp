@@ -58,7 +58,7 @@ const EventList = () => {
       <SearchBar />
       <Box
         sx={{
-          display: "flex",
+          display: { xs: "none", md: "flex" },
           gap: "0.2rem",
           marginTop: "0.5rem",
           marginBottom: "1rem",
@@ -73,7 +73,14 @@ const EventList = () => {
           </div>
         ))}
       </Box>
-      <Box sx={{ display: "flex", flexDirection: "column", width: "95%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: { xs: "100%", md: "95%" },
+          marginTop: { xs: "0.5rem", md: 0 },
+        }}
+      >
         {filteredEventData.map((data, index) => (
           <EventCard event={data} key={index} />
         ))}

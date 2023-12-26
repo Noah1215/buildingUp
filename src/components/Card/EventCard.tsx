@@ -51,7 +51,7 @@ const EventCard = ({ event }: EventDetailProps) => {
         elevation={3}
         sx={{
           width: "100%",
-          height: "230px",
+          height: { xs: "180px", md: "230px" },
           borderRadius: "0.8rem",
           display: "flex",
           position: "relative",
@@ -69,7 +69,7 @@ const EventCard = ({ event }: EventDetailProps) => {
           sx={{
             width: "20%",
             height: "100%",
-            display: { md: "none", lg: "flex" },
+            display: { xs: "none", lg: "flex" },
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -90,72 +90,68 @@ const EventCard = ({ event }: EventDetailProps) => {
         </Box>
         <Box
           sx={{
-            width: { md: "100%", lg: "80%" },
+            width: { xs: "100%", lg: "80%" },
             height: "100%",
             display: "flex",
             flexDirection: "column",
-            gap: "0.4rem",
+            gap: "0.3rem",
             padding: "1rem 3rem 0 1rem",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Typography variant="h2" fontWeight="bold" fontSize="1.5rem">
-              {title}
-            </Typography>
-            <Typography
-              variant="body1"
-              fontWeight="regular"
-              fontSize="0.7rem"
-              sx={{
-                display: { md: "flex", lg: "none" },
-                alignItems: "center",
-                marginLeft: "1rem",
-              }}
-            >
-              <CalendarIcon
-                sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
-              />
-              {date}
-            </Typography>
-          </div>
+          <Typography
+            variant="h2"
+            fontWeight="bold"
+            sx={{ fontSize: { xs: "1rem", md: "1.5rem" } }}
+          >
+            {title}
+          </Typography>
           <Box
             sx={{
-              display: { md: "none", lg: "flex" },
-              gap: "3rem",
-              alignItems: "center",
+              display: "flex",
+              gap: { xs: "0.2rem", md: "3rem" },
+              alignItems: { xs: "left", md: "center" },
+              flexDirection: { xs: "column", md: "row" },
             }}
           >
-            <Typography
-              variant="body1"
-              fontWeight="regular"
-              fontSize="0.7rem"
-              sx={{ display: "flex", alignItems: "center" }}
+            <Box
+              sx={{
+                display: "flex",
+                gap: { xs: "1rem", md: "3rem" },
+                alignItems: "center",
+              }}
             >
-              <CalendarIcon
-                sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
-              />
-              {date}
-            </Typography>
-            <Typography
-              variant="body1"
-              fontWeight="regular"
-              fontSize="0.7rem"
-              sx={{ display: "flex", alignItems: "center" }}
-            >
-              <ClockIcon sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }} />
-              {startTime} - {endTime}
-            </Typography>
-            <Typography
-              variant="body1"
-              fontWeight="regular"
-              fontSize="0.7rem"
-              sx={{ display: "flex", alignItems: "center" }}
-            >
-              <LocationIcon
-                sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
-              />
-              {address}
-            </Typography>
+              <Typography
+                variant="body1"
+                fontWeight="regular"
+                fontSize="0.7rem"
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <CalendarIcon
+                  sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
+                />
+                {date}
+              </Typography>
+              <Typography
+                variant="body1"
+                fontWeight="regular"
+                fontSize="0.7rem"
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <ClockIcon sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }} />
+                {startTime} - {endTime}
+              </Typography>
+              <Typography
+                variant="body1"
+                fontWeight="regular"
+                fontSize="0.7rem"
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <LocationIcon
+                  sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
+                />
+                {address}
+              </Typography>
+            </Box>
             <Typography
               variant="body1"
               fontWeight="regular"
@@ -173,14 +169,16 @@ const EventCard = ({ event }: EventDetailProps) => {
               width: "100%",
               height: "50%",
               borderRadius: "0.8rem",
-              marginBottom: { md: "1.2rem", lg: 0 },
             }}
           >
-            <Typography variant="caption" fontWeight="medium">
+            <Typography
+              variant="caption"
+              sx={{ fontWeight: { xs: "regular", md: "medium" } }}
+            >
               Description
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", gap: "1rem" }}>
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: "1rem" }}>
             <Tag content="#Tag1" />
             <Tag content="#Tag2" />
             <Tag content="#Tag3" />
@@ -199,10 +197,10 @@ const EventCard = ({ event }: EventDetailProps) => {
         <LikeComponent
           sx={{
             position: "absolute",
-            top: -85,
-            right: 50,
+            top: { xs: -65, md: -85 },
+            right: { xs: 40, md: 50 },
             height: "100%",
-            width: "2rem",
+            width: { xs: "1.5rem", md: "2rem" },
             cursor: "pointer",
             color: "#E91A1A",
           }}

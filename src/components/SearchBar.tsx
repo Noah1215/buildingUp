@@ -12,12 +12,12 @@ const SearchBar = () => {
       <Box
         sx={{
           display: "flex",
-          width: "320px",
-          height: "40px",
+          width: { xs: "100%", md: "320px" },
+          height: { xs: "30px", md: "40px" },
           alignItems: "center",
           justifyContent: "center",
-          marginTop: "1rem",
-          border: "1px solid #8891AA",
+          marginTop: { xs: "0.5rem", md: "1rem" },
+          border: { xs: "none", md: "1px solid #8891AA" },
           borderRadius: "6px",
           overflow: "hidden",
         }}
@@ -27,7 +27,7 @@ const SearchBar = () => {
             display: "flex",
             height: "100%",
             width: "12.5%",
-            backgroundColor: "#F4F4F6",
+            backgroundColor: { xs: "#EBF4FF", md: "#F4F4F6" },
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -43,6 +43,7 @@ const SearchBar = () => {
               borderRadius: 0,
             },
             "& fieldset": { border: "none" },
+            backgroundColor: { xs: "#EBF4FF", md: "transparent" },
           }}
         />
       </Box>
