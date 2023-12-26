@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import dayjs, { Dayjs } from "dayjs";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
+
 // MUI
 import Grid from "@mui/material/Unstable_Grid2";
 import { Typography } from "@mui/material";
@@ -17,21 +20,23 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 // MUI TextField
 import TextField from "@mui/material/TextField/TextField";
 
-const DATE_FORMAT = "YYYY-MM-DD";
+const TIME_BLOCK_DURATION = 30;
 
 export default function MeetingRequestForm() {
   const [openTimeBlocks, setOpenTimeBlocks] = useState<string[]>([]);
-  const [date, setDate] = useState<string>(dayjs().format(DATE_FORMAT));
+  const [date, setDate] = useState<Dayjs>(dayjs());
   const [time, setTime] = useState<string>("none");
   const [description, setDescription] = useState<string>("");
 
   useEffect(() => {
-    fetch(`/api/alumni/myMentor/openTimeBlocks/${date}`)
+    // TODO: add error handling while fetching data)
+    fetch(`/api/alumni/mentor/time-blocks?date=${date.valueOf()}`)
       .then((response) => response.json())
       .then((data) => {
         setTime(data[0] ?? "none");
         return setOpenTimeBlocks(data);
-      });
+      }),
+      { cache: "no-store" };
   }, [date]);
 
   const printStates = () => {
@@ -39,6 +44,7 @@ export default function MeetingRequestForm() {
     console.log("time: ", time);
     console.log("description: ", description);
     console.log("openTimeBlocks: ", openTimeBlocks);
+    console.log("dayjs()", dayjs().format());
   };
 
   return (
@@ -96,17 +102,17 @@ export default function MeetingRequestForm() {
     </Grid>
   );
 }
-1;
+
 function MeetingDatePicker({
   date,
   setDate,
 }: {
-  date: string;
-  setDate: (date: string) => void;
+  date: Dayjs;
+  setDate: (date: Dayjs) => void;
 }) {
   const onDateChange = (value: Dayjs | null) => {
     if (value) {
-      setDate(value.format(DATE_FORMAT));
+      setDate(value);
     }
   };
 
@@ -115,8 +121,8 @@ function MeetingDatePicker({
       <MobileDatePicker
         slotProps={{ textField: { fullWidth: true } }}
         disablePast={true}
-        maxDate={dayjs(date).add(2, "weeks")}
-        value={dayjs(date)}
+        maxDate={date.add(2, "weeks")}
+        value={date}
         onAccept={(value: Dayjs | null) => onDateChange(value)}
       />
     </LocalizationProvider>
@@ -146,7 +152,11 @@ function MeetingTimePicker({
       {openTimeBlocks.length > 0 ? (
         openTimeBlocks.map((time: string) => (
           <MenuItem value={time} key={time}>
-            {time}
+            {dayjs(time).local().format("hh:mm")} -{" "}
+            {dayjs(time)
+              .add(TIME_BLOCK_DURATION, "minute")
+              .local()
+              .format("hh:mm")}
           </MenuItem>
         ))
       ) : (
