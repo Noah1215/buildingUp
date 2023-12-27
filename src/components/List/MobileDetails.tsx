@@ -16,7 +16,7 @@ import Avatar from "@mui/material/Avatar";
 
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 
-import { filterCard } from "@/components/List/MenteeDataContext";
+import { filterCard } from "@/app/mentor/mentee/MenteeDataContext";
 import { createClient } from "@/lib/supabase/client";
 
 const supabase = createClient();

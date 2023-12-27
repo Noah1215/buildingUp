@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from "@mui/material/Container";
-import { MenteeDataProvider } from "@/components/List/MenteeDataContext";
-import MenteeContent from '@/components/List/Content';
+import { MenteeDataProvider } from "@/app/mentor/mentee/MenteeDataContext";
+import MenteeContent from '@/app/mentor/mentee/MenteeContent';
 
 const Mentee: React.FC = () => {
   return (

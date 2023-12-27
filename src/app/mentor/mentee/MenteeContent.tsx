@@ -7,12 +7,12 @@ import ListHeader from '@/components/List/ListHeader';
 import CardList from '@/components/List/CardList';
 import Details from '@/components/List/Details';
 import MobileDetails from '@/components/List/MobileDetails';
-import { filterCard } from "@/components/List/MenteeDataContext";
+import { filterCard } from "./MenteeDataContext";
 
 const MenteeContent: React.FC = () => {
   const { highlightedCard } = filterCard();
   const [showMobileDetails, setShowMobileDetails] = useState(false);
-  const isDesktop = useMediaQuery('(min-width:769px)');XMLHttpRequest
+  const isDesktop = useMediaQuery('(min-width:769px)');
 
   useEffect(() => {
     if (highlightedCard && !isDesktop) {

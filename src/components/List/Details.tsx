@@ -17,7 +17,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 import EmailIcon from "@mui/icons-material/Email";
 
-import { filterCard } from "@/components/List/MenteeDataContext";
+import { filterCard } from "@/app/mentor/mentee/MenteeDataContext";
 import { createClient } from "@/lib/supabase/client";
 
 const supabase = createClient();

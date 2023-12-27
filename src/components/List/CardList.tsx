@@ -6,7 +6,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { useMediaQuery } from "@mui/material";
 
-import { filterCard } from "@/components/List/MenteeDataContext";
+import { filterCard } from "@/app/mentor/mentee/MenteeDataContext";
 
 const CardList = () => {
   const { filteredMenteeData, highlightedCard, setHighlightedCard} = filterCard();
@@ -17,7 +17,7 @@ const CardList = () => {
   const isDesktop = useMediaQuery("(min-width: 769px)");
 
   return (
-    <div style={{ maxHeight: isDesktop ? "500px":"auto", overflowY: "auto" }}>
+    <div style={{ maxHeight: isDesktop ? "500px":"auto", overflowY: "auto" , marginBottom: isDesktop? "100px":"none"}}>
       {filteredMenteeData &&
         filteredMenteeData.map((mentee) => (
           <Card

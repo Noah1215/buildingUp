@@ -12,7 +12,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import FilterListIcon from "@mui/icons-material/FilterList";
 import SearchIcon from "@mui/icons-material/Search";
 
-import { filterCard, Mentee } from "@/components/List/MenteeDataContext";
+import { filterCard, Mentee } from "@/app/mentor/mentee/MenteeDataContext";
 
 const ListHeader = () => {
   const { menteeData, setFilteredMenteeData } = filterCard();
