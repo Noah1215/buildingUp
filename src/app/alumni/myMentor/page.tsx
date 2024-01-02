@@ -1,16 +1,15 @@
-import { cache } from "react";
-import { notFound } from "next/navigation";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 // MUI
-import Grid from "@mui/material/Unstable_Grid2";
+import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+
 // Components
-import MeetingRequestForm from "@/components/MeetingRequestForm";
-import { Stack, Avatar } from "@mui/material";
-import { WidthFull } from "@mui/icons-material";
+import MeetingRequestForm from "@/components/Meetings/MeetingRequestForm";
+import { Avatar } from "@mui/material";
 
 async function getMentorProfile() {
   const res = await fetch("http://localhost:3000/api/alumni/mentor/profile");
@@ -24,80 +23,111 @@ async function getMentorProfile() {
 
 export default async function Page() {
   const profile = await getMentorProfile();
-  console.log("profile ", profile);
 
   return (
-    <Grid
-      container
-      spacing={4}
+    <Box
+      component="article"
       sx={{
-        margin: {
-          md: 6,
-        },
+        display: "flex",
+        flexDirection: "column",
+        gap: { xs: "1rem", md: "2rem" },
       }}
-      maxWidth={"1200px"}
     >
-      <Grid xs={12} order={1}>
-        My Mentor
-      </Grid>
-      <Grid xs={12} order={2}>
-        <Paper elevation={4}>
-          <Grid
-            container
-            spacing={4}
-            sx={{
-              padding: {
-                md: 6,
-              },
-            }}
-          >
-            <Grid xs={12} md={5}>
-              <Stack
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-                spacing={2}
-              >
-                <Avatar
-                  alt="Avatar"
-                  src={profile.avatar}
-                  sx={{ width: 200, height: 200 }}
-                />
-                <div>{profile.name}</div>
-                <div>{profile.userType}</div>
-              </Stack>
-            </Grid>
-            <Grid xs={12} md={7} container>
-              <Grid xs={12}>
-                <div>About your mentor:</div>
-              </Grid>
-              <Grid xs={12} md={4}>
-                <div>Phone Number:</div>
-                <div>{profile.phone}</div>
-              </Grid>
-              <Grid xs={12} md={4}>
-                <div>Email:</div>
-                <div>{profile.email}</div>
-              </Grid>
-              <Grid xs={12} md={4}>
-                <div>Employer:</div>
-                <div>{profile.employer}</div>
-              </Grid>
-              <Grid xs={12} md={4}>
-                <div>Union:</div>
-                <div>{profile.union}</div>
-              </Grid>
-              <Grid xs={12} md={4}>
-                <div>Mentor period:</div>
-                <div>{dayjs(profile.since).fromNow(true)}</div>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
-      <Grid xs={12} order={3}>
+      {/* title */}
+      <Box component="header">
+        <Typography
+          component={"h1"}
+          sx={{
+            fontSize: { xs: "20px", md: "32px" },
+            fontWeight: 600,
+          }}
+        >
+          My Mentor
+        </Typography>
+      </Box>
+      {/* desktop mentor profile */}
+      <Paper
+        component="section"
+        elevation={4}
+        sx={{ display: { xs: "none", md: "block" }, padding: "2rem" }}
+      >
+        <MentorProfile profile={profile} />
+      </Paper>
+      {/* mobile mentor profile */}
+      <Box component="section" sx={{ display: { xs: "block", md: "none" } }}>
+        <MentorProfile profile={profile} />
+      </Box>
+      {/* meeting request form*/}
+      <Box component="section" sx={{ width: "100%" }}>
         <MeetingRequestForm />
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
+  );
+}
+
+function MentorProfile({ profile }: { profile: any }) {
+  return (
+    <Box sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" } }}>
+      {/* mentor avatar */}
+      <Box sx={{ flexBasis: 0, padding: "0 4em", textAlign: "center" }}>
+        <Avatar
+          alt="Avatar"
+          src={profile.avatar}
+          sx={{
+            margin: "auto",
+            width: { xs: "10rem", md: "18rem" },
+            height: { xs: "10rem", md: "18rem" },
+          }}
+        />
+        <Typography
+          component="h3"
+          sx={{
+            // 19pt, 14pt, light
+            fontSize: { xs: "19px", md: "25px" },
+            fontWeight: 500,
+          }}
+        >
+          {profile.name}
+        </Typography>
+      </Box>
+      {/* mentor bio */}
+      <Box sx={{ display: "flex", flexFlow: "row wrap", flexGrow: 1 }}>
+        <BioItem title={"Phone:"} content={profile.phone} />
+        <BioItem title={"Email:"} content={profile.email} />
+        <BioItem title={"Employer:"} content={profile.employer} />
+        <BioItem title={"Union:"} content={profile.union} />
+        <BioItem
+          title={"Mentor period:"}
+          content={dayjs(profile.since).fromNow(true)}
+        />
+      </Box>
+    </Box>
+  );
+}
+
+function BioItem({ title, content }: { title: string; content: string }) {
+  return (
+    <Box sx={{ minWidth: "50%" }}>
+      <Typography
+        component="p"
+        sx={{
+          // 14pt, 12pt, light
+          fontSize: { xs: "16px", md: "19px" },
+          fontWeight: 300,
+        }}
+      >
+        {title}
+      </Typography>
+      <Typography
+        component="p"
+        // 17pt, 14pt, regular
+        sx={{
+          fontSize: { xs: "19px", md: "23px" },
+          fontWeight: 400,
+        }}
+      >
+        {content}
+      </Typography>
+    </Box>
   );
 }
