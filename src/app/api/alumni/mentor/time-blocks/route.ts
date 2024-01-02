@@ -8,6 +8,7 @@ dayjs.extend(utc);
 // Constants
 const TIME_BLOCK_DURATION = 30;
 
+export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
   try {
     console.log(request.method, request.url);
