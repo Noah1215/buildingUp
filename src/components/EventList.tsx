@@ -42,20 +42,35 @@ const eventData = [
 const EventList = () => {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
+  const [searchText, setSearchText] = useState("");
 
   const filteredEventData =
     selectedCategory === "ALL"
       ? eventData
       : eventData.filter((event) => event.category === selectedCategory);
 
+  const getFilteredData = () => {
+    if (!searchText) {
+      return filteredEventData;
+    }
+
+    return filteredEventData.filter((event) =>
+      event.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+  };
+
   const handleButtonClick = (category: string, index: number) => {
     setSelectedCategory(category);
     setSelectedButtonIndex(index);
   };
 
+  const handleSearch = (searchText: string) => {
+    setSearchText(searchText);
+  };
+
   return (
     <>
-      <SearchBar />
+      <SearchBar onSearch={handleSearch} />
       <Box
         sx={{
           display: { xs: "none", md: "flex" },
@@ -81,7 +96,7 @@ const EventList = () => {
           marginTop: { xs: "0.5rem", md: 0 },
         }}
       >
-        {filteredEventData.map((data, index) => (
+        {getFilteredData().map((data, index) => (
           <EventCard event={data} key={index} />
         ))}
       </Box>

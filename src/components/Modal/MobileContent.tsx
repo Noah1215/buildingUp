@@ -12,7 +12,6 @@ import RegisteredIcon from "@mui/icons-material/AccountBoxOutlined";
 
 //type
 import { eventDetail } from "../Card/EventCard";
-import { register } from "module";
 import Tag from "../Button/Tag";
 
 type MobileContentProps = {
@@ -20,8 +19,7 @@ type MobileContentProps = {
 };
 
 const MobileContent = ({ event }: MobileContentProps) => {
-  const { category, title, date, startTime, endTime, address, registered } =
-    event;
+  const { title, date, startTime, endTime, address, registered } = event;
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
       <Typography

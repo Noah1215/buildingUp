@@ -83,14 +83,14 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
       <Box
         sx={{
           position: "absolute" as "absolute",
-          top: { xs: "48%", md: "50%" },
+          top: { xs: "48%", lg: "50%" },
           left: "50%",
           transform: "translate(-50%, -50%)",
           bgcolor: "background.paper",
           outline: "none",
-          padding: { xs: "1rem", md: "2rem 6rem" },
-          width: { xs: "340px", md: "75%" },
-          height: { xs: "500px", md: "80%" },
+          padding: { xs: "1rem", lg: "2rem 6rem" },
+          width: { xs: "340px", lg: "75%" },
+          height: { xs: "500px", lg: "80%" },
           display: "flex",
           flexDirection: "column",
           borderRadius: "8px",
@@ -105,7 +105,7 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
         <Box
           sx={{
             width: "100%",
-            display: { xs: "none", md: "flex" },
+            display: { xs: "none", lg: "flex" },
             gap: "4rem",
           }}
         >
@@ -161,7 +161,7 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
             ))}
           </Box>
         </Box>
-        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+        <Box sx={{ display: { xs: "flex", lg: "none" } }}>
           <MobileContent event={event} />
         </Box>
 
@@ -176,15 +176,15 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
         >
           <Box sx={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
             <DescriptionIcon
-              sx={{ fontSize: "19px", display: { xs: "none", md: "flex" } }}
+              sx={{ fontSize: "19px", display: { xs: "none", lg: "flex" } }}
             />
-            <Typography sx={{ fontSize: { xs: "12px", md: "14px" } }}>
+            <Typography sx={{ fontSize: { xs: "12px", lg: "14px" } }}>
               DESCRIPTION:
             </Typography>
           </Box>
           <Box
             sx={{
-              display: { xs: "none", md: "flex" },
+              display: { xs: "none", lg: "flex" },
               width: "100%",
               height: "160px",
               backgroundColor: "#EBF4FF",

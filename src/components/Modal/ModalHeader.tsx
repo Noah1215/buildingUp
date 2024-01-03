@@ -16,24 +16,24 @@ const ModalHeader = ({ title, buttonContent, setIsOpen }: modalHeaderProps) => {
     <>
       <Box
         sx={{
-          display: { xs: "flex", md: "none" },
+          display: { xs: "flex", lg: "none" },
           alignItems: "center",
           justifyContent: "space-between",
         }}
       >
         <Button
           sx={{
-            backgroundColor: { xs: "transparent", md: "#024761" },
-            color: { xs: "#024761", md: "#FFF" },
+            backgroundColor: { xs: "transparent", lg: "#024761" },
+            color: { xs: "#024761", lg: "#FFF" },
             transition: "background-color 0.3s ease",
             ":hover": {
               backgroundColor: "#035B7D",
               color: "#FFF",
               cursor: "pointer",
             },
-            padding: { xs: 0, md: "0.3rem 1rem" },
+            padding: { xs: 0, lg: "0.3rem 1rem" },
             fontWeight: "medium",
-            fontSize: { xs: "12px", md: "14px" },
+            fontSize: { xs: "12px", lg: "14px" },
             borderRadius: "8px",
           }}
         >
@@ -48,7 +48,7 @@ const ModalHeader = ({ title, buttonContent, setIsOpen }: modalHeaderProps) => {
       </Box>
       <Box
         sx={{
-          display: { xs: "none", md: "flex" },
+          display: { xs: "none", lg: "flex" },
           justifyContent: "space-between",
           alignItems: "center",
         }}
