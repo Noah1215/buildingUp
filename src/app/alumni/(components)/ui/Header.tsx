@@ -1,25 +1,27 @@
 "use client";
-import Toolbar from "@mui/material/Toolbar";
+// MUI
 import Box from "@mui/material/Box";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
 import Image from "next/image";
+import { Avatar } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import NotificationIcon from "@mui/icons-material/Notifications";
-import AppBar from "@mui/material/AppBar";
-import { useSupabase } from "@/app/supabase-provider";
-import { useRouter } from "next/navigation";
+// Components
 import SignOutButton from "@/components/SignOutButton";
-import { Avatar } from "@mui/material";
 
 interface Props {
   userName: string;
 }
 
 export default function Header({ userName }: Props) {
-  const { supabase } = useSupabase();
-  const router = useRouter();
-
   return (
-    <AppBar position="fixed" sx={{ zIndex: 2000 }}>
+    <AppBar
+      component="header"
+      sx={{
+        width: "100%",
+      }}
+    >
       <Toolbar
         sx={{
           backgroundColor: "background.paper",
@@ -65,15 +67,13 @@ export default function Header({ userName }: Props) {
                 height: { xs: "2rem", md: "3rem" },
                 width: { xs: "2rem", md: "3rem" },
                 backgroundColor: "#D9D9D9",
-                //borderRadius: { xs: "1rem", md: "1.5rem" },
                 marginLeft: "3rem",
-              }}  
-            >                        
-            </Avatar>
+              }}
+            ></Avatar>
             <Typography
               variant="h6"
               color="#024761"
-              sx={{ fontSize: { xs: "0.9rem", md: "1.1rem" } }}
+              sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
             >
               Welcome, {userName}
             </Typography>
