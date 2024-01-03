@@ -5,6 +5,8 @@ import Image from "next/image";
 import Typography from "@mui/material/Typography";
 import NotificationIcon from "@mui/icons-material/Notifications";
 import AppBar from "@mui/material/AppBar";
+import { useSupabase } from "@/app/supabase-provider";
+import { useRouter } from "next/navigation";
 import SignOutButton from "@/components/SignOutButton";
 import { Avatar } from "@mui/material";
 
@@ -13,6 +15,9 @@ interface Props {
 }
 
 export default function Header({ userName }: Props) {
+  const { supabase } = useSupabase();
+  const router = useRouter();
+
   return (
     <AppBar position="fixed" sx={{ zIndex: 2000 }}>
       <Toolbar
@@ -68,7 +73,7 @@ export default function Header({ userName }: Props) {
             <Typography
               variant="h6"
               color="#024761"
-              sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
+              sx={{ fontSize: { xs: "0.9rem", md: "1.1rem" } }}
             >
               Welcome, {userName}
             </Typography>

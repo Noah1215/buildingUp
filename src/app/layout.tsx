@@ -21,9 +21,9 @@ export default function RootLayout({
           margin: 0,
         }}
       >
-        <SupabaseProvider>
-          <ThemeRegistry>{children}</ThemeRegistry>
-        </SupabaseProvider>
+        <ThemeRegistry>
+          <SupabaseProvider>{children}</SupabaseProvider>
+        </ThemeRegistry>
       </body>
     </html>
   );

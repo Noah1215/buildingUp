@@ -1,9 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
-import { cookies } from "next/headers";
 
 export async function getSession() {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   try {
     const {
       data: { session },
@@ -16,8 +14,7 @@ export async function getSession() {
 }
 
 export async function getUser() {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   try {
     const {
       data: { user },
@@ -30,8 +27,7 @@ export async function getUser() {
 }
 
 export async function getUserRole() {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   try {
     const {
       data: { user },
@@ -50,8 +46,7 @@ export async function getUserRole() {
 }
 
 export async function getUserName() {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   try {
     const {
       data: { user },
