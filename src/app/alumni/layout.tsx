@@ -3,42 +3,24 @@ import { getUser, getUserName, getUserRole } from "@/app/supabase-server";
 // Next
 import { redirect, notFound } from "next/navigation";
 // Components
-import Header from "@/components/Header";
-import SideDrawer from "@/components/SideDrawer";
-import Footer from "@/components/Footer";
+import Header from "@/app/alumni/(components)/ui/Header";
+import SideNavigation from "@/app/alumni/(components)/ui/SideNavigation";
+import BottomNavigation from "@/app/alumni/(components)/ui/BottomNavigation";
 // MUI
 import Box from "@mui/material/Box";
-// MUI Icons
-import HomeIcon from "@mui/icons-material/Home";
-import MyPageIcon from "@mui/icons-material/AccountCircle";
-import MenteeIcon from "@mui/icons-material/Groups";
-import EventIcon from "@mui/icons-material/EventNote";
-import JobsIcon from "@mui/icons-material/BusinessCenter";
-import SupportIcon from "@mui/icons-material/SpeakerNotes";
-import MeetingIcon from "@mui/icons-material/PermContactCalendar";
-import MentorListIcon from "@mui/icons-material/PersonAdd";
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
 
-const DRAWER_WIDTH = 220;
-
-const LINKS = [
-  { text: "Home", href: "/alumni", icon: HomeIcon },
-  { text: "My Page", href: "/alumni/myPage", icon: MyPageIcon },
-  { text: "My Mentor", href: "/alumni/myMentor", icon: MenteeIcon },
-  { text: "Event", href: "/alumni/event", icon: EventIcon },
-  { text: "Jobs", href: "/alumni/jobs", icon: JobsIcon },
-  { text: "Support", href: "/alumni/support", icon: SupportIcon },
-  { text: "Meeting", href: "/alumni/meeting", icon: MeetingIcon },
-  { text: "Mentor List", href: "/alumni/mentors", icon: MentorListIcon },
-  { text: "My Union", href: "/alumni/myUnion", icon: JobsIcon },
-];
+const DESKTOP_HEADER_HEIGHT = "64px";
+const MOBILE_HEADER_HEIGHT = "56px";
+const SIDE_NAV_BAR_WIDTH = "220px";
+const BOTTOM_NAV_BAR_HEIGHT = "80px";
 
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  console.log("Layout");
-
   const [userRole, userName] = await Promise.all([
     getUserRole(),
     getUserName(),
@@ -49,23 +31,57 @@ export default async function Layout({
   }
 
   return (
-    <>
-      <Header userName={userName} />
-      <SideDrawer links={LINKS} width={DRAWER_WIDTH} />
+    <Box className="page-wrapper">
       <Box
-        component="main"
+        className="sticky-header-container"
         sx={{
-          flexGrow: 1,
-          bgcolor: "#FFF",
-          ml: { xs: 0, md: `${DRAWER_WIDTH}px` },
-          mt: "64px",
-          mb: { xs: "80px", md: 0 },
-          p: 3,
+          height: { xs: MOBILE_HEADER_HEIGHT, md: DESKTOP_HEADER_HEIGHT },
+          position: "sticky",
+          top: 0,
+          zIndex: 1,
         }}
       >
-        {children}
+        <Header userName={userName} />
       </Box>
-      <Footer />
-    </>
+
+      <Box
+        className="main-wrapper"
+        sx={{
+          display: { sx: "flex", md: "grid" },
+          gridTemplateColumns: {
+            sx: "none",
+            md: `${SIDE_NAV_BAR_WIDTH} auto`,
+          },
+        }}
+      >
+        <Box
+          className="sidebar-container"
+          sx={{
+            width: SIDE_NAV_BAR_WIDTH,
+            minHeight: `calc(100vh - ${DESKTOP_HEADER_HEIGHT})`,
+            position: "sticky",
+            zIndex: 0,
+            display: { xs: "none", md: "block" },
+            boxSizing: "border-box",
+            backgroundColor: "#024761",
+          }}
+        >
+          <SideNavigation />
+        </Box>
+
+        <Container
+          className="main-content"
+          component="main"
+          maxWidth="lg"
+          sx={{ padding: { xs: "1rem", md: "2rem" } }}
+        >
+          {children}
+        </Container>
+      </Box>
+
+      <Box className="sticky-footer-container">
+        <BottomNavigation />
+      </Box>
+    </Box>
   );
 }
