@@ -140,9 +140,9 @@ async function getMentorId() {
     } = await supabase.auth.getUser();
 
     const { data: mentor } = await supabase
-      .from("alumni")
+      .from("alumni_mentor")
       .select("mentor_id")
-      .eq("user_id", user?.id)
+      .eq("alumni_id", user?.id)
       .single()
       .throwOnError();
 
