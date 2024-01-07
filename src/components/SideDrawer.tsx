@@ -1,8 +1,5 @@
 "use client";
-import { useSupabase } from "@/app/supabase-provider";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -24,9 +21,6 @@ interface link {
 }
 
 export default function SideDrawer({ links, width }: Props) {
-  const { supabase } = useSupabase();
-  const router = useRouter();
-
   return (
     <Drawer
       sx={{
