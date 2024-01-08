@@ -39,6 +39,8 @@ const eventData = [
   },
 ];
 
+const popoverContent = ["ALL", "Seminar", "Workshop", "Party"];
+
 const EventList = () => {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
@@ -70,7 +72,11 @@ const EventList = () => {
 
   return (
     <>
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar
+        onSearch={handleSearch}
+        isFilter={false}
+        popoverContent={popoverContent}
+      />
       <Box
         sx={{
           display: { xs: "none", md: "flex" },
