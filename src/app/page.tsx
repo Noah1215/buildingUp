@@ -5,6 +5,7 @@ import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 
 import SignInForm from "@/components/Auth/SignInForm";
+import mainBUimg from "/public/mainBU.png";
 
 export default function Home() {
   return (
@@ -39,13 +40,7 @@ export default function Home() {
         </Box>
         {/* Desktop */}
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <Image
-            src="/img/logo.png"
-            alt="logo"
-            width={324}
-            height={71}
-            priority
-          />
+          <Image src={mainBUimg} alt="logo" width={324} height={71} priority />
         </Box>
       </Box>
       {/*Right Box*/}
