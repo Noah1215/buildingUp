@@ -31,3 +31,20 @@ export async function getUserRole() {
     return null;
   }
 }
+
+export async function getEventsList() {
+  const supabase = createClient();
+
+  try {
+    const { data: events, error } = await supabase.from("events").select("*");
+
+    if (error) {
+      throw error;
+    }
+
+    return events;
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    return null;
+  }
+}

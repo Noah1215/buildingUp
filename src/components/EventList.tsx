@@ -1,10 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 
 import EventCard from "./Card/EventCard";
 import SearchBar from "./SearchBar";
 import LightButton from "./Button/LightButton";
+
+import { getEventsList } from "@/app/supabase-client";
 
 const eventData = [
   {
@@ -45,6 +47,22 @@ const EventList = () => {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
   const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    const fetchEventList = async () => {
+      try {
+        const eventsList = await getEventsList();
+
+        if (eventsList) {
+          console.log(eventsList);
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEventList();
+  }, []);
 
   const filteredEventData =
     selectedCategory === "ALL"
