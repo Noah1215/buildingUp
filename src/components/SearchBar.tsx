@@ -15,9 +15,17 @@ type SearchBarProps = {
   onSearch: (searchText: string) => void;
   isFilter: Boolean;
   popoverContent: string[];
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+  selectedCategory: string;
 };
 
-const SearchBar = ({ onSearch, isFilter, popoverContent }: SearchBarProps) => {
+const SearchBar = ({
+  onSearch,
+  isFilter,
+  popoverContent,
+  setSelectedCategory,
+  selectedCategory,
+}: SearchBarProps) => {
   const [searchText, setSearchText] = useState("");
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -43,8 +51,9 @@ const SearchBar = ({ onSearch, isFilter, popoverContent }: SearchBarProps) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (selectedCategory: string) => {
     setAnchorEl(null);
+    setSelectedCategory(selectedCategory);
   };
 
   const open = Boolean(anchorEl);
@@ -108,7 +117,7 @@ const SearchBar = ({ onSearch, isFilter, popoverContent }: SearchBarProps) => {
                 <IconButton
                   onClick={handleClick}
                   sx={{
-                    display: { xs: "flex", lg: isFilter ? "flex" : "none" },
+                    display: { xs: "flex", md: isFilter ? "flex" : "none" },
                     "&:hover": { backgroundColor: "transparent" },
                   }}
                 >
@@ -123,7 +132,7 @@ const SearchBar = ({ onSearch, isFilter, popoverContent }: SearchBarProps) => {
           id={id}
           open={open}
           anchorEl={anchorEl}
-          onClose={handleClose}
+          onClose={() => handleClose(selectedCategory)}
           anchorOrigin={{
             vertical: "bottom",
             horizontal: "center",
@@ -142,6 +151,7 @@ const SearchBar = ({ onSearch, isFilter, popoverContent }: SearchBarProps) => {
                 "&:hover": { backgroundColor: "#EBF4FF", cursor: "pointer" },
                 fontSize: "14px",
               }}
+              onClick={() => handleClose(content)}
             >
               {content}
             </Typography>

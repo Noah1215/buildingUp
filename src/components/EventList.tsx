@@ -76,6 +76,8 @@ const EventList = () => {
         onSearch={handleSearch}
         isFilter={false}
         popoverContent={popoverContent}
+        setSelectedCategory={setSelectedCategory}
+        selectedCategory={selectedCategory}
       />
       <Box
         sx={{
