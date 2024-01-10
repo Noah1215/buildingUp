@@ -8,38 +8,15 @@ import LightButton from "./Button/LightButton";
 
 import { getEventsList } from "@/app/supabase-client";
 
-const eventData = [
-  {
-    category: "Seminar",
-    title: "Career Consulting Seminar",
-    date: "11/01/2023",
-    startTime: "09:00AM",
-    endTime: "11:00AM",
-    address: "123 ABC, Toronto, ON",
-    registered: 114,
-    color: "#ED6C02",
-  },
-  {
-    category: "Workshop",
-    title: "Alumni Workshop",
-    date: "11/02/2023",
-    startTime: "09:00AM",
-    endTime: "11:00AM",
-    address: "123 ABC, Toronto, ON",
-    registered: 123,
-    color: "#86CD82",
-  },
-  {
-    category: "Party",
-    title: "Dinner Party",
-    date: "11/03/2023",
-    startTime: "09:00PM",
-    endTime: "11:00PM",
-    address: "123 ABC, Toronto, ON",
-    registered: 130,
-    color: "#024761",
-  },
-];
+type EventType = {
+  type: "Seminar" | "Workshop" | "Party";
+  name: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  address: string;
+  description: string;
+};
 
 const popoverContent = ["ALL", "Seminar", "Workshop", "Party"];
 
@@ -47,14 +24,42 @@ const EventList = () => {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
   const [searchText, setSearchText] = useState("");
+  const [events, setEvents] = useState<EventType[]>([]);
 
+  // useEffect(() => {
+  //   const fetchEventList = async () => {
+  //     try {
+  //       const eventsList = await getEventsList();
+
+  //       if (eventsList) {
+  //         setEvents(eventsList);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching events:", error);
+  //     }
+  //   };
+
+  //   fetchEventList();
+  // }, []);
   useEffect(() => {
     const fetchEventList = async () => {
       try {
         const eventsList = await getEventsList();
 
         if (eventsList) {
-          console.log(eventsList);
+          const sortedEvents = eventsList.sort((a, b) => {
+            const dateA = new Date(`${a.date} ${a.startTime}`);
+            const dateB = new Date(`${b.date} ${b.startTime}`);
+            if (dateA.getTime() === dateB.getTime()) {
+              const startTimeA = new Date(`1970-01-01 ${a.startTime}`);
+              const startTimeB = new Date(`1970-01-01 ${b.startTime}`);
+              return startTimeA.getTime() - startTimeB.getTime();
+            }
+
+            return dateA.getTime() - dateB.getTime();
+          });
+
+          setEvents(sortedEvents);
         }
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -66,8 +71,8 @@ const EventList = () => {
 
   const filteredEventData =
     selectedCategory === "ALL"
-      ? eventData
-      : eventData.filter((event) => event.category === selectedCategory);
+      ? events
+      : events.filter((event) => event.type === selectedCategory);
 
   const getFilteredData = () => {
     if (!searchText) {
@@ -75,7 +80,7 @@ const EventList = () => {
     }
 
     return filteredEventData.filter((event) =>
-      event.title.toLowerCase().includes(searchText.toLowerCase())
+      event.name.toLowerCase().includes(searchText.toLowerCase())
     );
   };
 

@@ -19,14 +19,13 @@ import RegisteredIcon from "@mui/icons-material/AccountBoxOutlined";
 import DetailModal from "../Modal/DetailModal";
 
 export type eventDetail = {
-  category: string;
-  title: string;
+  type: "Seminar" | "Workshop" | "Party";
+  name: string;
   date: string;
   startTime: string;
   endTime: string;
   address: string;
-  registered: number;
-  color: string;
+  description: string;
 };
 
 type EventDetailProps = {
@@ -34,10 +33,39 @@ type EventDetailProps = {
   key: number;
 };
 
+const getColorByType = (eventType: string): string => {
+  switch (eventType) {
+    case "Seminar":
+      return "#ED6C02";
+    case "Workshop":
+      return "#86CD82";
+    case "Party":
+      return "#024761";
+    default:
+      return "#000000";
+  }
+};
+
+export const formatTime = (timeString: string): string => {
+  const [hour, minute] = timeString.split(":");
+  let parsedHour = parseInt(hour, 10);
+  const isAfterNoon = parsedHour >= 12;
+  parsedHour = parsedHour === 24 ? 0 : parsedHour;
+
+  return `${String(parsedHour).padStart(2, "0")}:${minute} ${
+    isAfterNoon ? "PM" : "AM"
+  }`;
+};
+
 const EventCard = ({ event }: EventDetailProps) => {
-  const { title, date, startTime, endTime, address, registered, color } = event;
+  // const { title, date, startTime, endTime, address, registered, color } = event;
+  const { type, name, date, startTime, endTime, address, description } = event;
+  const color = getColorByType(type);
   const [liked, setLiked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const formattedStartTime = formatTime(startTime);
+  const formattedEndTime = formatTime(endTime);
 
   const handleLikeClick = () => {
     setLiked((prevLiked) => !prevLiked);
@@ -103,7 +131,7 @@ const EventCard = ({ event }: EventDetailProps) => {
             fontWeight="bold"
             sx={{ fontSize: { xs: "1rem", md: "1.5rem" } }}
           >
-            {title}
+            {name}
           </Typography>
           <Box
             sx={{
@@ -138,7 +166,7 @@ const EventCard = ({ event }: EventDetailProps) => {
                 sx={{ display: "flex", alignItems: "center" }}
               >
                 <ClockIcon sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }} />
-                {startTime} - {endTime}
+                {formattedStartTime} - {formattedEndTime}
               </Typography>
               <Typography
                 variant="body1"
@@ -161,7 +189,7 @@ const EventCard = ({ event }: EventDetailProps) => {
               <RegisteredIcon
                 sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
               />
-              {registered} Registered
+              0 Registered
             </Typography>
           </Box>
           <Box
@@ -169,13 +197,18 @@ const EventCard = ({ event }: EventDetailProps) => {
               width: "100%",
               height: "50%",
               borderRadius: "0.8rem",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
+            <Typography variant="caption" sx={{ fontWeight: "medium" }}>
+              Description
+            </Typography>
             <Typography
               variant="caption"
-              sx={{ fontWeight: { xs: "regular", md: "medium" } }}
+              sx={{ fontWeight: { xs: "regular", md: "light" } }}
             >
-              Description
+              {description}
             </Typography>
           </Box>
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: "1rem" }}>

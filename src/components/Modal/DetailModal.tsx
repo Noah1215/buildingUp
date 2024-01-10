@@ -23,6 +23,9 @@ import ModalHeader from "./ModalHeader";
 import ModalContent from "./ModalContent";
 import MobileContent from "./MobileContent";
 
+//method
+import { formatTime } from "../Card/EventCard";
+
 type modalContentArr = {
   firstTitle: string;
   firstContent: string;
@@ -39,14 +42,16 @@ type modalProps = {
 };
 
 const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
-  const { category, title, date, startTime, endTime, address, registered } =
-    event;
+  const { type, name, date, startTime, endTime, address, description } = event;
+
+  const formattedStart = formatTime(startTime);
+  const formattedEnd = formatTime(endTime);
 
   // modal content array
   const modalContents: modalContentArr[] = [
     {
       firstTitle: "Title:",
-      firstContent: title,
+      firstContent: name,
       secondTitle: "Location:",
       secondContent: address,
       FirstIcon: TitleIcon,
@@ -54,9 +59,9 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
     },
     {
       firstTitle: "Category:",
-      firstContent: category,
+      firstContent: type,
       secondTitle: "Participants:",
-      secondContent: `${registered} people`,
+      secondContent: `0 people`,
       FirstIcon: CategoryIcon,
       SecondIcon: RegisteredIcon,
     },
@@ -70,9 +75,9 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
     },
     {
       firstTitle: "Start Time:",
-      firstContent: startTime,
+      firstContent: formattedStart,
       secondTitle: "End Time:",
-      secondContent: endTime,
+      secondContent: formattedEnd,
       FirstIcon: ClockIcon,
       SecondIcon: ClockIcon,
     },
@@ -97,7 +102,7 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
         }}
       >
         <ModalHeader
-          title={title}
+          title={name}
           buttonContent="Register"
           setIsOpen={setIsOpen}
         />
@@ -178,20 +183,30 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
             <DescriptionIcon
               sx={{ fontSize: "19px", display: { xs: "none", lg: "flex" } }}
             />
-            <Typography sx={{ fontSize: { xs: "12px", lg: "14px" } }}>
+            <Typography
+              sx={{
+                fontSize: { xs: "12px", lg: "14px" },
+                fontWeight: "medium",
+              }}
+            >
               DESCRIPTION:
             </Typography>
           </Box>
           <Box
             sx={{
-              display: { xs: "none", lg: "flex" },
+              display: "flex",
               width: "100%",
               height: "160px",
-              backgroundColor: "#EBF4FF",
+              backgroundColor: { xs: "transparent", lg: "#EBF4FF" },
               borderRadius: "8px",
               marginTop: "0.5rem",
+              padding: { xs: 0, lg: "1rem" },
             }}
-          />
+          >
+            <Typography sx={{ fontSize: { xs: "12px", lg: "14px" } }}>
+              {description}
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </Modal>

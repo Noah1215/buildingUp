@@ -14,18 +14,25 @@ import RegisteredIcon from "@mui/icons-material/AccountBoxOutlined";
 import { eventDetail } from "../Card/EventCard";
 import Tag from "../Button/Tag";
 
+//method
+import { formatTime } from "../Card/EventCard";
+
 type MobileContentProps = {
   event: eventDetail;
 };
 
 const MobileContent = ({ event }: MobileContentProps) => {
-  const { title, date, startTime, endTime, address, registered } = event;
+  const { name, date, startTime, endTime, address, description } = event;
+
+  const formattedStart = formatTime(startTime);
+  const formattedEnd = formatTime(endTime);
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
       <Typography
         sx={{ fontWeight: "medium", fontSize: "14px", marginTop: "1rem" }}
       >
-        {title}
+        {name}
       </Typography>
       <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
         <div
@@ -47,7 +54,7 @@ const MobileContent = ({ event }: MobileContentProps) => {
         >
           <ClockIcon sx={{ fontSize: "14px" }} />
           <Typography sx={{ fontSize: "12px" }}>
-            {startTime}-{endTime}
+            {formattedStart}-{formattedEnd}
           </Typography>
         </div>
       </Box>
@@ -66,9 +73,7 @@ const MobileContent = ({ event }: MobileContentProps) => {
           }}
         >
           <RegisteredIcon sx={{ fontSize: "14px" }} />
-          <Typography sx={{ fontSize: "12px" }}>
-            {registered} registered
-          </Typography>
+          <Typography sx={{ fontSize: "12px" }}>0 registered</Typography>
         </div>
         <div
           style={{
