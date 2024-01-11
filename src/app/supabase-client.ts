@@ -42,9 +42,64 @@ export async function getEventsList() {
       throw error;
     }
 
-    return events;
+    if (events) {
+      const eventsWithParticipants = await Promise.all(
+        events.map(async (event) => {
+          const { data: participants, error: participantsError } =
+            await supabase
+              .from("event_participants")
+              .select("event_id, user_id")
+              .eq("event_id", event.id);
+
+          if (participantsError) {
+            console.error(
+              "Error fetching participants for event:",
+              event.id,
+              participantsError
+            );
+            return { ...event, registeredUsersCount: 0 };
+          }
+
+          return { ...event, registeredUsersCount: participants.length };
+        })
+      );
+
+      return eventsWithParticipants;
+    }
+
+    return null;
   } catch (error) {
     console.error("Error fetching events:", error);
     return null;
+  }
+}
+
+export async function toggleEventRegistration(eventId: string, userId: string) {
+  try {
+    const supabase = createClient();
+
+    const existingRegistration = await supabase
+      .from("event_participants")
+      .select("id")
+      .eq("event_id", eventId)
+      .eq("user_id", userId)
+      .single();
+
+    if (existingRegistration.data) {
+      await supabase
+        .from("event_participants")
+        .delete()
+        .eq("id", existingRegistration.data.id);
+    } else {
+      await supabase.from("event_participants").insert([
+        {
+          event_id: eventId,
+          user_id: userId,
+        },
+      ]);
+    }
+  } catch (error) {
+    console.error("Error toggling event registration:", error);
+    throw error;
   }
 }

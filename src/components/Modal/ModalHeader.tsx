@@ -5,13 +5,32 @@ import Button from "@mui/material/Button";
 
 //icon
 import CancelIcon from "@mui/icons-material/Cancel";
+
+//method
+import { toggleEventRegistration } from "@/app/supabase-client";
+
 type modalHeaderProps = {
   title: string;
-  buttonContent: string;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  eventId: string;
+  userId: string;
 };
 
-const ModalHeader = ({ title, buttonContent, setIsOpen }: modalHeaderProps) => {
+const ModalHeader = ({
+  title,
+  setIsOpen,
+  userId,
+  eventId,
+}: modalHeaderProps) => {
+  const handleRegisterButtonClick = async () => {
+    try {
+      await toggleEventRegistration(eventId, userId);
+      console.log("Event registered successfully!");
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Error registering for event:", error);
+    }
+  };
   return (
     <>
       <Box
@@ -22,6 +41,7 @@ const ModalHeader = ({ title, buttonContent, setIsOpen }: modalHeaderProps) => {
         }}
       >
         <Button
+          onClick={handleRegisterButtonClick}
           sx={{
             backgroundColor: { xs: "transparent", lg: "#024761" },
             color: { xs: "#024761", lg: "#FFF" },
@@ -37,12 +57,12 @@ const ModalHeader = ({ title, buttonContent, setIsOpen }: modalHeaderProps) => {
             borderRadius: "8px",
           }}
         >
-          {buttonContent}
+          Register
         </Button>
         <Typography
           sx={{ marginRight: "2rem", fontWeight: "medium", fontSize: "19px" }}
         >
-          Event Detail
+          {title}
         </Typography>
         <CancelIcon onClick={() => setIsOpen(false)} />
       </Box>
@@ -59,10 +79,11 @@ const ModalHeader = ({ title, buttonContent, setIsOpen }: modalHeaderProps) => {
           fontSize={19}
           sx={{ display: "flex" }}
         >
-          Event Detail
+          {title}
         </Typography>
         <Box sx={{ display: "flex" }}>
           <Button
+            onClick={handleRegisterButtonClick}
             sx={{
               backgroundColor: "#024761",
               color: "#FFF",
@@ -78,7 +99,7 @@ const ModalHeader = ({ title, buttonContent, setIsOpen }: modalHeaderProps) => {
               borderRadius: "9px",
             }}
           >
-            {buttonContent}
+            Register
           </Button>
           <CancelIcon
             onClick={() => setIsOpen(false)}

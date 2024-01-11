@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography/Typography";
@@ -18,13 +18,14 @@ import TitleIcon from "@mui/icons-material/Title";
 import DescriptionIcon from "@mui/icons-material/Description";
 
 //type
-import { eventDetail } from "../Card/EventCard";
+import { EventType } from "@/app/mentor/event/eventType";
 import ModalHeader from "./ModalHeader";
 import ModalContent from "./ModalContent";
 import MobileContent from "./MobileContent";
 
 //method
 import { formatTime } from "../Card/EventCard";
+import { getUser } from "@/app/supabase-client";
 
 type modalContentArr = {
   firstTitle: string;
@@ -36,16 +37,44 @@ type modalContentArr = {
 };
 
 type modalProps = {
-  event: eventDetail;
+  event: EventType;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
-  const { type, name, date, startTime, endTime, address, description } = event;
+  const {
+    id,
+    type,
+    name,
+    date,
+    startTime,
+    endTime,
+    address,
+    description,
+    registeredUsersCount,
+  } = event;
 
   const formattedStart = formatTime(startTime);
   const formattedEnd = formatTime(endTime);
+  const [userId, setUserId] = useState("");
+
+  //getUserId
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const user = await getUser();
+
+        if (user) {
+          setUserId(user.id);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   // modal content array
   const modalContents: modalContentArr[] = [
@@ -61,7 +90,7 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
       firstTitle: "Category:",
       firstContent: type,
       secondTitle: "Participants:",
-      secondContent: `0 people`,
+      secondContent: registeredUsersCount.toString(),
       FirstIcon: CategoryIcon,
       SecondIcon: RegisteredIcon,
     },
@@ -102,8 +131,9 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
         }}
       >
         <ModalHeader
-          title={name}
-          buttonContent="Register"
+          userId={userId}
+          eventId={id}
+          title="Event Detail"
           setIsOpen={setIsOpen}
         />
 

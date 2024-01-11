@@ -8,15 +8,8 @@ import LightButton from "./Button/LightButton";
 
 import { getEventsList } from "@/app/supabase-client";
 
-type EventType = {
-  type: "Seminar" | "Workshop" | "Party";
-  name: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  address: string;
-  description: string;
-};
+//Type
+import { EventType } from "@/app/mentor/event/eventType";
 
 const popoverContent = ["ALL", "Seminar", "Workshop", "Party"];
 
@@ -26,21 +19,6 @@ const EventList = () => {
   const [searchText, setSearchText] = useState("");
   const [events, setEvents] = useState<EventType[]>([]);
 
-  // useEffect(() => {
-  //   const fetchEventList = async () => {
-  //     try {
-  //       const eventsList = await getEventsList();
-
-  //       if (eventsList) {
-  //         setEvents(eventsList);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching events:", error);
-  //     }
-  //   };
-
-  //   fetchEventList();
-  // }, []);
   useEffect(() => {
     const fetchEventList = async () => {
       try {

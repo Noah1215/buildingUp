@@ -18,18 +18,10 @@ import LocationIcon from "@mui/icons-material/LocationOnOutlined";
 import RegisteredIcon from "@mui/icons-material/AccountBoxOutlined";
 import DetailModal from "../Modal/DetailModal";
 
-export type eventDetail = {
-  type: "Seminar" | "Workshop" | "Party";
-  name: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  address: string;
-  description: string;
-};
+import { EventType } from "@/app/mentor/event/eventType";
 
 type EventDetailProps = {
-  event: eventDetail;
+  event: EventType;
   key: number;
 };
 
@@ -59,7 +51,16 @@ export const formatTime = (timeString: string): string => {
 
 const EventCard = ({ event }: EventDetailProps) => {
   // const { title, date, startTime, endTime, address, registered, color } = event;
-  const { type, name, date, startTime, endTime, address, description } = event;
+  const {
+    type,
+    name,
+    date,
+    startTime,
+    endTime,
+    address,
+    description,
+    registeredUsersCount,
+  } = event;
   const color = getColorByType(type);
   const [liked, setLiked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -152,7 +153,11 @@ const EventCard = ({ event }: EventDetailProps) => {
                 variant="body1"
                 fontWeight="regular"
                 fontSize="0.7rem"
-                sx={{ display: "flex", alignItems: "center" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  whiteSpace: "nowrap",
+                }}
               >
                 <CalendarIcon
                   sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
@@ -163,7 +168,11 @@ const EventCard = ({ event }: EventDetailProps) => {
                 variant="body1"
                 fontWeight="regular"
                 fontSize="0.7rem"
-                sx={{ display: "flex", alignItems: "center" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  whiteSpace: "nowrap",
+                }}
               >
                 <ClockIcon sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }} />
                 {formattedStartTime} - {formattedEndTime}
@@ -172,10 +181,17 @@ const EventCard = ({ event }: EventDetailProps) => {
                 variant="body1"
                 fontWeight="regular"
                 fontSize="0.7rem"
-                sx={{ display: "flex", alignItems: "center" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  whiteSpace: "nowrap",
+                }}
               >
                 <LocationIcon
-                  sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
+                  sx={{
+                    fontSize: "1.2rem",
+                    marginRight: "0.2rem",
+                  }}
                 />
                 {address}
               </Typography>
@@ -189,7 +205,7 @@ const EventCard = ({ event }: EventDetailProps) => {
               <RegisteredIcon
                 sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
               />
-              0 Registered
+              {registeredUsersCount} Registered
             </Typography>
           </Box>
           <Box
