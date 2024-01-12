@@ -40,9 +40,15 @@ type modalProps = {
   event: EventType;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  updateEventList: (newEvents: EventType[] | null) => void;
 };
 
-const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
+const DetailModal = ({
+  event,
+  isOpen,
+  setIsOpen,
+  updateEventList,
+}: modalProps) => {
   const {
     id,
     type,
@@ -135,6 +141,7 @@ const DetailModal = ({ event, isOpen, setIsOpen }: modalProps) => {
           eventId={id}
           title="Event Detail"
           setIsOpen={setIsOpen}
+          updateEventList={updateEventList}
         />
 
         <Box

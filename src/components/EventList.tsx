@@ -47,6 +47,16 @@ const EventList = () => {
     fetchEventList();
   }, []);
 
+  const updateEventList = async (newEvents: EventType[] | null) => {
+    try {
+      if (newEvents !== null) {
+        setEvents(newEvents);
+      }
+    } catch (error) {
+      console.error("Error updating event list:", error);
+    }
+  };
+
   const filteredEventData =
     selectedCategory === "ALL"
       ? events
@@ -106,7 +116,11 @@ const EventList = () => {
         }}
       >
         {getFilteredData().map((data, index) => (
-          <EventCard event={data} key={index} />
+          <EventCard
+            event={data}
+            key={index}
+            updateEventList={updateEventList}
+          />
         ))}
       </Box>
     </>

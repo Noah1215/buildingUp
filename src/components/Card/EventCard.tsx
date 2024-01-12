@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 
 import Typography from "@mui/material/Typography/Typography";
 import Box from "@mui/material/Box";
@@ -23,6 +23,7 @@ import { EventType } from "@/app/mentor/event/eventType";
 type EventDetailProps = {
   event: EventType;
   key: number;
+  updateEventList: (newEvents: EventType[] | null) => void;
 };
 
 const getColorByType = (eventType: string): string => {
@@ -49,7 +50,7 @@ export const formatTime = (timeString: string): string => {
   }`;
 };
 
-const EventCard = ({ event }: EventDetailProps) => {
+const EventCard = ({ event, updateEventList }: EventDetailProps) => {
   // const { title, date, startTime, endTime, address, registered, color } = event;
   const {
     type,
@@ -260,7 +261,12 @@ const EventCard = ({ event }: EventDetailProps) => {
         />
       </Paper>
       {isOpen && (
-        <DetailModal event={event} isOpen={isOpen} setIsOpen={setIsOpen} />
+        <DetailModal
+          event={event}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          updateEventList={updateEventList}
+        />
       )}
     </>
   );

@@ -9,11 +9,15 @@ import CancelIcon from "@mui/icons-material/Cancel";
 //method
 import { toggleEventRegistration } from "@/app/supabase-client";
 
+//type
+import { EventType } from "@/app/mentor/event/eventType";
+
 type modalHeaderProps = {
   title: string;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   eventId: string;
   userId: string;
+  updateEventList: (newEvents: EventType[] | null) => void;
 };
 
 const ModalHeader = ({
@@ -21,10 +25,11 @@ const ModalHeader = ({
   setIsOpen,
   userId,
   eventId,
+  updateEventList,
 }: modalHeaderProps) => {
   const handleRegisterButtonClick = async () => {
     try {
-      await toggleEventRegistration(eventId, userId);
+      await toggleEventRegistration(eventId, userId, updateEventList);
       console.log("Event registered successfully!");
       setIsOpen(false);
     } catch (error) {

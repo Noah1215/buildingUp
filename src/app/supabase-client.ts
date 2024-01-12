@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
+import { EventType } from "./mentor/event/eventType";
 
 export async function getUser() {
   const supabase = createClient();
@@ -74,7 +75,11 @@ export async function getEventsList() {
   }
 }
 
-export async function toggleEventRegistration(eventId: string, userId: string) {
+export async function toggleEventRegistration(
+  eventId: string,
+  userId: string,
+  updateEventList: (newEvents: EventType[] | null) => void
+) {
   try {
     const supabase = createClient();
 
@@ -98,6 +103,9 @@ export async function toggleEventRegistration(eventId: string, userId: string) {
         },
       ]);
     }
+
+    const updatedEvents = await getEventsList();
+    updateEventList(updatedEvents);
   } catch (error) {
     console.error("Error toggling event registration:", error);
     throw error;
