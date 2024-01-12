@@ -13,6 +13,26 @@ import { EventType } from "@/app/mentor/event/eventType";
 
 const popoverContent = ["ALL", "Seminar", "Workshop", "Party"];
 
+const sortEvents = (events: EventType[] | null) => {
+  if (events) {
+    const sortedEvents = events.sort((a, b) => {
+      const dateA = new Date(`${a.date} ${a.startTime}`);
+      const dateB = new Date(`${b.date} ${b.startTime}`);
+      if (dateA.getTime() === dateB.getTime()) {
+        const startTimeA = new Date(`1970-01-01 ${a.startTime}`);
+        const startTimeB = new Date(`1970-01-01 ${b.startTime}`);
+        return startTimeA.getTime() - startTimeB.getTime();
+      }
+
+      return dateA.getTime() - dateB.getTime();
+    });
+
+    return sortedEvents;
+  }
+
+  return [];
+};
+
 const EventList = () => {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
@@ -23,22 +43,8 @@ const EventList = () => {
     const fetchEventList = async () => {
       try {
         const eventsList = await getEventsList();
-
-        if (eventsList) {
-          const sortedEvents = eventsList.sort((a, b) => {
-            const dateA = new Date(`${a.date} ${a.startTime}`);
-            const dateB = new Date(`${b.date} ${b.startTime}`);
-            if (dateA.getTime() === dateB.getTime()) {
-              const startTimeA = new Date(`1970-01-01 ${a.startTime}`);
-              const startTimeB = new Date(`1970-01-01 ${b.startTime}`);
-              return startTimeA.getTime() - startTimeB.getTime();
-            }
-
-            return dateA.getTime() - dateB.getTime();
-          });
-
-          setEvents(sortedEvents);
-        }
+        const sortedEvents = sortEvents(eventsList);
+        setEvents(sortedEvents);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -50,7 +56,8 @@ const EventList = () => {
   const updateEventList = async (newEvents: EventType[] | null) => {
     try {
       if (newEvents !== null) {
-        setEvents(newEvents);
+        const sortedEvents = sortEvents(newEvents);
+        setEvents(sortedEvents);
       }
     } catch (error) {
       console.error("Error updating event list:", error);

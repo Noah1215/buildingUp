@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography/Typography";
 import Button from "@mui/material/Button";
@@ -30,7 +31,6 @@ const ModalHeader = ({
   const handleRegisterButtonClick = async () => {
     try {
       await toggleEventRegistration(eventId, userId, updateEventList);
-      console.log("Event registered successfully!");
       setIsOpen(false);
     } catch (error) {
       console.error("Error registering for event:", error);

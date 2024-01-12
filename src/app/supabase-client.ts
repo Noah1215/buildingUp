@@ -88,7 +88,7 @@ export async function toggleEventRegistration(
       .select("id")
       .eq("event_id", eventId)
       .eq("user_id", userId)
-      .single();
+      .maybeSingle();
 
     if (existingRegistration.data) {
       await supabase
@@ -103,7 +103,6 @@ export async function toggleEventRegistration(
         },
       ]);
     }
-
     const updatedEvents = await getEventsList();
     updateEventList(updatedEvents);
   } catch (error) {
