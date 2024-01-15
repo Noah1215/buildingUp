@@ -1,25 +1,16 @@
-import React from "react";
-import Typography from "@mui/material/Typography/Typography";
+import React from 'react';
 
-import SearchBar from "@/components/Jobs/Search";
-import JobList from "@/components/Jobs/JobList";
-import JobDetails from "@/components/Jobs/JobDetails";
-import DetailModal from "@/components/Jobs/DetailModal";
-import { JobDataProvider } from "@/app/mentor/jobs/JobDataContext";
+import JobContext from './JobContext';
+import { JobDataProvider } from '@/app/mentor/jobs/JobDataContext';
 
-const mentorJobs = () => {
+const MentorJobs = () => {
   return (
     <>
       <JobDataProvider>
-        <Typography variant="h5" fontWeight="bold" align="left">
-          Jobs
-        </Typography>
-        <SearchBar />
-        <JobList />
-        <DetailModal />
+        <JobContext />
       </JobDataProvider>
     </>
   );
 };
 
-export default mentorJobs;
+export default MentorJobs;

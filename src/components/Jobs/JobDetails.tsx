@@ -14,30 +14,29 @@ import Divider from "@mui/material/Divider"
 
 import { sortCard } from "@/app/mentor/jobs/JobDataContext"
 
-interface JobDetailsProps {
+type JobDetailsProps = {
     mobileView?: boolean;
     titleAlign?: 'inherit' | 'left' | 'center' | 'right' | 'justify';
-  }
+};
 
-  
-  const JobDetails: React.FC<JobDetailsProps> = ({
+const JobDetails = ({
     mobileView = true,
     titleAlign = 'center',
-  }) => {
+}: JobDetailsProps) => {
     const { jobData, highlightedCard, setHighlightedCard, setShowMobileDetails } = sortCard();
-
     const selectedJob = jobData?.find((job) => job.id === highlightedCard);
     
     const handleApplyClick = () => {
         if (selectedJob?.link) {
-            window.location.href = selectedJob.link;
+            window.open(selectedJob.link, '_blank');
         }
     };
 
     const handleBackClick = () => {
         setHighlightedCard(0);  
         setShowMobileDetails(false);  
-      };
+    };
+
     return (
         <div style={{ paddingBottom: "70px" }}>
             {highlightedCard && highlightedCard === selectedJob?.id && (
