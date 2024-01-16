@@ -17,6 +17,7 @@ type SearchBarProps = {
   popoverContent: string[];
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
   selectedCategory: string;
+  onFilterClick: React.MouseEventHandler<HTMLElement>;
 };
 
 const SearchBar = ({
@@ -25,6 +26,7 @@ const SearchBar = ({
   popoverContent,
   setSelectedCategory,
   selectedCategory,
+  onFilterClick
 }: SearchBarProps) => {
   const [searchText, setSearchText] = useState("");
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -115,7 +117,7 @@ const SearchBar = ({
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  onClick={handleClick}
+                  onClick={onFilterClick}
                   sx={{
                     display: { xs: "flex", md: isFilter ? "flex" : "none" },
                     "&:hover": { backgroundColor: "transparent" },
