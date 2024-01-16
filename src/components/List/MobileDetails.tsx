@@ -87,7 +87,7 @@ const MobileDetails = () => {
               </Grid>
             </Grid>
             <Grid item>
-              <Button variant="contained" onClick={handleBackClick} style={{ color: '#024761', backgroundColor: "transparent" }} >
+              <Button variant="text" onClick={handleBackClick} style={{ color: '#024761', backgroundColor: "transparent" }} >
                 Back
               </Button>
             </Grid>
@@ -100,8 +100,8 @@ const MobileDetails = () => {
               <TableBody>
                 <TableRow>
                   <TableCell sx={{ padding: 1, borderBottom: '1px solid black' }}>
-                    <Typography sx={{ fontSize: 12, color: '#6C757D' }}>First Name</Typography>
-                    <Typography sx={{ fontSize: 14 }}>{firstName}</Typography>
+                    <Typography sx={{ fontSize: 14, color: '#6C757D' }}>First Name</Typography>
+                    <Typography sx={{ fontSize: 16 }}>{firstName}</Typography>
                   </TableCell>
                 </TableRow>
                 <TableRow>
