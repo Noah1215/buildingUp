@@ -4,6 +4,8 @@ import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 dayjs.extend(localizedFormat);
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 import Modal from "@mui/material/Modal";
 import { Avatar, Box, Paper } from "@mui/material";
@@ -41,71 +43,69 @@ export function DesktopMeetingModal({
           height: "35rem",
         }}
       >
-        <Box
-          sx={{
-            position: "relative",
-            padding: "2rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-          }}
-        >
-          <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
-            <Avatar
-              sx={{ width: "80px", height: "80px" }}
-              alt="Mentor Avatar"
-              src="https://i.pravatar.cc/100"
-            />
-            <Box>
-              <Box>Mentor 1</Box>
-              <Box>meeting starts in 10 mins</Box>
-            </Box>
-          </Box>
+        {meeting ? (
           <Box
             sx={{
+              position: "relative",
+              padding: "2rem",
               display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
+              flexDirection: "column",
+              gap: "1rem",
             }}
           >
-            <Box>
-              <Box>Date:</Box>
-              {meeting ? (
+            <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+              <Avatar
+                sx={{ width: "80px", height: "80px" }}
+                alt="Mentor Avatar"
+                src="https://i.pravatar.cc/100"
+              />
+              <Box>
+                <Box>{meeting.mentor_name}</Box>
+                <Box>{dayjs(meeting.start_time).fromNow()}</Box>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box>
+                <Box>Date:</Box>
                 <Box>{dayjs(meeting.start_time).format("L")}</Box>
-              ) : (
-                <Box>N/A</Box>
-              )}
+              </Box>
+              <Box>
+                <Box>Time:</Box>
+                {meeting ? (
+                  <Box>
+                    {dayjs(meeting.start_time).format("LT")} -
+                    {dayjs(meeting.end_time).format("LT")}
+                  </Box>
+                ) : (
+                  <Box>N/A</Box>
+                )}
+              </Box>
+              <Box>
+                <Box>Status</Box>
+                {meeting ? <Box>{meeting.status}</Box> : <Box>N/A</Box>}
+              </Box>
             </Box>
             <Box>
-              <Box>Time:</Box>
-              {meeting ? (
-                <Box>
-                  {dayjs(meeting.start_time).format("LT")} -
-                  {dayjs(meeting.end_time).format("LT")}
-                </Box>
-              ) : (
-                <Box>N/A</Box>
-              )}
+              <Box>Link</Box>
+              <Box>{meeting.link ?? "N/A"}</Box>
             </Box>
             <Box>
-              <Box>Status</Box>
-              {meeting ? <Box>{meeting.status}</Box> : <Box>N/A</Box>}
-            </Box>
-          </Box>
-          <Box>
-            <Box>Link</Box>
-            {meeting ? <Box>{meeting.link ?? "N/A"}</Box> : <Box>N/A</Box>}
-          </Box>
-          <Box>
-            <Box>Description</Box>
-            {meeting ? (
+              <Box>Description</Box>
               <Box>{meeting.description ?? "N/A"}</Box>
-            ) : (
-              <Box>N/A</Box>
-            )}
+            </Box>
+            <Box sx={{ position: "absolute", top: "1rem", right: "1rem" }}>
+              X
+            </Box>
           </Box>
-          <Box sx={{ position: "absolute", top: "1rem", right: "1rem" }}>X</Box>
-        </Box>
+        ) : (
+          <Box>Loading...</Box>
+        )}
       </Paper>
     </Modal>
   );
