@@ -72,7 +72,7 @@ export default async function Layout({
         <Container
           className="main-content"
           component="main"
-          maxWidth="lg"
+          maxWidth="xl"
           sx={{ padding: { xs: "1rem", md: "2rem" } }}
         >
           {children}
