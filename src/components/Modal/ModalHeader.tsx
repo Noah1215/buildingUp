@@ -19,6 +19,7 @@ type modalHeaderProps = {
   eventId: string;
   userId: string;
   updateEventList: (newEvents: EventType[] | null) => void;
+  isRegistered: boolean | undefined;
 };
 
 const ModalHeader = ({
@@ -27,10 +28,12 @@ const ModalHeader = ({
   userId,
   eventId,
   updateEventList,
+  isRegistered,
 }: modalHeaderProps) => {
   const handleRegisterButtonClick = async () => {
     try {
       await toggleEventRegistration(eventId, userId, updateEventList);
+
       setIsOpen(false);
     } catch (error) {
       console.error("Error registering for event:", error);
@@ -48,21 +51,21 @@ const ModalHeader = ({
         <Button
           onClick={handleRegisterButtonClick}
           sx={{
-            backgroundColor: { xs: "transparent", lg: "#024761" },
-            color: { xs: "#024761", lg: "#FFF" },
+            backgroundColor: isRegistered ? "#616480" : "transparent",
+            color: isRegistered ? "#FFF" : "#024761",
             transition: "background-color 0.3s ease",
             ":hover": {
-              backgroundColor: "#035B7D",
+              backgroundColor: isRegistered ? "#616480" : "#035B7D",
               color: "#FFF",
               cursor: "pointer",
             },
-            padding: { xs: 0, lg: "0.3rem 1rem" },
+            padding: "0.2rem",
             fontWeight: "medium",
-            fontSize: { xs: "12px", lg: "14px" },
+            fontSize: "12px",
             borderRadius: "8px",
           }}
         >
-          Register
+          {isRegistered ? "Registered" : "Register"}
         </Button>
         <Typography
           sx={{ marginRight: "2rem", fontWeight: "medium", fontSize: "19px" }}
@@ -71,6 +74,7 @@ const ModalHeader = ({
         </Typography>
         <CancelIcon onClick={() => setIsOpen(false)} />
       </Box>
+
       <Box
         sx={{
           display: { xs: "none", lg: "flex" },
@@ -90,11 +94,11 @@ const ModalHeader = ({
           <Button
             onClick={handleRegisterButtonClick}
             sx={{
-              backgroundColor: "#024761",
+              backgroundColor: isRegistered ? "#616480" : "#024761",
               color: "#FFF",
               transition: "background-color 0.3s ease",
               ":hover": {
-                backgroundColor: "#035B7D",
+                backgroundColor: isRegistered ? "#616480" : "#035B7D",
                 color: "#FFF",
                 cursor: "pointer",
               },
@@ -104,7 +108,7 @@ const ModalHeader = ({
               borderRadius: "9px",
             }}
           >
-            Register
+            {isRegistered ? "Registered" : "Register"}
           </Button>
           <CancelIcon
             onClick={() => setIsOpen(false)}

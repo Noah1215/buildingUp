@@ -110,3 +110,28 @@ export async function toggleEventRegistration(
     throw error;
   }
 }
+
+export const checkRegistrationStatus = async (
+  eventId: string,
+  userId: string
+): Promise<boolean> => {
+  const supabase = createClient();
+
+  try {
+    const { data, error } = await supabase
+      .from("event_participants")
+      .select("id")
+      .eq("event_id", eventId)
+      .eq("user_id", userId);
+
+    if (error) {
+      console.error("Error checking registration status:", error);
+      return false;
+    }
+
+    return data && data.length > 0;
+  } catch (error) {
+    console.error("Error checking registration status:", error);
+    return false;
+  }
+};

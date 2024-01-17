@@ -25,7 +25,7 @@ import MobileContent from "./MobileContent";
 
 //method
 import { formatTime } from "../Card/EventCard";
-import { getUser } from "@/app/supabase-client";
+import { checkRegistrationStatus, getUser } from "@/app/supabase-client";
 
 type modalContentArr = {
   firstTitle: string;
@@ -64,6 +64,9 @@ const DetailModal = ({
   const formattedStart = formatTime(startTime);
   const formattedEnd = formatTime(endTime);
   const [userId, setUserId] = useState("");
+  const [isRegistered, setRegistered] = useState<boolean | undefined>(
+    undefined
+  );
 
   //getUserId
   useEffect(() => {
@@ -74,6 +77,8 @@ const DetailModal = ({
         if (user) {
           setUserId(user.id);
         }
+        const status = await checkRegistrationStatus(id, user?.id || "");
+        setRegistered(status);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -142,6 +147,7 @@ const DetailModal = ({
           title="Event Detail"
           setIsOpen={setIsOpen}
           updateEventList={updateEventList}
+          isRegistered={isRegistered}
         />
 
         <Box
