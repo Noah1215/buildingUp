@@ -13,7 +13,7 @@ import Box from "@mui/material/Box";
 import SvgIcon from "@mui/material/SvgIcon";
 import HomeIcon from "@mui/icons-material/Home";
 import MyPageIcon from "@mui/icons-material/AccountCircle";
-import MenteeIcon from "@mui/icons-material/Groups";
+import MentorIcon from "@mui/icons-material/Groups";
 import EventIcon from "@mui/icons-material/EventNote";
 import JobsIcon from "@mui/icons-material/BusinessCenter";
 import SupportIcon from "@mui/icons-material/SpeakerNotes";
@@ -23,12 +23,12 @@ import MentorListIcon from "@mui/icons-material/PersonAdd";
 const LINKS = [
   { text: "Home", href: "/alumni", icon: HomeIcon },
   { text: "My Page", href: "/alumni/myPage", icon: MyPageIcon },
-  { text: "My Mentor", href: "/alumni/myMentor", icon: MenteeIcon },
+  { text: "My Mentor", href: "/alumni/myMentor", icon: MentorIcon },
   { text: "Event", href: "/alumni/event", icon: EventIcon },
   { text: "Jobs", href: "/alumni/jobs", icon: JobsIcon },
   { text: "Support", href: "/alumni/support", icon: SupportIcon },
-  { text: "Meeting", href: "/alumni/meeting", icon: MeetingIcon },
-  { text: "Mentor List", href: "/alumni/mentors", icon: MentorListIcon },
+  { text: "Meetings", href: "/alumni/meetings", icon: MeetingIcon },
+  // { text: "Mentor List", href: "/alumni/mentors", icon: MentorListIcon },
   { text: "My Union", href: "/alumni/myUnion", icon: JobsIcon },
 ];
 
