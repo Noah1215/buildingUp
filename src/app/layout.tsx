@@ -14,13 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        suppressHydrationWarning={true}
-        style={{
-          background: "white",
-          margin: 0,
-        }}
-      >
+      <body suppressHydrationWarning={true}>
         <SupabaseProvider>
           <ThemeRegistry>{children}</ThemeRegistry>
         </SupabaseProvider>
