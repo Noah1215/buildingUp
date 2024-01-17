@@ -9,8 +9,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import Autocomplete from '@mui/material/Autocomplete';
 
+import FilterListIcon from "@mui/icons-material/FilterList";
+import SearchIcon from "@mui/icons-material/Search";
+
 import { filterCard, Mentee } from "@/app/mentor/mentee/MenteeDataContext";
-import SearchBar from "../SearchBar";
 
 const ListHeader = () => {
   const { menteeData, setFilteredMenteeData } = filterCard();
@@ -18,13 +20,6 @@ const ListHeader = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [sortBy, setSortBy] = useState(""); 
   const [jobFilter, setJobFilter] = useState(""); 
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-
-  const popoverContent = ['Name', 'Cohort', 'Job'];
-
-  const handleSearch = (newSearchText: string) => {
-    setSearchQuery(newSearchText);
-  };
 
   const handleFilterClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -34,6 +29,7 @@ const ListHeader = () => {
     setAnchorEl(null);
   };
 
+  
   const handleSortBy = (criteria:string) => {
     setSortBy(criteria);
   };
@@ -77,15 +73,24 @@ const ListHeader = () => {
       <Typography fontSize="17" align="left" style={{ marginTop: "5px" }}>
         Total: {menteeData? menteeData.length:0}
       </Typography>
-     
-      <SearchBar 
-        onSearch={handleSearch}
-        isFilter={true}
-        popoverContent={popoverContent}
-        setSelectedCategory={setSelectedCategory}
-        selectedCategory={selectedCategory}
-        onFilterClick={handleFilterClick}
-        />
+      <TextField
+        label="Search"
+        variant="outlined"
+        size="small"
+        style={{ width: "100%", marginTop: "20px", marginBottom: "10px" }}
+        InputProps={{
+          startAdornment: <SearchIcon />,
+          endAdornment: (
+            <Tooltip title="Filter">
+              <div onClick={handleFilterClick}>
+                <FilterListIcon />
+              </div>
+            </Tooltip>
+          ),
+        }}
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
 
       {/* Filter Menu */}
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleFilterClose}>
