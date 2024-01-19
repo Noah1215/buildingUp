@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -68,24 +69,33 @@ const DetailModal = ({
     undefined
   );
 
-  //getUserId
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
       try {
         const user = await getUser();
 
         if (user) {
           setUserId(user.id);
+
+          if (user.id) {
+            const registerStatus = await checkRegistrationStatus(id, user.id);
+
+            if (registerStatus) {
+              setRegistered(true);
+            } else {
+              setRegistered(false);
+            }
+          }
+
+          console.log(userId, isRegistered);
         }
-        const status = await checkRegistrationStatus(id, user?.id || "");
-        setRegistered(status);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchUserData();
-  }, []);
+    fetchData();
+  }, [id, userId, isRegistered]);
 
   // modal content array
   const modalContents: modalContentArr[] = [

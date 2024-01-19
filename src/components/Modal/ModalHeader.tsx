@@ -30,6 +30,11 @@ const ModalHeader = ({
   updateEventList,
   isRegistered,
 }: modalHeaderProps) => {
+  const [buttonText, setButtonText] = useState("Register");
+
+  useEffect(() => {
+    setButtonText(isRegistered ? "Registered" : "Register");
+  }, [isRegistered]);
   const handleRegisterButtonClick = async () => {
     try {
       await toggleEventRegistration(eventId, userId, updateEventList);
@@ -108,7 +113,7 @@ const ModalHeader = ({
               borderRadius: "9px",
             }}
           >
-            {isRegistered ? "Registered" : "Register"}
+            {buttonText}
           </Button>
           <CancelIcon
             onClick={() => setIsOpen(false)}

@@ -122,14 +122,15 @@ export const checkRegistrationStatus = async (
       .from("event_participants")
       .select("id")
       .eq("event_id", eventId)
-      .eq("user_id", userId);
+      .eq("user_id", userId)
+      .maybeSingle();
 
     if (error) {
       console.error("Error checking registration status:", error);
       return false;
     }
 
-    return data && data.length > 0;
+    return data ? true : false;
   } catch (error) {
     console.error("Error checking registration status:", error);
     return false;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState, useEffect } from "react";
 
 import Typography from "@mui/material/Typography/Typography";
 import Box from "@mui/material/Box";
@@ -19,6 +19,7 @@ import RegisteredIcon from "@mui/icons-material/AccountBoxOutlined";
 import DetailModal from "../Modal/DetailModal";
 
 import { EventType } from "@/app/mentor/event/eventType";
+import { checkRegistrationStatus, getUser } from "@/app/supabase-client";
 
 type EventDetailProps = {
   event: EventType;
@@ -51,8 +52,8 @@ export const formatTime = (timeString: string): string => {
 };
 
 const EventCard = ({ event, updateEventList }: EventDetailProps) => {
-  // const { title, date, startTime, endTime, address, registered, color } = event;
   const {
+    id,
     type,
     name,
     date,

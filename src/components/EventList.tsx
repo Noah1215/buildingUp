@@ -6,7 +6,11 @@ import EventCard from "./Card/EventCard";
 import SearchBar from "./SearchBar";
 import LightButton from "./Button/LightButton";
 
-import { getEventsList } from "@/app/supabase-client";
+import {
+  checkRegistrationStatus,
+  getEventsList,
+  getUser,
+} from "@/app/supabase-client";
 
 //Type
 import { EventType } from "@/app/mentor/event/eventType";
@@ -38,7 +42,6 @@ const EventList = () => {
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
   const [searchText, setSearchText] = useState("");
   const [events, setEvents] = useState<EventType[]>([]);
-
   useEffect(() => {
     const fetchEventList = async () => {
       try {
