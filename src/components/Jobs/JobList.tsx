@@ -8,11 +8,10 @@ import Grid from "@mui/material/Grid/Grid";
 import { sortCard } from "@/app/mentor/jobs/JobDataContext";
 
 const JobList = () => {
-    const { sortedJobData, setHighlightedCard, setShowMobileDetails } = sortCard() 
+    const { sortedJobData, setHighlightedCard } = sortCard() 
 
     const handleCardClick = (jobId: number) => {
         setHighlightedCard(jobId);
-        setShowMobileDetails(true);
     };
 
     return (

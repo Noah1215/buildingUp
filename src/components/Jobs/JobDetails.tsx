@@ -23,7 +23,7 @@ const JobDetails = ({
     mobileView = true,
     titleAlign = 'center',
 }: JobDetailsProps) => {
-    const { jobData, highlightedCard, setHighlightedCard, setShowMobileDetails } = sortCard();
+    const { jobData, highlightedCard, setHighlightedCard } = sortCard();
     const selectedJob = jobData?.find((job) => job.id === highlightedCard);
     
     const handleApplyClick = () => {
@@ -34,14 +34,13 @@ const JobDetails = ({
 
     const handleBackClick = () => {
         setHighlightedCard(0);  
-        setShowMobileDetails(false);  
     };
 
     return (
         <div style={{ paddingBottom: "70px" }}>
             {highlightedCard && highlightedCard === selectedJob?.id && (
                 <>
-                <Grid container alignItems="center" justifyContent="space-between" sx={{ mt: "15px" }}>
+                <Grid container alignItems="center" justifyContent="space-between" sx={{ mt: mobileView? "none": "15px" }}>
                     {mobileView && (
                         <Grid item>
                             <Button 
@@ -64,13 +63,13 @@ const JobDetails = ({
                     </Grid>
                 </Grid>
 
-                <Grid container alignItems="center" spacing={1} sx={{ mt: "1px"}} >
+                <Grid container alignItems="center" spacing={1} sx={{mb:-1}}>
                     <Grid item>
                         <CardMedia
                             component="img"
                             image={selectedJob?.logo}
                             alt={`${selectedJob?.company} Logo`}
-                            sx={{ width: 50, height: 50, mr:-1, ml:1}}
+                            sx={{ width: 50, height: 50 }}
                         />
                     </Grid>
                     <Grid item>
@@ -83,51 +82,95 @@ const JobDetails = ({
                         <TableBody>
                             <TableRow>
                                 <TableCell sx={{ padding: 1, border: "none"}}>
-                                    <Typography sx={{ fontSize:14, color: "#6C757D"}}> Job title:</Typography>
-                                    <Typography sx={{ fontSize:16 }}> {selectedJob?.job_title} </Typography>
+                                    <Typography sx={{ fontSize:12, color: "#6C757D"}}> Job title:</Typography>
+                                    <Typography sx={{ fontSize:14, mb:-1 }}> {selectedJob?.job_title} </Typography>
                                 </TableCell>
                             </TableRow>
 
                             <TableRow>
                                 <TableCell sx={{ padding: 1, border: "none"}}>
-                                    <Typography sx={{ fontSize:14, color: "#6C757D"}}> Salary:</Typography>
-                                    <Typography sx={{ fontSize:16 }}> ${selectedJob?.salary.toLocaleString()} </Typography>
+                                    <Typography sx={{ fontSize:12, color: "#6C757D"}}> Salary:</Typography>
+                                    <Typography sx={{ fontSize:14, mb:-1 }}> ${selectedJob?.salary.toLocaleString()} </Typography>
                                 </TableCell>
                                 <TableCell sx={{ padding: 1, border: "none"}}>
-                                    <Typography sx={{ fontSize:14, color: "#6C757D"}}> Work Type:</Typography>
-                                    <Typography sx={{ fontSize:16 }}> {selectedJob?.work_type} </Typography>
+                                    <Typography sx={{ fontSize:12, color: "#6C757D"}}> Work Type:</Typography>
+                                    <Typography sx={{ fontSize:14, mb:-1 }}> {selectedJob?.work_type} </Typography>
                                 </TableCell>
                                 <TableCell sx={{ padding: 1, border: "none"}}>
-                                    <Typography sx={{ fontSize:14, color: "#6C757D"}}> Contract Type:</Typography>
-                                    <Typography sx={{ fontSize:16 }}> {selectedJob?.contract_type} </Typography>
+                                    <Typography sx={{ fontSize:12, color: "#6C757D"}}> Contract Type:</Typography>
+                                    <Typography sx={{ fontSize:14, mb:-1 }}> {selectedJob?.contract_type} </Typography>
                                 </TableCell>
                             </TableRow>
 
                             <TableRow>
                                 <TableCell sx={{ padding: 1, border: "none" }} colSpan={2}>
-                                    <Typography sx={{ fontSize: 14, color: "#6C757D" }}> Location:</Typography>
-                                    <Typography sx={{ fontSize: 16 }}> {selectedJob?.location} </Typography>
+                                    <Typography sx={{ fontSize: 12, color: "#6C757D" }}> Location:</Typography>
+                                    <Typography sx={{ fontSize: 14 }}> {selectedJob?.location} </Typography>
                                 </TableCell>
                                 <TableCell sx={{ padding: 1, border: "none" }}>
-                                    <Typography sx={{ fontSize: 14, color: "#6C757D" }}> Posted Date:</Typography>
-                                    <Typography sx={{ fontSize: 16 }}> {selectedJob?.posted} </Typography>
+                                    <Typography sx={{ fontSize: 12, color: "#6C757D" }}> Posted Date:</Typography>
+                                    <Typography sx={{ fontSize: 14 }}> {selectedJob?.posted} </Typography>
                                 </TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>
                 
-                <Typography variant="subtitle1" fontWeight="bold" align="left" color="#0263E0" sx={{ mt: "10px", mb: "8px", ml:"7px" }}>
+                <Typography variant="subtitle1" fontWeight="bold" align="left" color="#0263E0" sx={{  }}>
                   Details
                 </Typography>
                 <Divider />
                 
-                <Typography sx={{ fontSize:14, align:"left", color:"#6C757D", mt:"8px", mb:"1em" }}> Description: </Typography>
-                <Typography sx={{ fontSize: 16 }}> {selectedJob?.description} </Typography>
-                <Typography sx={{ fontSize:14, align:"left", color:"#6C757D", mt:"8px", mb:"1em" }}> Responsibilities: </Typography>
-                <Typography sx={{ fontSize: 16 }}> {selectedJob?.responsibilities} </Typography>
-                <Typography sx={{ fontSize:14, align:"left", color:"#6C757D", mt:"8px", mb:"1em" }}> Requirements: </Typography>
-                <Typography sx={{ fontSize: 16 }}> {selectedJob?.requirements} </Typography>
+                <Typography sx={{ fontSize: 12, align:"left", color:"#6C757D", mt:"8px", mb:"0.5em" }}> Description: </Typography>
+                <Typography
+                    sx={{
+                        fontSize: 14,
+                        lineHeight: 1.5,
+                        display: mobileView ? "block" : "-webkit-box",
+                        overflow: mobileView ? "hidden" : "visible",
+                        textOverflow: mobileView ? "clip" : "ellipsis",
+                        WebkitBoxOrient: mobileView ? undefined : "vertical",
+                        WebkitLineClamp: mobileView ? undefined : 3,
+                        maxHeight: mobileView ? "none" : "4.5em",
+                        overflowY: mobileView ? "hidden" : "auto",
+                    }}
+                > 
+                    {selectedJob?.description} 
+                </Typography>
+
+                <Typography sx={{ fontSize: 12, align:"left", color:"#6C757D", mt:"8px", mb:"0.5em" }}> Responsibilities: </Typography>
+                <Typography 
+                    sx={{ 
+                        fontSize: 14,
+                        lineHeight: 1.5,
+                        display: mobileView ? "block" : "-webkit-box",
+                        overflow: mobileView ? "hidden" : "visible",
+                        textOverflow: mobileView ? "clip" : "ellipsis",
+                        WebkitBoxOrient: mobileView ? undefined : "vertical",
+                        WebkitLineClamp: mobileView ? undefined : 3,
+                        maxHeight: mobileView ? "none" : "4.5em",
+                        overflowY: mobileView ? "hidden" : "auto",
+                    }}
+                > 
+                    {selectedJob?.responsibilities} 
+                </Typography>
+
+                <Typography sx={{ fontSize: 12, align:"left", color:"#6C757D", mt:"8px", mb:"0.5em" }}> Requirements: </Typography>
+                <Typography 
+                    sx={{
+                        fontSize: 14,
+                        lineHeight: 1.5,
+                        display: mobileView ? "block" : "-webkit-box",
+                        overflow: mobileView ? "hidden" : "visible",
+                        textOverflow: mobileView ? "clip" : "ellipsis",
+                        WebkitBoxOrient: mobileView ? undefined : "vertical",
+                        WebkitLineClamp: mobileView ? undefined : 3,
+                        maxHeight: mobileView ? "none" : "4.5em",
+                        overflowY: mobileView ? "hidden" : "auto",
+                    }}
+                > 
+                    {selectedJob?.requirements}
+                </Typography>
 
                 </> 
             )}

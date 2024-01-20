@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, {useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -10,10 +10,16 @@ import JobDetails from '@/components/Jobs/JobDetails';
 import DetailModal from '@/components/Jobs/DetailModal';
 import { sortCard } from '@/app/mentor/jobs/JobDataContext';
 
-const JobContext = () => {
-  const { showMobileDetails } = sortCard();
+const JobContent= () => {
+  const { showMobileDetails, setShowMobileDetails,highlightedCard } = sortCard();
   const isDesktop = useMediaQuery('(min-width:769px)');
-
+  useEffect(() => {
+    if (highlightedCard && !isDesktop) {
+      setShowMobileDetails(true);
+    } else {
+      setShowMobileDetails(false);
+    }
+  }, [highlightedCard, isDesktop]);
   return (
     <>
       <Grid container>
@@ -26,15 +32,15 @@ const JobContext = () => {
         </Grid>
 
         <Grid item lg={12} sx={{ display: { xs: 'none', lg: 'block' } }}>
-          {isDesktop && <DetailModal />}
+          {isDesktop && highlightedCard !==0 && <DetailModal />}
         </Grid>
 
         <Grid item xs={12} sx={{ display: { xs: showMobileDetails ? 'block' : 'none', lg: 'none' } }}>
-          {!isDesktop && showMobileDetails && <JobDetails />}
+          {!isDesktop && showMobileDetails && highlightedCard !==0 && <JobDetails />}
         </Grid>
       </Grid>
     </>
   );
 };
 
-export default JobContext;
+export default JobContent;

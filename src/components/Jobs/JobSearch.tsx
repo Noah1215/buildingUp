@@ -78,7 +78,7 @@ const JobSearch = () =>{
         <MenuItem sx={{ fontSize: "14px" }} onClick={() => handleCategorySelection('company')}>
             Company {sortCriteria === 'company' && (sortOrder === 'asc' ? '↑' : '↓')}
         </MenuItem>
-    </Menu>
+      </Menu>
     </>
     )
 }

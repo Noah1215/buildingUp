@@ -22,7 +22,7 @@ export interface Jobs{
 
 interface JobDataContextProps {
   jobData: Jobs[] | null;
-  highlightedCard: number;
+  highlightedCard: number | null;
   setHighlightedCard: (id: number) => void;
   sortedJobData: Jobs[] | null; 
   setSortedJobData: React.Dispatch<React.SetStateAction<Jobs[] | null>>; 
@@ -46,7 +46,7 @@ export const sortCard = () => {
 
 export const JobDataProvider: FunctionComponent<JobDataProviderProps> = ({ children }) => {
   const [jobData, setJobData] = useState<Jobs[] | null>(null);
-  const [highlightedCard, setHighlightedCard] = useState<number>(0);
+  const [highlightedCard, setHighlightedCard] = useState<number | null>(null);
   const [sortedJobData, setSortedJobData] = useState<Jobs[] | null>(null);
   const [showMobileDetails, setShowMobileDetails] = useState<boolean>(false)
 
