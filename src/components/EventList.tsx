@@ -12,7 +12,7 @@ import {
   getUser,
 } from "@/app/supabase-client";
 
-//Type
+// Type
 import { EventType } from "@/app/mentor/event/eventType";
 
 const popoverContent = ["ALL", "Seminar", "Workshop", "Party"];
