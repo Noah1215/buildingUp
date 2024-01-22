@@ -42,6 +42,9 @@ const EventList = () => {
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
   const [searchText, setSearchText] = useState("");
   const [events, setEvents] = useState<EventType[]>([]);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
   useEffect(() => {
     const fetchEventList = async () => {
       try {
@@ -91,6 +94,9 @@ const EventList = () => {
     setSearchText(searchText);
   };
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
   return (
     <>
       <SearchBar
@@ -99,6 +105,7 @@ const EventList = () => {
         popoverContent={popoverContent}
         setSelectedCategory={setSelectedCategory}
         selectedCategory={selectedCategory}
+        onFilterClick={handleClick}
       />
       <Box
         sx={{
