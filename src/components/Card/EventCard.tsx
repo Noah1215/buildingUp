@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState, useEffect } from "react";
 
 import Typography from "@mui/material/Typography/Typography";
 import Box from "@mui/material/Box";
@@ -18,26 +18,57 @@ import LocationIcon from "@mui/icons-material/LocationOnOutlined";
 import RegisteredIcon from "@mui/icons-material/AccountBoxOutlined";
 import DetailModal from "../Modal/DetailModal";
 
-export type eventDetail = {
-  category: string;
-  title: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  address: string;
-  registered: number;
-  color: string;
-};
+import { EventType } from "@/app/mentor/event/eventType";
+import { checkRegistrationStatus, getUser } from "@/app/supabase-client";
 
 type EventDetailProps = {
-  event: eventDetail;
+  event: EventType;
   key: number;
+  updateEventList: (newEvents: EventType[] | null) => void;
 };
 
-const EventCard = ({ event }: EventDetailProps) => {
-  const { title, date, startTime, endTime, address, registered, color } = event;
+const getColorByType = (eventType: string): string => {
+  switch (eventType) {
+    case "Seminar":
+      return "#ED6C02";
+    case "Workshop":
+      return "#86CD82";
+    case "Party":
+      return "#024761";
+    default:
+      return "#000000";
+  }
+};
+
+export const formatTime = (timeString: string): string => {
+  const [hour, minute] = timeString.split(":");
+  let parsedHour = parseInt(hour, 10);
+  const isAfterNoon = parsedHour >= 12;
+  parsedHour = parsedHour === 24 ? 0 : parsedHour;
+
+  return `${String(parsedHour).padStart(2, "0")}:${minute} ${
+    isAfterNoon ? "PM" : "AM"
+  }`;
+};
+
+const EventCard = ({ event, updateEventList }: EventDetailProps) => {
+  const {
+    id,
+    type,
+    name,
+    date,
+    startTime,
+    endTime,
+    address,
+    description,
+    registeredUsersCount,
+  } = event;
+  const color = getColorByType(type);
   const [liked, setLiked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const formattedStartTime = formatTime(startTime);
+  const formattedEndTime = formatTime(endTime);
 
   const handleLikeClick = () => {
     setLiked((prevLiked) => !prevLiked);
@@ -103,7 +134,7 @@ const EventCard = ({ event }: EventDetailProps) => {
             fontWeight="bold"
             sx={{ fontSize: { xs: "1rem", md: "1.5rem" } }}
           >
-            {title}
+            {name}
           </Typography>
           <Box
             sx={{
@@ -124,7 +155,11 @@ const EventCard = ({ event }: EventDetailProps) => {
                 variant="body1"
                 fontWeight="regular"
                 fontSize="0.7rem"
-                sx={{ display: "flex", alignItems: "center" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  whiteSpace: "nowrap",
+                }}
               >
                 <CalendarIcon
                   sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
@@ -135,19 +170,30 @@ const EventCard = ({ event }: EventDetailProps) => {
                 variant="body1"
                 fontWeight="regular"
                 fontSize="0.7rem"
-                sx={{ display: "flex", alignItems: "center" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  whiteSpace: "nowrap",
+                }}
               >
                 <ClockIcon sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }} />
-                {startTime} - {endTime}
+                {formattedStartTime} - {formattedEndTime}
               </Typography>
               <Typography
                 variant="body1"
                 fontWeight="regular"
                 fontSize="0.7rem"
-                sx={{ display: "flex", alignItems: "center" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  whiteSpace: "nowrap",
+                }}
               >
                 <LocationIcon
-                  sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
+                  sx={{
+                    fontSize: "1.2rem",
+                    marginRight: "0.2rem",
+                  }}
                 />
                 {address}
               </Typography>
@@ -161,7 +207,7 @@ const EventCard = ({ event }: EventDetailProps) => {
               <RegisteredIcon
                 sx={{ fontSize: "1.2rem", marginRight: "0.2rem" }}
               />
-              {registered} Registered
+              {registeredUsersCount} Registered
             </Typography>
           </Box>
           <Box
@@ -169,13 +215,18 @@ const EventCard = ({ event }: EventDetailProps) => {
               width: "100%",
               height: "50%",
               borderRadius: "0.8rem",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
+            <Typography variant="caption" sx={{ fontWeight: "medium" }}>
+              Description
+            </Typography>
             <Typography
               variant="caption"
-              sx={{ fontWeight: { xs: "regular", md: "medium" } }}
+              sx={{ fontWeight: { xs: "regular", md: "light" } }}
             >
-              Description
+              {description}
             </Typography>
           </Box>
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: "1rem" }}>
@@ -211,7 +262,12 @@ const EventCard = ({ event }: EventDetailProps) => {
         />
       </Paper>
       {isOpen && (
-        <DetailModal event={event} isOpen={isOpen} setIsOpen={setIsOpen} />
+        <DetailModal
+          event={event}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          updateEventList={updateEventList}
+        />
       )}
     </>
   );
