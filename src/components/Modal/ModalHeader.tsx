@@ -1,17 +1,49 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography/Typography";
 import Button from "@mui/material/Button";
 
 //icon
 import CancelIcon from "@mui/icons-material/Cancel";
+
+//method
+import { toggleEventRegistration } from "@/app/supabase-client";
+
+//type
+import { EventType } from "@/app/mentor/event/eventType";
+
 type modalHeaderProps = {
   title: string;
-  buttonContent: string;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  eventId: string;
+  userId: string;
+  updateEventList: (newEvents: EventType[] | null) => void;
+  isRegistered: boolean | undefined;
 };
 
-const ModalHeader = ({ title, buttonContent, setIsOpen }: modalHeaderProps) => {
+const ModalHeader = ({
+  title,
+  setIsOpen,
+  userId,
+  eventId,
+  updateEventList,
+  isRegistered,
+}: modalHeaderProps) => {
+  const [buttonText, setButtonText] = useState("Register");
+
+  useEffect(() => {
+    setButtonText(isRegistered ? "Registered" : "Register");
+  }, [isRegistered]);
+  const handleRegisterButtonClick = async () => {
+    try {
+      await toggleEventRegistration(eventId, userId, updateEventList);
+
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Error registering for event:", error);
+    }
+  };
   return (
     <>
       <Box
@@ -22,30 +54,32 @@ const ModalHeader = ({ title, buttonContent, setIsOpen }: modalHeaderProps) => {
         }}
       >
         <Button
+          onClick={handleRegisterButtonClick}
           sx={{
-            backgroundColor: { xs: "transparent", lg: "#024761" },
-            color: { xs: "#024761", lg: "#FFF" },
+            backgroundColor: isRegistered ? "#616480" : "transparent",
+            color: isRegistered ? "#FFF" : "#024761",
             transition: "background-color 0.3s ease",
             ":hover": {
-              backgroundColor: "#035B7D",
+              backgroundColor: isRegistered ? "#616480" : "#035B7D",
               color: "#FFF",
               cursor: "pointer",
             },
-            padding: { xs: 0, lg: "0.3rem 1rem" },
+            padding: "0.2rem",
             fontWeight: "medium",
-            fontSize: { xs: "12px", lg: "14px" },
+            fontSize: "12px",
             borderRadius: "8px",
           }}
         >
-          {buttonContent}
+          {isRegistered ? "Registered" : "Register"}
         </Button>
         <Typography
           sx={{ marginRight: "2rem", fontWeight: "medium", fontSize: "19px" }}
         >
-          Event Detail
+          {title}
         </Typography>
         <CancelIcon onClick={() => setIsOpen(false)} />
       </Box>
+
       <Box
         sx={{
           display: { xs: "none", lg: "flex" },
@@ -59,16 +93,17 @@ const ModalHeader = ({ title, buttonContent, setIsOpen }: modalHeaderProps) => {
           fontSize={19}
           sx={{ display: "flex" }}
         >
-          Event Detail
+          {title}
         </Typography>
         <Box sx={{ display: "flex" }}>
           <Button
+            onClick={handleRegisterButtonClick}
             sx={{
-              backgroundColor: "#024761",
+              backgroundColor: isRegistered ? "#616480" : "#024761",
               color: "#FFF",
               transition: "background-color 0.3s ease",
               ":hover": {
-                backgroundColor: "#035B7D",
+                backgroundColor: isRegistered ? "#616480" : "#035B7D",
                 color: "#FFF",
                 cursor: "pointer",
               },
@@ -78,7 +113,7 @@ const ModalHeader = ({ title, buttonContent, setIsOpen }: modalHeaderProps) => {
               borderRadius: "9px",
             }}
           >
-            {buttonContent}
+            {buttonText}
           </Button>
           <CancelIcon
             onClick={() => setIsOpen(false)}

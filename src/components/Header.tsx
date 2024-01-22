@@ -62,9 +62,8 @@ export default function Header({ userName }: Props) {
                 backgroundColor: "#D9D9D9",
                 //borderRadius: { xs: "1rem", md: "1.5rem" },
                 marginLeft: "3rem",
-              }}  
-            >                        
-            </Avatar>
+              }}
+            ></Avatar>
             <Typography
               variant="h6"
               color="#024761"

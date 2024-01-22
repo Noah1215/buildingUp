@@ -2,19 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Image from "next/image";
 import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Link from "next/link";
 
 import HomeIcon from "@mui/icons-material/HouseOutlined";
 import MyPageIcon from "@mui/icons-material/AccountCircle";
@@ -24,10 +12,9 @@ import JobsIcon from "@mui/icons-material/BusinessCenter";
 import SupportIcon from "@mui/icons-material/SpeakerNotes";
 import MeetingIcon from "@mui/icons-material/PermContactCalendar";
 //import NotificationActiveIcon from "@mui/icons-material/NotificationsActive";
-import NotificationIcon from "@mui/icons-material/Notifications";
-import LogoutIcon from "@mui/icons-material/Logout";
+
 import Footer from "@/components/Footer";
-import { getUser, getUserName, getUserRole } from "@/app/supabase-server";
+import { getUserName, getUserRole } from "@/app/supabase-server";
 import Header from "@/components/Header";
 import SideDrawer from "@/components/SideDrawer";
 

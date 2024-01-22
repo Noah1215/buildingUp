@@ -11,21 +11,29 @@ import LocationIcon from "@mui/icons-material/LocationOnOutlined";
 import RegisteredIcon from "@mui/icons-material/AccountBoxOutlined";
 
 //type
-import { eventDetail } from "../Card/EventCard";
+import { EventType } from "@/app/mentor/event/eventType";
 import Tag from "../Button/Tag";
 
+//method
+import { formatTime } from "../Card/EventCard";
+
 type MobileContentProps = {
-  event: eventDetail;
+  event: EventType;
 };
 
 const MobileContent = ({ event }: MobileContentProps) => {
-  const { title, date, startTime, endTime, address, registered } = event;
+  const { name, date, startTime, endTime, address, registeredUsersCount } =
+    event;
+
+  const formattedStart = formatTime(startTime);
+  const formattedEnd = formatTime(endTime);
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
       <Typography
         sx={{ fontWeight: "medium", fontSize: "14px", marginTop: "1rem" }}
       >
-        {title}
+        {name}
       </Typography>
       <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
         <div
@@ -36,7 +44,9 @@ const MobileContent = ({ event }: MobileContentProps) => {
           }}
         >
           <CalendarIcon sx={{ fontSize: "14px" }} />
-          <Typography sx={{ fontSize: "12px" }}>{date}</Typography>
+          <Typography sx={{ fontSize: "12px", whiteSpace: "nowrap" }}>
+            {date}
+          </Typography>
         </div>
         <div
           style={{
@@ -47,7 +57,7 @@ const MobileContent = ({ event }: MobileContentProps) => {
         >
           <ClockIcon sx={{ fontSize: "14px" }} />
           <Typography sx={{ fontSize: "12px" }}>
-            {startTime}-{endTime}
+            {formattedStart}-{formattedEnd}
           </Typography>
         </div>
       </Box>
@@ -67,7 +77,7 @@ const MobileContent = ({ event }: MobileContentProps) => {
         >
           <RegisteredIcon sx={{ fontSize: "14px" }} />
           <Typography sx={{ fontSize: "12px" }}>
-            {registered} registered
+            {registeredUsersCount} registered
           </Typography>
         </div>
         <div

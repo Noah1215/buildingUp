@@ -1,55 +1,76 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 
 import EventCard from "./Card/EventCard";
 import SearchBar from "./SearchBar";
 import LightButton from "./Button/LightButton";
 
-const eventData = [
-  {
-    category: "Seminar",
-    title: "Career Consulting Seminar",
-    date: "11/01/2023",
-    startTime: "09:00AM",
-    endTime: "11:00AM",
-    address: "123 ABC, Toronto, ON",
-    registered: 114,
-    color: "#ED6C02",
-  },
-  {
-    category: "Workshop",
-    title: "Alumni Workshop",
-    date: "11/02/2023",
-    startTime: "09:00AM",
-    endTime: "11:00AM",
-    address: "123 ABC, Toronto, ON",
-    registered: 123,
-    color: "#86CD82",
-  },
-  {
-    category: "Party",
-    title: "Dinner Party",
-    date: "11/03/2023",
-    startTime: "09:00PM",
-    endTime: "11:00PM",
-    address: "123 ABC, Toronto, ON",
-    registered: 130,
-    color: "#024761",
-  },
-];
+import {
+  checkRegistrationStatus,
+  getEventsList,
+  getUser,
+} from "@/app/supabase-client";
+
+//Type
+import { EventType } from "@/app/mentor/event/eventType";
 
 const popoverContent = ["ALL", "Seminar", "Workshop", "Party"];
+
+const sortEvents = (events: EventType[] | null) => {
+  if (events) {
+    const sortedEvents = events.sort((a, b) => {
+      const dateA = new Date(`${a.date} ${a.startTime}`);
+      const dateB = new Date(`${b.date} ${b.startTime}`);
+      if (dateA.getTime() === dateB.getTime()) {
+        const startTimeA = new Date(`1970-01-01 ${a.startTime}`);
+        const startTimeB = new Date(`1970-01-01 ${b.startTime}`);
+        return startTimeA.getTime() - startTimeB.getTime();
+      }
+
+      return dateA.getTime() - dateB.getTime();
+    });
+
+    return sortedEvents;
+  }
+
+  return [];
+};
 
 const EventList = () => {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
   const [searchText, setSearchText] = useState("");
+  const [events, setEvents] = useState<EventType[]>([]);
+  useEffect(() => {
+    const fetchEventList = async () => {
+      try {
+        const eventsList = await getEventsList();
+        const sortedEvents = sortEvents(eventsList);
+        setEvents(sortedEvents);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEventList();
+  }, []);
+
+  const updateEventList = async (newEvents: EventType[] | null) => {
+    try {
+      if (newEvents !== null) {
+        const sortedEvents = sortEvents(newEvents);
+        setEvents(sortedEvents);
+      }
+    } catch (error) {
+      console.error("Error updating event list:", error);
+    }
+  };
 
   const filteredEventData =
     selectedCategory === "ALL"
-      ? eventData
-      : eventData.filter((event) => event.category === selectedCategory);
+      ? events
+      : events.filter((event) => event.type === selectedCategory);
 
   const getFilteredData = () => {
     if (!searchText) {
@@ -57,7 +78,7 @@ const EventList = () => {
     }
 
     return filteredEventData.filter((event) =>
-      event.title.toLowerCase().includes(searchText.toLowerCase())
+      event.name.toLowerCase().includes(searchText.toLowerCase())
     );
   };
 
@@ -105,7 +126,11 @@ const EventList = () => {
         }}
       >
         {getFilteredData().map((data, index) => (
-          <EventCard event={data} key={index} />
+          <EventCard
+            event={data}
+            key={index}
+            updateEventList={updateEventList}
+          />
         ))}
       </Box>
     </>
