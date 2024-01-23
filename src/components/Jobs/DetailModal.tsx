@@ -43,6 +43,7 @@ const DetailModal = () =>{
                   display: "flex",
                   flexDirection: "column",
                   borderRadius: "8px",
+                  overflowY: "auto",
                 }}
             >
                 <JobDetails mobileView={false} titleAlign="left" />

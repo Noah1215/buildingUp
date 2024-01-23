@@ -122,55 +122,13 @@ const JobDetails = ({
                 <Divider />
                 
                 <Typography sx={{ fontSize: 12, align:"left", color:"#6C757D", mt:"8px", mb:"0.5em" }}> Description: </Typography>
-                <Typography
-                    sx={{
-                        fontSize: 14,
-                        lineHeight: 1.5,
-                        display: mobileView ? "block" : "-webkit-box",
-                        overflow: mobileView ? "hidden" : "visible",
-                        textOverflow: mobileView ? "clip" : "ellipsis",
-                        WebkitBoxOrient: mobileView ? undefined : "vertical",
-                        WebkitLineClamp: mobileView ? undefined : 3,
-                        maxHeight: mobileView ? "none" : "4.5em",
-                        overflowY: mobileView ? "hidden" : "auto",
-                    }}
-                > 
-                    {selectedJob?.description} 
-                </Typography>
+                <Typography sx={{ fontSize: 14, }} > {selectedJob?.description} </Typography>
 
                 <Typography sx={{ fontSize: 12, align:"left", color:"#6C757D", mt:"8px", mb:"0.5em" }}> Responsibilities: </Typography>
-                <Typography 
-                    sx={{ 
-                        fontSize: 14,
-                        lineHeight: 1.5,
-                        display: mobileView ? "block" : "-webkit-box",
-                        overflow: mobileView ? "hidden" : "visible",
-                        textOverflow: mobileView ? "clip" : "ellipsis",
-                        WebkitBoxOrient: mobileView ? undefined : "vertical",
-                        WebkitLineClamp: mobileView ? undefined : 3,
-                        maxHeight: mobileView ? "none" : "4.5em",
-                        overflowY: mobileView ? "hidden" : "auto",
-                    }}
-                > 
-                    {selectedJob?.responsibilities} 
-                </Typography>
+                <Typography sx={{ fontSize: 14, }} > {selectedJob?.responsibilities} </Typography>
 
                 <Typography sx={{ fontSize: 12, align:"left", color:"#6C757D", mt:"8px", mb:"0.5em" }}> Requirements: </Typography>
-                <Typography 
-                    sx={{
-                        fontSize: 14,
-                        lineHeight: 1.5,
-                        display: mobileView ? "block" : "-webkit-box",
-                        overflow: mobileView ? "hidden" : "visible",
-                        textOverflow: mobileView ? "clip" : "ellipsis",
-                        WebkitBoxOrient: mobileView ? undefined : "vertical",
-                        WebkitLineClamp: mobileView ? undefined : 3,
-                        maxHeight: mobileView ? "none" : "4.5em",
-                        overflowY: mobileView ? "hidden" : "auto",
-                    }}
-                > 
-                    {selectedJob?.requirements}
-                </Typography>
+                <Typography sx={{ fontSize: 14, }} > {selectedJob?.requirements} </Typography>
 
                 </> 
             )}
