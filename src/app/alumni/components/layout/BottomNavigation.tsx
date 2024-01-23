@@ -145,6 +145,7 @@ export default function BottomNavigation() {
           <StyledMenuItem
             key={item.label}
             onClick={() => {
+              handleClose();
               router.push(item.link);
             }}
           >
