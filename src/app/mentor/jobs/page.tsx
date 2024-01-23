@@ -1,7 +1,16 @@
-import React from "react";
+import React from 'react';
 
-const mentorJobs = () => {
-  return <div>This is Mentor's jobs page</div>;
+import JobContent from './JobContent';
+import { JobDataProvider } from '@/app/mentor/jobs/JobDataContext';
+
+const MentorJobs = () => {
+  return (
+    <>
+      <JobDataProvider>
+        <JobContent />
+      </JobDataProvider>
+    </>
+  );
 };
 
-export default mentorJobs;
+export default MentorJobs;
