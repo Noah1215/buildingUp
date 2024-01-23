@@ -1,8 +1,8 @@
 //React
 import React from "react";
 //Component
-import Board from "@/app/alumni/(components)/Board";
-import EventTable from "@/app/alumni/(components)/EventTable";
+import Board from "@/app/alumni/components/Board";
+import EventTable from "@/app/alumni/components/EventTable";
 import JobDistribution from "@/components/Recharts/JobDistribution";
 import WageDistribution from "@/components/Recharts/WageDistribution";
 import AverageWage from "@/components/Recharts/AverageWage";

@@ -6,22 +6,17 @@ import timezone from "dayjs/plugin/timezone";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
-
 dayjs.extend(weekday);
 dayjs.extend(timezone);
 dayjs.extend(localizedFormat);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
-
 // MUI
-import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
 // lib
 import { getLocaleAwareWeekdays } from "../lib/calendar";
 import { useState } from "react";
-import { Paper } from "@mui/material";
 import { DesktopMeetingModal } from "./DesktopMeetingModal";
 
 export default function DesktopCalendar({
