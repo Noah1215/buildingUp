@@ -69,8 +69,7 @@ export default async function Layout({
         sx={{
           display: "flex",
           flexDirection: "column",
-          minHeight: {
-            xs: "none",
+          height: {
             md: `calc(100% - ${HEADER_HEIGHT_DESKTOP})`,
           },
           margin: {
