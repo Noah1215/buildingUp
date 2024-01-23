@@ -18,6 +18,7 @@ export default async function Page() {
         height: "100%",
         display: "flex",
         flexDirection: "column",
+        gap: "0.5rem",
       }}
     >
       <Box component="header" sx={{ flex: 0 }}>
@@ -26,12 +27,13 @@ export default async function Page() {
           sx={{
             fontSize: { xs: "20px", md: "32px" },
             fontWeight: 600,
+            textAlign: { xs: "center", md: "left" },
           }}
         >
-          My Mentor
+          Meeting
         </Typography>
       </Box>
-      <Box sx={{ flex: 1 }}>
+      <Box sx={{ flex: 1, display: "flex" }}>
         <Calendar />
       </Box>
     </Box>

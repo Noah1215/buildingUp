@@ -27,6 +27,8 @@ export default function Header({ userName }: Props) {
           backgroundColor: "background.paper",
           display: "flex",
           justifyContent: "space-between",
+          // TODO:
+          minHeight: { xs: "56px", md: "64px" },
         }}
       >
         <Box
