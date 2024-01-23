@@ -15,12 +15,12 @@ export default async function Page() {
     <Box
       component="article"
       sx={{
+        height: "100%",
         display: "flex",
         flexDirection: "column",
-        height: "100%",
       }}
     >
-      <Box component="header">
+      <Box component="header" sx={{ flex: 0 }}>
         <Typography
           component={"h1"}
           sx={{
@@ -31,8 +31,9 @@ export default async function Page() {
           My Mentor
         </Typography>
       </Box>
-
-      <Calendar />
+      <Box sx={{ flex: 1 }}>
+        <Calendar />
+      </Box>
     </Box>
   );
 }
