@@ -47,10 +47,10 @@ const StyledNavigation = styled(MuiBottomNavigation)({
   width: "100%",
   backgroundColor: "#FFFFFF",
   boxShadow: "0px -2px 5px rgba(0, 0, 0, 0.2)",
-  boxSizing: "border-box",
 });
 
 const StyledNavigationItem = styled(MuiBottomNavigationAction)({
+  // padding: 0,
   minWidth: "fit-content",
   "& .MuiBottomNavigationAction-label": {
     color: "#234561",

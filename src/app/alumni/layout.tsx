@@ -33,7 +33,7 @@ export default async function Layout({
       className="page-wrapper"
       sx={{
         height: "100%",
-        boxSizing: "border-box",
+        overflow: "auto",
       }}
     >
       <Box
@@ -45,7 +45,6 @@ export default async function Layout({
           left: 0,
           right: 0,
           zIndex: "2000",
-          boxSizing: "border-box",
         }}
       >
         <Header userName={userName} />
@@ -61,7 +60,6 @@ export default async function Layout({
           left: 0,
           bottom: 0,
           zIndex: "auto",
-          boxSizing: "border-box",
         }}
       >
         <Sidebar />
@@ -95,7 +93,6 @@ export default async function Layout({
           left: 0,
           right: 0,
           zIndex: "2000",
-          boxSizing: "border-box",
         }}
       >
         <BottomNavigation />
