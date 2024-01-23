@@ -2,13 +2,11 @@
 import { useState } from "react";
 
 import dayjs, { Dayjs } from "dayjs";
-import localizedFormat from "dayjs/plugin/localizedFormat";
-dayjs.extend(localizedFormat);
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
-import Modal from "@mui/material/Modal";
-import { Avatar, Box, Paper } from "@mui/material";
+import { Box, Paper, Modal, Avatar, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 export function DesktopMeetingModal({
   open,
@@ -73,14 +71,15 @@ export function DesktopMeetingModal({
             >
               <Box>
                 <Box>Date:</Box>
-                <Box>{dayjs(meeting.start_time).format("L")}</Box>
+                <Box>{dayjs(meeting.start_time).format("MM/DD/YYYY")}</Box>
               </Box>
               <Box>
                 <Box>Time:</Box>
                 {meeting ? (
                   <Box>
-                    {dayjs(meeting.start_time).format("LT")} -
-                    {dayjs(meeting.end_time).format("LT")}
+                    {`${dayjs(meeting.start_time).format("hh:mm A")} - ${dayjs(
+                      meeting.end_time
+                    ).format("hh:mm A")}`}
                   </Box>
                 ) : (
                   <Box>N/A</Box>
@@ -99,9 +98,23 @@ export function DesktopMeetingModal({
               <Box>Description</Box>
               <Box>{meeting.description ?? "N/A"}</Box>
             </Box>
-            <Box sx={{ position: "absolute", top: "1rem", right: "1rem" }}>
-              X
-            </Box>
+            <IconButton
+              aria-label="close"
+              onClick={handleClose}
+              sx={{
+                position: "absolute",
+                right: 8,
+                top: 8,
+              }}
+            >
+              <CloseIcon
+                sx={{
+                  color: "white",
+                  background: "#4b5057",
+                  borderRadius: "50%",
+                }}
+              />
+            </IconButton>
           </Box>
         ) : (
           <Box>Loading...</Box>

@@ -1,65 +1,62 @@
 "use client";
 // day.js
 import dayjs, { Dayjs } from "dayjs";
-import weekday from "dayjs/plugin/weekday";
-import timezone from "dayjs/plugin/timezone";
-import localizedFormat from "dayjs/plugin/localizedFormat";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
-dayjs.extend(weekday);
-dayjs.extend(timezone);
-dayjs.extend(localizedFormat);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 // MUI
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 // lib
-import { getLocaleAwareWeekdays } from "../lib/calendar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DesktopMeetingModal } from "./DesktopMeetingModal";
 
 export default function DesktopCalendar({
+  month,
   meetings,
-  userLocale,
 }: {
+  month: Dayjs;
   meetings: any[];
-  userLocale?: string;
 }) {
-  const today = dayjs();
-  const startOfMonth = today.startOf("month");
-  const firstDay = startOfMonth.subtract(startOfMonth.weekday(), "day");
+  const startOfMonth = month.startOf("month");
+  const firstDay = startOfMonth.subtract(startOfMonth.day(), "day");
+  const weekdays: string[] = [0, 1, 2, 3, 4, 5, 6].map((day) =>
+    dayjs().day(day).format("ddd")
+  );
 
-  // Generate dates
-  const dates: any = [];
-  for (let i = 0; i < 5; i++) {
-    const week: any = [];
-    for (let j = 0; j < 7; j++) {
-      const currDate = dayjs(firstDay).add(i * 7 + j, "day");
-      const dailyMeetings = meetings.filter(
-        (meeting) =>
-          dayjs(meeting["start_time"]).isSameOrAfter(currDate.startOf("day")) &&
-          dayjs(meeting["start_time"]).isSameOrBefore(currDate.endOf("day"))
-      );
-      week.push({
-        date: currDate,
-        dailyMeetings,
-      });
-    }
-    dates.push(week);
-  }
-
-  const weekdays: string[] = getLocaleAwareWeekdays("ddd", userLocale);
-
+  // Calendar
+  const [dates, setDates] = useState<any>([]);
+  // Modal
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const weeks = [];
+    for (let i = 0; i < 5; i++) {
+      const week: any = [];
+      for (let j = 0; j < 7; j++) {
+        const currDate = dayjs(firstDay).add(i * 7 + j, "day");
+        const dailyMeetings = meetings.filter(
+          (meeting) =>
+            dayjs(meeting["start_time"]).isSameOrAfter(
+              currDate.startOf("day")
+            ) &&
+            dayjs(meeting["start_time"]).isSameOrBefore(currDate.endOf("day"))
+        );
+        week.push({
+          date: currDate,
+          dailyMeetings: dailyMeetings,
+        });
+      }
+      weeks.push(week);
+    }
+    setDates(weeks);
+  }, [meetings]);
 
   return (
     <>
       <CalendarContainer>
-        <CalendarNav>
-          <h2>January</h2>
-        </CalendarNav>
         <CalendarHeader>
           {weekdays.map((dayOfWeek: string) => (
             <HeaderColumn key={dayOfWeek}>
@@ -80,6 +77,9 @@ export default function DesktopCalendar({
                         sx={{
                           backgroundColor: "#024761",
                           padding: "0",
+                          "&:hover": {
+                            backgroundColor: "#2f597d",
+                          },
                         }}
                         onClick={() => {
                           setSelected(meeting);
@@ -87,7 +87,7 @@ export default function DesktopCalendar({
                         }}
                       >
                         <CalendarItemText>
-                          {dayjs(meeting.start_time).format("LT")}
+                          {dayjs(meeting.start_time).format("hh:mm A")}
                         </CalendarItemText>
                       </Button>
                     ))}
