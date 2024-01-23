@@ -62,9 +62,9 @@ const StyledNavigationItem = styled(MuiBottomNavigationAction)({
     fontSize: "2.5rem",
     marginBottom: "0.5rem",
   },
-  "&:hover": {
-    backgroundColor: "#EBF4FF",
-  },
+  // "&:hover": {
+  //   backgroundColor: "#EBF4FF",
+  // },
 });
 
 const StyledMenu = styled(Menu)({
@@ -86,7 +86,7 @@ const StyledMenuItem = styled(MenuItem)({
     color: "#ffffff",
     fontSize: "1.8rem",
   },
-  "&:hover": { backgroundColor: "#2f597d" },
+  // "&:hover": { backgroundColor: "#2f597d" },
 });
 
 export default function BottomNavigation() {
