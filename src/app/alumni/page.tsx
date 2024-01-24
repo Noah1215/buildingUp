@@ -1,8 +1,8 @@
 // Component
-import Board from "@/app/alumni/(components)/Board";
-import EventTable from "@/app/alumni/(components)/EventTable";
-import SupportTable from "@/app/alumni/(components)/SupportTable";
-import ChartContainer from "@/app/alumni/(components)/ChartContainer";
+import Board from "@/app/alumni/components/Board";
+import EventTable from "@/app/alumni/components/EventTable";
+import SupportTable from "@/app/alumni/components/SupportTable";
+import ChartContainer from "@/app/alumni/components/ChartContainer";
 import JobDistribution from "@/recharts/JobDistribution";
 import CurrentJob from "@/recharts/CurrentJob";
 // MUI

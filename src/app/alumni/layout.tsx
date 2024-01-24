@@ -3,18 +3,16 @@ import { getUser, getUserName, getUserRole } from "@/app/supabase-server";
 // Next
 import { redirect, notFound } from "next/navigation";
 // Components
-import Header from "@/app/alumni/(components)/ui/Header";
-import SideNavigation from "@/app/alumni/(components)/ui/SideNavigation";
-import BottomNavigation from "@/app/alumni/(components)/ui/BottomNavigation";
+import Header from "@/app/alumni/components/layout/Header";
+import Sidebar from "@/app/alumni/components/layout/Sidebar";
+import BottomNavigation from "@/app/alumni/components/layout/BottomNavigation";
 // MUI
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Stack from "@mui/material/Stack";
 
-const DESKTOP_HEADER_HEIGHT = "64px";
-const MOBILE_HEADER_HEIGHT = "56px";
-const SIDE_NAV_BAR_WIDTH = "220px";
-const BOTTOM_NAV_BAR_HEIGHT = "80px";
+const HEADER_HEIGHT_DESKTOP = "64px";
+const HEADER_HEIGHT_MOBILE = "56px";
+const SIDEBAR_WIDTH_DESKTOP = "220px";
+const FOOTER_HEIGHT_MOBILE = "80px";
 
 export default async function Layout({
   children,
@@ -31,55 +29,71 @@ export default async function Layout({
   }
 
   return (
-    <Box className="page-wrapper">
+    <Box
+      className="page-wrapper"
+      sx={{
+        height: "100%",
+        overflow: "auto",
+      }}
+    >
       <Box
-        className="sticky-header-container"
+        component="header"
         sx={{
-          height: { xs: MOBILE_HEADER_HEIGHT, md: DESKTOP_HEADER_HEIGHT },
-          position: "sticky",
+          height: { xs: HEADER_HEIGHT_MOBILE, md: HEADER_HEIGHT_DESKTOP },
+          position: "fixed",
           top: 0,
-          zIndex: 1,
+          left: 0,
+          right: 0,
+          zIndex: "2000",
         }}
       >
         <Header userName={userName} />
       </Box>
-
       <Box
-        className="main-wrapper"
+        component="aside"
+        className="sidebar-container"
         sx={{
-          display: { sx: "flex", md: "grid" },
-          gridTemplateColumns: {
-            sx: "none",
-            md: `${SIDE_NAV_BAR_WIDTH} auto`,
-          },
+          display: { xs: "none", md: "block" },
+          width: SIDEBAR_WIDTH_DESKTOP,
+          position: "fixed",
+          top: HEADER_HEIGHT_DESKTOP,
+          left: 0,
+          bottom: 0,
+          zIndex: "auto",
         }}
       >
-        <Box
-          className="sidebar-container"
-          sx={{
-            width: SIDE_NAV_BAR_WIDTH,
-            minHeight: `calc(100vh - ${DESKTOP_HEADER_HEIGHT})`,
-            position: "sticky",
-            zIndex: 0,
-            display: { xs: "none", md: "block" },
-            boxSizing: "border-box",
-            backgroundColor: "#024761",
-          }}
-        >
-          <SideNavigation />
-        </Box>
-
-        <Container
-          className="main-content"
-          component="main"
-          maxWidth="lg"
-          sx={{ padding: { xs: "1rem", md: "2rem" } }}
-        >
-          {children}
-        </Container>
+        <Sidebar />
+      </Box>
+      <Box
+        component="main"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          height: {
+            md: `calc(100% - ${HEADER_HEIGHT_DESKTOP})`,
+          },
+          margin: {
+            xs: `${HEADER_HEIGHT_MOBILE} 0 ${FOOTER_HEIGHT_MOBILE} 0`,
+            md: `${HEADER_HEIGHT_DESKTOP} 0 0 ${SIDEBAR_WIDTH_DESKTOP}`,
+          },
+          padding: { xs: "1rem", md: "2rem" },
+        }}
+      >
+        {children}
       </Box>
 
-      <Box className="sticky-footer-container">
+      <Box
+        component="nav"
+        sx={{
+          display: { sx: "block", md: "none" },
+          height: FOOTER_HEIGHT_MOBILE,
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: "2000",
+        }}
+      >
         <BottomNavigation />
       </Box>
     </Box>
