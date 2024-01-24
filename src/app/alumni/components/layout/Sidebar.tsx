@@ -24,7 +24,7 @@ const LINKS = [
   { text: "Jobs", href: "/alumni/jobs", icon: JobsIcon },
   { text: "Support", href: "/alumni/support", icon: SupportIcon },
   { text: "Meeting", href: "/alumni/meeting", icon: MeetingIcon },
-  { text: "My Union", href: "/alumni/myUnion", icon: JobsIcon },
+  // { text: "My Union", href: "/alumni/myUnion", icon: JobsIcon },
 ];
 
 export default function Sidebar() {
