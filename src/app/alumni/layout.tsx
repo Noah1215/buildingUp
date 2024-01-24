@@ -3,42 +3,22 @@ import { getUser, getUserName, getUserRole } from "@/app/supabase-server";
 // Next
 import { redirect, notFound } from "next/navigation";
 // Components
-import Header from "@/components/Header";
-import SideDrawer from "@/components/SideDrawer";
-import Footer from "@/components/Footer";
+import Header from "@/app/alumni/components/layout/Header";
+import Sidebar from "@/app/alumni/components/layout/Sidebar";
+import BottomNavigation from "@/app/alumni/components/layout/BottomNavigation";
 // MUI
 import Box from "@mui/material/Box";
-// MUI Icons
-import HomeIcon from "@mui/icons-material/Home";
-import MyPageIcon from "@mui/icons-material/AccountCircle";
-import MenteeIcon from "@mui/icons-material/Groups";
-import EventIcon from "@mui/icons-material/EventNote";
-import JobsIcon from "@mui/icons-material/BusinessCenter";
-import SupportIcon from "@mui/icons-material/SpeakerNotes";
-import MeetingIcon from "@mui/icons-material/PermContactCalendar";
-import MentorListIcon from "@mui/icons-material/PersonAdd";
 
-const DRAWER_WIDTH = 220;
-
-const LINKS = [
-  { text: "Home", href: "/alumni", icon: HomeIcon },
-  { text: "My Page", href: "/alumni/myPage", icon: MyPageIcon },
-  { text: "My Mentor", href: "/alumni/myMentor", icon: MenteeIcon },
-  { text: "Event", href: "/alumni/event", icon: EventIcon },
-  { text: "Jobs", href: "/alumni/jobs", icon: JobsIcon },
-  { text: "Support", href: "/alumni/support", icon: SupportIcon },
-  { text: "Meeting", href: "/alumni/meeting", icon: MeetingIcon },
-  { text: "Mentor List", href: "/alumni/mentors", icon: MentorListIcon },
-  { text: "My Union", href: "/alumni/myUnion", icon: JobsIcon },
-];
+const HEADER_HEIGHT_DESKTOP = "64px";
+const HEADER_HEIGHT_MOBILE = "56px";
+const SIDEBAR_WIDTH_DESKTOP = "220px";
+const FOOTER_HEIGHT_MOBILE = "80px";
 
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  console.log("Layout");
-
   const [userRole, userName] = await Promise.all([
     getUserRole(),
     getUserName(),
@@ -49,23 +29,73 @@ export default async function Layout({
   }
 
   return (
-    <>
-      <Header userName={userName} />
-      <SideDrawer links={LINKS} width={DRAWER_WIDTH} />
+    <Box
+      className="page-wrapper"
+      sx={{
+        height: "100%",
+        overflow: "auto",
+      }}
+    >
+      <Box
+        component="header"
+        sx={{
+          height: { xs: HEADER_HEIGHT_MOBILE, md: HEADER_HEIGHT_DESKTOP },
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: "2000",
+        }}
+      >
+        <Header userName={userName} />
+      </Box>
+      <Box
+        component="aside"
+        className="sidebar-container"
+        sx={{
+          display: { xs: "none", md: "block" },
+          width: SIDEBAR_WIDTH_DESKTOP,
+          position: "fixed",
+          top: HEADER_HEIGHT_DESKTOP,
+          left: 0,
+          bottom: 0,
+          zIndex: "auto",
+        }}
+      >
+        <Sidebar />
+      </Box>
       <Box
         component="main"
         sx={{
-          flexGrow: 1,
-          bgcolor: "#FFF",
-          ml: { xs: 0, md: `${DRAWER_WIDTH}px` },
-          mt: "64px",
-          mb: { xs: "80px", md: 0 },
-          p: 3,
+          display: "flex",
+          flexDirection: "column",
+          height: {
+            md: `calc(100% - ${HEADER_HEIGHT_DESKTOP})`,
+          },
+          margin: {
+            xs: `${HEADER_HEIGHT_MOBILE} 0 ${FOOTER_HEIGHT_MOBILE} 0`,
+            md: `${HEADER_HEIGHT_DESKTOP} 0 0 ${SIDEBAR_WIDTH_DESKTOP}`,
+          },
+          padding: { xs: "1rem", md: "2rem" },
         }}
       >
         {children}
       </Box>
-      <Footer />
-    </>
+
+      <Box
+        component="nav"
+        sx={{
+          display: { sx: "block", md: "none" },
+          height: FOOTER_HEIGHT_MOBILE,
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: "2000",
+        }}
+      >
+        <BottomNavigation />
+      </Box>
+    </Box>
   );
 }

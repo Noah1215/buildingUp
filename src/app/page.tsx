@@ -5,6 +5,7 @@ import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 
 import SignInForm from "@/components/Auth/SignInForm";
+import mainBUimg from "/public/mainBU.png";
 
 import mainBUimg from "/public/mainBU.png";
 
@@ -40,11 +41,7 @@ export default function Home() {
           <SignInForm device="Mobile" />
         </Box>
         {/* Desktop */}
-        <Box
-          sx={{
-            display: { xs: "none", md: "flex" },
-          }}
-        >
+        <Box sx={{ display: { xs: "none", md: "flex" } }}>
           <Image src={mainBUimg} alt="logo" width={324} height={71} priority />
         </Box>
       </Box>
