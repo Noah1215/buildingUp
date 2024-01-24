@@ -7,8 +7,6 @@ import Typography from "@mui/material/Typography/Typography";
 import SignInForm from "@/components/Auth/SignInForm";
 import mainBUimg from "/public/mainBU.png";
 
-import mainBUimg from "/public/mainBU.png";
-
 export default function Home() {
   return (
     <Box height="100vh" display="flex" component="main">
