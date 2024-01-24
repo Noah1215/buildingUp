@@ -173,8 +173,8 @@ export default function DesktopCalendar({
               >
                 <ListItemText sx={{ paddingLeft: "2rem" }}>{`${dayjs(
                   meeting.start_time
-                ).format("LT")} -
-                    ${dayjs(meeting.end_time).format("LT")} | ${
+                ).format("hh:mm A")} -
+                    ${dayjs(meeting.end_time).format("hh:mm A")} | ${
                       meeting.mentor_name
                     }`}</ListItemText>
               </ListItemButton>

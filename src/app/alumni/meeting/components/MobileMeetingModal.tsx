@@ -44,13 +44,13 @@ export function MobileMeetingModal({
             </Box>
             <Box>
               <Box>Date:</Box>
-              <Box>{dayjs(meeting.start_time).format("L")}</Box>
+              <Box>{dayjs(meeting.start_time).format("MM/DD/YYYY")}</Box>
             </Box>
             <Box>
               <Box>Time:</Box>
               <Box>
-                {dayjs(meeting.start_time).format("LT")} -
-                {dayjs(meeting.end_time).format("LT")}
+                {dayjs(meeting.start_time).format("hh:mm A")} -
+                {dayjs(meeting.end_time).format("hh:mm A")}
               </Box>
             </Box>
             <Box>
